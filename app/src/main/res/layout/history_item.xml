@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/history_item">
+
+    <TextView
+        android:text="PlayerNames"
+        android:textStyle="bold"
+        android:textSize="24sp"
+        android:id="@+id/playerNames"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="5dp" />
+
+    <TextView
+        android:text="Scores"
+        android:textStyle="bold"
+        android:textSize="24sp"
+        android:id="@+id/scores"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp" />
+
+    <TextView
+        android:text="Location"
+        android:textSize="16sp"
+        android:id="@+id/location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/scores"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="5dp" />
+
+    <TextView
+        android:text="Innings"
+        android:textSize="16sp"
+        android:id="@+id/innings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/location"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="5dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+<!-- Code Generator
+
+playerNames, tvb30, ww, tm5, lm5
+scores, tvb30, ww, tm5, rm5
+location, tv20, ww, x-1m5,, lm5
+innings, tv20, ww, ,x-1*, rm5
+
+-->

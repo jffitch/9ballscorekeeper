@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/game">
+    <fragment android:id="@+id/game"
+        android:name="com.mathgeniusguide.nineballscorekeeper.GameFragment"
+        android:label="@string/game"
+        tools:layout="@layout/game_fragment">
+    </fragment>
+    <fragment android:id="@+id/player_stats"
+        android:name="com.mathgeniusguide.nineballscorekeeper.PlayerStatsFragment"
+        android:label="@string/player_stats"
+        tools:layout="@layout/player_stats_fragment">
+    </fragment>
+    <fragment android:id="@+id/rack_stats"
+        android:name="com.mathgeniusguide.nineballscorekeeper.RackStatsFragment"
+        android:label="@string/rack_stats"
+        tools:layout="@layout/rack_stats_fragment">
+    </fragment>
+    <fragment android:id="@+id/history"
+        android:name="com.mathgeniusguide.nineballscorekeeper.HistoryFragment"
+        android:label="@string/history"
+        tools:layout="@layout/history_fragment">
+        <action android:id="@+id/action_history_to_stats"
+            app:destination="@id/history_stats" />
+    </fragment>
+    <fragment android:id="@+id/all_time"
+        android:name="com.mathgeniusguide.nineballscorekeeper.AllTimeFragment"
+        android:label="@string/all_time"
+        tools:layout="@layout/all_time_fragment">
+        <action android:id="@+id/action_all_time_to_stats"
+            app:destination="@id/all_time_stats" />
+    </fragment>
+    <fragment android:id="@+id/settings"
+        android:name="com.mathgeniusguide.nineballscorekeeper.SettingsFragment"
+        android:label="@string/settings"
+        tools:layout="@layout/settings_fragment">
+    </fragment>
+    <fragment android:id="@+id/history_stats"
+        android:name="com.mathgeniusguide.nineballscorekeeper.PlayerStatsFragment"
+        android:label="@string/history_stats"
+        tools:layout="@layout/player_stats_fragment">
+    </fragment>
+    <fragment android:id="@+id/all_time_stats"
+        android:name="com.mathgeniusguide.nineballscorekeeper.PlayerStatsFragment"
+        android:label="@string/all_time_stats"
+        tools:layout="@layout/player_stats_fragment">
+    </fragment>
+</navigation>

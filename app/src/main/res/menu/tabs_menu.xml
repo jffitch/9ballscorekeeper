@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/game"
+        android:title="@string/game"
+        android:icon="@drawable/ic_game" />
+    <item
+        android:id="@+id/rack_stats"
+        android:title="@string/rack_stats"
+        android:icon="@drawable/ic_rack_stats" />
+    <item
+        android:id="@+id/player_stats"
+        android:title="@string/player_stats"
+        android:icon="@drawable/ic_player_stats" />
+    <item
+        android:id="@+id/history"
+        android:title="@string/history"
+        android:icon="@drawable/ic_history" />
+    <item
+        android:id="@+id/all_time"
+        android:title="@string/all_time"
+        android:icon="@drawable/ic_all_time" />
+</menu>

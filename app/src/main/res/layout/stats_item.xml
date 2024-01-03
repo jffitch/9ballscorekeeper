@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:text=""
+        android:id="@+id/statLabel"
+        android:layout_width="0dp"
+        app:layout_constraintHorizontal_weight="1.5"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/statPlayer1" />
+
+    <TextView
+        android:text="Player 1"
+        android:id="@+id/statPlayer1"
+        android:layout_width="0dp"
+        app:layout_constraintHorizontal_weight="1"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/statLabel"
+        app:layout_constraintEnd_toStartOf="@id/statPlayer2" />
+
+    <TextView
+        android:text="Player 2"
+        android:id="@+id/statPlayer2"
+        android:layout_width="0dp"
+        app:layout_constraintHorizontal_weight="1"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/statPlayer1"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

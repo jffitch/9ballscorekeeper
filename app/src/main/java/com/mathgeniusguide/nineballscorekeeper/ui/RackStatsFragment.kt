@@ -29,7 +29,13 @@ class RackStatsFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.rackRecyclerView.layoutManager = LinearLayoutManager(context)
-        binding.rackRecyclerView.adapter = RackAdapter(mainActivity.gameDetails.rackList, requireContext())
+        val showTimeOuts = mainActivity.gameDetails.player1MatchPoints != -1 && mainActivity.gameDetails.player2MatchPoints != -1
+        binding.rackLabels.player1TimeOutsTextView.visibility = if (showTimeOuts) View.VISIBLE else View.GONE
+        binding.rackLabels.player2TimeOutsTextView.visibility = if (showTimeOuts) View.VISIBLE else View.GONE
+        binding.rackRecyclerView.adapter = RackAdapter(
+            mainActivity.gameDetails.rackList,
+            showTimeOuts,
+            requireContext())
     }
     override fun onDestroyView() {
         super.onDestroyView()

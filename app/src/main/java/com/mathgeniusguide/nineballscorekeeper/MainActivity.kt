@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -89,7 +88,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         return pref.getString(target.target, "") ?: ""
     }
 
-    private fun writeGameList() {
+    fun writeGameList() {
         val editor = getPreferences(Context.MODE_PRIVATE).edit()
         editor.putStringSet("game_list", gameList.toSet())
         editor.apply()
@@ -129,17 +128,17 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     }
 
     fun speak(speech: String) {
-        textToSpeech.speak(speech, TextToSpeech.QUEUE_FLUSH, null, "")
+        textToSpeech.speak(speech, TextToSpeech.QUEUE_ADD, null, "")
     }
 
-    fun readScore() {
+    fun speakScore() {
         val player1Score = gameDetails.gameStats.player1Stats.score
         val player2Score = gameDetails.gameStats.player2Stats.score
         val player1Name = gameDetails.player1Name
         val player2Name = gameDetails.player2Name
         speak(
             String.format(
-                getString(R.string.spoken_score),
+                if (gameDetails.gameOver) getString(R.string.spoken_final_score) else getString(R.string.spoken_score),
                 player1Name,
                 if (player1Score == 0) getString(R.string.goose_egg) else player1Score,
                 player2Name,

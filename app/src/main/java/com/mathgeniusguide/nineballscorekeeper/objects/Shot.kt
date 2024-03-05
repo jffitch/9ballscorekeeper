@@ -5,7 +5,7 @@ import com.mathgeniusguide.nineballscorekeeper.enums.PlayerTurn
 import com.mathgeniusguide.nineballscorekeeper.enums.ShotCondition
 import com.mathgeniusguide.nineballscorekeeper.objects.stats.PlayerStats
 
-class Shot(string: String, playerTurn: PlayerTurn, startCondition: ShotCondition, ballStatus: MutableList<BallStatus>) {
+class Shot(string: String, playerTurn: PlayerTurn, startCondition: ShotCondition, ballStatus: Array<BallStatus>) {
     private val foulRegex = "[KMWRPO]".toRegex()
     private val isFoul = foulRegex.containsMatchIn(string)
     private val isScratch = string.contains('K') || string.contains('P')
@@ -17,6 +17,7 @@ class Shot(string: String, playerTurn: PlayerTurn, startCondition: ShotCondition
     private val isLucky = string.contains('l')
     private val isBank = string.contains('b')
     private val isMiscue = string.contains('m')
+    private val isTimeOut = string.contains('t')
     val isStalemate = string.contains('S')
     private val isNine = string.contains('9')
     val isRackEnd = isStalemate || (isNine && !isFoul)
@@ -59,7 +60,7 @@ class Shot(string: String, playerTurn: PlayerTurn, startCondition: ShotCondition
             achievements.nines = if (isNine && !isFoul) 1 else 0
             achievements.nineOnBreak = if (isNine && !isFoul && startCondition == ShotCondition.BREAK) 1 else 0
             achievements.breakAndRun = if (isNine && !isFoul && ballStatus.all { it == BallStatus.SCORED_THIS_TURN }) 1 else 0
-            achievements.perfectRack = if (isNine && !isFoul && ballStatus.all { it == BallStatus.SCORED_THIS_TURN || it == playerTurn.toBallStatus() }) 1 else 0
+            achievements.perfectRack = if (isNine && !isFoul && ballStatus.dropLast(1).all { it == BallStatus.SCORED_THIS_TURN || it == playerTurn.toBallStatus() }) 1 else 0
             achievements.earlyNine = if (isNine && !isFoul && startCondition != ShotCondition.BREAK && ballStatus.any { it == BallStatus.ON_TABLE }) 1 else 0
             achievements.pointsOnBreak[if (isFoul) 0 else points] += if (startCondition == ShotCondition.BREAK && !isBadBreak) 1 else 0
             achievements.scratchOnBreak = if (isScratch && startCondition == ShotCondition.BREAK) 1 else 0
@@ -85,10 +86,15 @@ class Shot(string: String, playerTurn: PlayerTurn, startCondition: ShotCondition
             achievements.miscueHit = if (isMiscue && !isFoul && !isBadBreak) 1 else 0
             achievements.miscuePocket = if (isMiscue && score != 0) 1 else 0
             achievements.miscueBreak = if (isMiscue && startCondition == ShotCondition.BREAK) 1 else 0
+            achievements.timeOut = if (isTimeOut) 1 else 0
+            achievements.timeOutDefense = if (isTimeOut && !isFoul && isDefense && points == 0) 1 else 0
+            achievements.timeOutPocket = if (isTimeOut && !isFoul && points != 0) 1 else 0
+            achievements.timeOutFoul = if (isTimeOut && isFoul) 1 else 0
+            achievements.timeOutMiss = if (isTimeOut && !isFoul && !isDefense && points == 0) 1 else 0
         }
     }
 
-    private fun calculatePoints(string: String, isFoul: Boolean, ballStatus: MutableList<BallStatus>): Int {
+    private fun calculatePoints(string: String, isFoul: Boolean, ballStatus: Array<BallStatus>): Int {
         var currentPoints = 0
         for (i in listOf('1', '2', '3', '4', '5', '6', '7', '8')) {
             val index = i - '0' - 1

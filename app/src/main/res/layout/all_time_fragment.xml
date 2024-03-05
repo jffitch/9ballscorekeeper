@@ -5,12 +5,49 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:text=""
+        android:id="@+id/blankTextView"
+        android:layout_width="0dp"
+        app:layout_constraintHorizontal_weight="1.5"
+        android:textSize="14sp"
+        android:gravity="center"
         android:layout_height="wrap_content"
-        android:text="Hello World"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/player1Name" />
+
+    <EditText
+        android:hint="@string/player1"
+        android:id="@+id/player1Name"
+        android:inputType="text"
+        android:layout_width="0dp"
+        app:layout_constraintHorizontal_weight="1"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/blankTextView"
+        app:layout_constraintEnd_toStartOf="@id/player2Name" />
+
+    <EditText
+        android:hint="@string/player2"
+        android:id="@+id/player2Name"
+        android:inputType="text"
+        android:layout_width="0dp"
+        app:layout_constraintHorizontal_weight="1"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/player1Name"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/allTimeStatsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintVertical_weight="1"
+        app:layout_constraintTop_toBottomOf="@id/blankTextView"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

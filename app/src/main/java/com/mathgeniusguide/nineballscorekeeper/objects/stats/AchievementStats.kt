@@ -27,6 +27,11 @@ class AchievementStats {
     var miscueHit = 0
     var miscuePocket = 0
     var miscueBreak = 0
+    var timeOut = 0
+    var timeOutDefense = 0
+    var timeOutPocket = 0
+    var timeOutFoul = 0
+    var timeOutMiss = 0
 
     fun addAchievementStats(achievementStats: AchievementStats) {
         nineOnBreak += achievementStats.nineOnBreak
@@ -57,6 +62,11 @@ class AchievementStats {
         miscueHit += achievementStats.miscueHit
         miscuePocket += achievementStats.miscuePocket
         miscueBreak += achievementStats.miscueBreak
+        timeOut += achievementStats.timeOut
+        timeOutDefense += achievementStats.timeOutDefense
+        timeOutPocket += achievementStats.timeOutPocket
+        timeOutFoul += achievementStats.timeOutFoul
+        timeOutMiss += achievementStats.timeOutMiss
     }
 
     fun averagePointsOnBreak(): Double {

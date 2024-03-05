@@ -24,7 +24,16 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center_horizontal"
+        android:textStyle="bold"
         android:text="Total" />
+    <TextView
+        android:id="@+id/player1TimeOutsTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:textStyle="italic"
+        android:text="T/O" />
     <TextView
         android:id="@+id/player2TextView"
         android:layout_width="0dp"
@@ -38,7 +47,16 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center_horizontal"
+        android:textStyle="bold"
         android:text="Total" />
+    <TextView
+        android:id="@+id/player2TimeOutsTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:textStyle="italic"
+        android:text="T/O" />
     <TextView
         android:id="@+id/deadBallsTextView"
         android:layout_width="0dp"
@@ -52,6 +70,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center_horizontal"
+        android:textStyle="bold"
         android:text="Total" />
     <TextView
         android:id="@+id/inningsTextView"
@@ -66,5 +85,6 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center_horizontal"
+        android:textStyle="bold"
         android:text="Total" />
 </LinearLayout>

@@ -37,15 +37,27 @@
         android:name="com.mathgeniusguide.nineballscorekeeper.SettingsFragment"
         android:label="@string/settings"
         tools:layout="@layout/settings_fragment">
+        <action android:id="@+id/action_settings_to_edit_game_string"
+            app:destination="@id/edit_game_string" />
     </fragment>
     <fragment android:id="@+id/history_stats"
         android:name="com.mathgeniusguide.nineballscorekeeper.PlayerStatsFragment"
         android:label="@string/history_stats"
         tools:layout="@layout/player_stats_fragment">
     </fragment>
+    <fragment android:id="@+id/twenty_three"
+        android:name="com.mathgeniusguide.nineballscorekeeper.TwentyThreeFragment"
+        android:label="@string/twenty_three_rule"
+        tools:layout="@layout/twenty_three_fragment">
+    </fragment>
     <fragment android:id="@+id/all_time_stats"
         android:name="com.mathgeniusguide.nineballscorekeeper.PlayerStatsFragment"
         android:label="@string/all_time_stats"
         tools:layout="@layout/player_stats_fragment">
+    </fragment>
+    <fragment android:id="@+id/edit_game_string"
+        android:name="com.mathgeniusguide.nineballscorekeeper.EditGameStringFragment"
+        android:label="@string/edit_game_string"
+        tools:layout="@layout/edit_game_string_fragment">
     </fragment>
 </navigation>

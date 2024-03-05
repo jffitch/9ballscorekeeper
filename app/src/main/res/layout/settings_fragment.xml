@@ -53,6 +53,18 @@
         android:layout_marginTop="10dp"
         android:layout_marginStart="10dp" />
 
+    <Button
+        android:text="Edit Game String"
+        android:textStyle="bold"
+        android:textSize="25sp"
+        android:id="@+id/editGameString"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/resetGameButton"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 <!-- Code Generator

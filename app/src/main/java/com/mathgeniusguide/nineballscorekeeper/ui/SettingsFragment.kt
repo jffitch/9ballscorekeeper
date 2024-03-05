@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.mathgeniusguide.nineballscorekeeper.databinding.SettingsFragmentBinding
 import com.mathgeniusguide.nineballscorekeeper.enums.SharedPreferencesTarget
 import com.mathgeniusguide.nineballscorekeeper.util.getGameDetails
@@ -61,6 +62,15 @@ class SettingsFragment: Fragment() {
             }
             builder.setNegativeButton("Back", null)
             builder.setMessage(getString(R.string.reset_are_you_sure))
+            builder.create().show()
+        }
+        binding.editGameString.setOnClickListener {
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setPositiveButton("Continue") { _, _ ->
+                findNavController().navigate(R.id.action_settings_to_edit_game_string)
+            }
+            builder.setNegativeButton("Back", null)
+            builder.setMessage(getString(R.string.edit_string_are_you_sure))
             builder.create().show()
         }
     }

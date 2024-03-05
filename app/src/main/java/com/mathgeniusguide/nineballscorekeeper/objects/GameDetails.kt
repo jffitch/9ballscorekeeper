@@ -4,13 +4,26 @@ import com.mathgeniusguide.nineballscorekeeper.enums.BallStatus
 import com.mathgeniusguide.nineballscorekeeper.enums.PlayerTurn
 import com.mathgeniusguide.nineballscorekeeper.enums.ShotCondition
 import com.mathgeniusguide.nineballscorekeeper.objects.stats.GameStats
+import com.mathgeniusguide.nineballscorekeeper.util.matchPointsArray
 
 class GameDetails(val description: Map<String, String>, val innings: List<Pair<String, String>>) {
     val gameStats = GameStats()
     val player1Name = if (description["Player 1"]?.isNotBlank() == true) description["Player 1"] else "Player 1"
     val player2Name = if (description["Player 2"]?.isNotBlank() == true) description["Player 2"] else "Player 2"
+    private val player1GoalString = description["Goal 1"]
+    private val player2GoalString = description["Goal 2"]
+    val player1Goal = if ("\\d+".toRegex().matches(player1GoalString ?: "")) (player1GoalString ?: "-1").toInt() else -1
+    val player2Goal = if ("\\d+".toRegex().matches(player2GoalString ?: "")) (player2GoalString ?: "-1").toInt() else -1
+    private val announceStreak1String = description["Announce Streak 1"]
+    private val announceStreak2String = description["Announce Streak 2"]
+    val announceStreak1 = if ("\\d+".toRegex().matches(announceStreak1String ?: "")) (announceStreak1String ?: "-1").toInt() else -1
+    val announceStreak2 = if ("\\d+".toRegex().matches(announceStreak2String ?: "")) (announceStreak2String ?: "-1").toInt() else -1
+    var player1MatchPoints = -1
+    var player2MatchPoints = -1
+
+    var gameOver = false
     var currentPlayerTurnStreak = 0
-    val ballStatus = mutableListOf(
+    val ballStatus = arrayOf(
         BallStatus.ON_TABLE,
         BallStatus.ON_TABLE,
         BallStatus.ON_TABLE,
@@ -19,6 +32,7 @@ class GameDetails(val description: Map<String, String>, val innings: List<Pair<S
         BallStatus.ON_TABLE,
         BallStatus.ON_TABLE,
         BallStatus.ON_TABLE,
+        BallStatus.SCORED_THIS_TURN
     )
     val rackList = mutableListOf<Rack>()
     var shotCondition = ShotCondition.BREAK
@@ -81,5 +95,22 @@ class GameDetails(val description: Map<String, String>, val innings: List<Pair<S
             PlayerTurn.PLAYER1 -> gameStats.player1Stats.streaks
             PlayerTurn.PLAYER2 -> gameStats.player2Stats.streaks
         }.currentTurnStreak = currentPlayerTurnStreak
+        if ((player1Goal != -1 && gameStats.player1Stats.score >= player1Goal) || (player2Goal != -1 && gameStats.player2Stats.score >= player2Goal)) {
+            gameOver = true
+        }
+        if (matchPointsArray[8].contains(player1Goal) && matchPointsArray[8].contains(player2Goal)) {
+            val player1Rank = matchPointsArray[8].indexOf(player1Goal)
+            val player2Rank = matchPointsArray[8].indexOf(player2Goal)
+            player1MatchPoints = matchPointsArray.indexOfFirst { it[player1Rank] > gameStats.player1Stats.score }
+            player2MatchPoints = matchPointsArray.indexOfFirst { it[player2Rank] > gameStats.player2Stats.score }
+            when {
+                player1MatchPoints == -1 && player2MatchPoints == -1 -> {
+                    player1MatchPoints = 10
+                    player2MatchPoints = 10
+                }
+                player1MatchPoints == -1 -> player1MatchPoints = 20 - player2MatchPoints
+                player2MatchPoints == -1 -> player2MatchPoints = 20 - player1MatchPoints
+            }
+        }
     }
 }

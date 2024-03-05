@@ -8,15 +8,16 @@
     <TextView
         android:text="@string/ball_in_hand"
         android:textStyle="bold"
-        android:textSize="25sp"
+        android:textSize="20sp"
         android:id="@+id/ballInHandTextView"
         android:textColor="@color/ball_in_hand_color"
         android:gravity="center_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/ball3"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="20dp" />
 
     <TextView
         android:text="Player 1"
@@ -42,6 +43,41 @@
         android:layout_marginStart="10dp" />
 
     <TextView
+        android:textSize="20sp"
+        android:id="@+id/player1Goal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/player1Score"
+        app:layout_constraintStart_toEndOf="@id/player1Score"
+        android:layout_marginStart="5dp"
+        android:layout_marginBottom="5dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:id="@+id/mp1Label"
+        android:textStyle="bold"
+        android:textColor="@color/match_points_color"
+        android:text="MP"
+        app:layout_constraintStart_toEndOf="@id/player1Label"
+        app:layout_constraintTop_toTopOf="@id/player1Label"
+        android:layout_marginStart="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:id="@+id/mp1Score"
+        android:textStyle="bold"
+        android:textColor="@color/match_points_color"
+        android:text="0"
+        app:layout_constraintStart_toStartOf="@id/mp1Label"
+        app:layout_constraintEnd_toEndOf="@id/mp1Label"
+        app:layout_constraintTop_toBottomOf="@id/mp1Label"
+        android:layout_marginTop="-10dp" />
+
+    <TextView
         android:text="Player 2"
         android:textStyle="bold"
         android:textSize="30sp"
@@ -60,9 +96,44 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/player2Label"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/player2Goal"
         android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp" />
+
+    <TextView
+        android:textSize="20sp"
+        android:id="@+id/player2Goal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/player2Score"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="5dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:id="@+id/mp2Label"
+        android:textColor="@color/match_points_color"
+        android:text="MP"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/player2Label"
+        app:layout_constraintTop_toTopOf="@id/player2Label"
         android:layout_marginEnd="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:id="@+id/mp2Score"
+        android:textStyle="bold"
+        android:textColor="@color/match_points_color"
+        android:text="0"
+        app:layout_constraintStart_toStartOf="@id/mp2Label"
+        app:layout_constraintEnd_toEndOf="@id/mp2Label"
+        app:layout_constraintTop_toBottomOf="@id/mp2Label"
+        android:layout_marginTop="-10dp" />
 
     <ImageView
         android:src="@drawable/ball_1"
@@ -74,6 +145,15 @@
         app:layout_constraintEnd_toStartOf="@id/ball2"
         android:layout_marginTop="10dp" />
 
+    <TextView
+        android:id="@+id/ball1Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/ball1"
+        app:layout_constraintStart_toStartOf="@id/ball1"
+        app:layout_constraintEnd_toEndOf="@id/ball1"
+        app:layout_constraintBottom_toBottomOf="@id/ball1" />
+
     <ImageView
         android:src="@drawable/ball_2"
         android:id="@+id/ball2"
@@ -82,6 +162,14 @@
         app:layout_constraintTop_toTopOf="@id/ball1"
         app:layout_constraintStart_toEndOf="@id/ball1"
         app:layout_constraintEnd_toStartOf="@id/ball3" />
+    <TextView
+        android:id="@+id/ball2Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/ball2"
+        app:layout_constraintStart_toStartOf="@id/ball2"
+        app:layout_constraintEnd_toEndOf="@id/ball2"
+        app:layout_constraintBottom_toBottomOf="@id/ball2" />
 
     <ImageView
         android:src="@drawable/ball_3"
@@ -92,6 +180,15 @@
         app:layout_constraintStart_toEndOf="@id/ball2"
         app:layout_constraintEnd_toStartOf="@id/ball4" />
 
+    <TextView
+        android:id="@+id/ball3Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/ball3"
+        app:layout_constraintStart_toStartOf="@id/ball3"
+        app:layout_constraintEnd_toEndOf="@id/ball3"
+        app:layout_constraintBottom_toBottomOf="@id/ball3" />
+
     <ImageView
         android:src="@drawable/ball_4"
         android:id="@+id/ball4"
@@ -100,6 +197,15 @@
         app:layout_constraintTop_toTopOf="@id/ball3"
         app:layout_constraintStart_toEndOf="@id/ball3"
         app:layout_constraintEnd_toStartOf="@id/ball5" />
+
+    <TextView
+        android:id="@+id/ball4Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/ball4"
+        app:layout_constraintStart_toStartOf="@id/ball4"
+        app:layout_constraintEnd_toEndOf="@id/ball4"
+        app:layout_constraintBottom_toBottomOf="@id/ball4" />
 
     <ImageView
         android:src="@drawable/ball_5"
@@ -110,6 +216,15 @@
         app:layout_constraintStart_toEndOf="@id/ball4"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <TextView
+        android:id="@+id/ball5Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/ball5"
+        app:layout_constraintStart_toStartOf="@id/ball5"
+        app:layout_constraintEnd_toEndOf="@id/ball5"
+        app:layout_constraintBottom_toBottomOf="@id/ball5" />
+
     <ImageView
         android:src="@drawable/ball_6"
         android:id="@+id/ball6"
@@ -118,6 +233,15 @@
         app:layout_constraintTop_toBottomOf="@id/ball1"
         app:layout_constraintStart_toStartOf="@id/ball1"
         app:layout_constraintEnd_toEndOf="@id/ball2" />
+
+    <TextView
+        android:id="@+id/ball6Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/ball6"
+        app:layout_constraintStart_toStartOf="@id/ball6"
+        app:layout_constraintEnd_toEndOf="@id/ball6"
+        app:layout_constraintBottom_toBottomOf="@id/ball6" />
 
     <ImageView
         android:src="@drawable/ball_7"
@@ -128,6 +252,15 @@
         app:layout_constraintStart_toStartOf="@id/ball2"
         app:layout_constraintEnd_toEndOf="@id/ball3" />
 
+    <TextView
+        android:id="@+id/ball7Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/ball7"
+        app:layout_constraintStart_toStartOf="@id/ball7"
+        app:layout_constraintEnd_toEndOf="@id/ball7"
+        app:layout_constraintBottom_toBottomOf="@id/ball7" />
+
     <ImageView
         android:src="@drawable/ball_8"
         android:id="@+id/ball8"
@@ -136,6 +269,15 @@
         app:layout_constraintTop_toTopOf="@id/ball7"
         app:layout_constraintStart_toStartOf="@id/ball3"
         app:layout_constraintEnd_toEndOf="@id/ball4" />
+
+    <TextView
+        android:id="@+id/ball8Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/ball8"
+        app:layout_constraintStart_toStartOf="@id/ball8"
+        app:layout_constraintEnd_toEndOf="@id/ball8"
+        app:layout_constraintBottom_toBottomOf="@id/ball8" />
 
     <ImageView
         android:src="@drawable/ball_9"
@@ -315,6 +457,25 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="5dp" />
 
+    <CheckBox
+        android:id="@+id/timeOutCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/timeOutLabel"
+        app:layout_constraintBottom_toBottomOf="@id/timeOutLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="10dp" />
+
+    <TextView
+        android:text="Time Out"
+        android:id="@+id/timeOutLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/miscueLabel"
+        app:layout_constraintEnd_toStartOf="@id/timeOutCheckBox"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp" />
+
     <Button
         android:text="Bad\nBreak"
         android:textStyle="bold"
@@ -322,7 +483,7 @@
         android:id="@+id/badBreakButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/miscueLabel"
+        app:layout_constraintTop_toBottomOf="@id/timeOutLabel"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp" />

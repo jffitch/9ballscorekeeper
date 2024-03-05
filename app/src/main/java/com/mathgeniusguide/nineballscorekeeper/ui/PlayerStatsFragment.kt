@@ -84,6 +84,40 @@ class PlayerStatsFragment: Fragment() {
                 Stat("BIH Blunders"),
                 Stat("Ball In Hand Miss", player1Stats.achievements.ballInHandMiss.toString(), player2Stats.achievements.ballInHandMiss.toString()),
                 Stat("Ball In Hand Return", player1Stats.achievements.ballInHandReturn.toString(), player2Stats.achievements.ballInHandReturn.toString()),
+            ))
+            if (mainActivity.gameDetails.player1MatchPoints != -1 && mainActivity.gameDetails.player2MatchPoints != -1) {
+                statList.addAll(
+                    listOf(
+                        Stat("Time Outs"),
+                        Stat(
+                            "Total Time Outs",
+                            player1Stats.achievements.timeOut.toString(),
+                            player2Stats.achievements.timeOut.toString()
+                        ),
+                        Stat(
+                            "Defense On Time Out",
+                            player1Stats.achievements.timeOutDefense.toString(),
+                            player2Stats.achievements.timeOutDefense.toString()
+                        ),
+                        Stat(
+                            "Foul On Time Out",
+                            player1Stats.achievements.timeOutFoul.toString(),
+                            player2Stats.achievements.timeOutFoul.toString()
+                        ),
+                        Stat(
+                            "Miss On Time Out",
+                            player1Stats.achievements.timeOutMiss.toString(),
+                            player2Stats.achievements.timeOutMiss.toString()
+                        ),
+                        Stat(
+                            "Pocket On Time Out",
+                            player1Stats.achievements.timeOutPocket.toString(),
+                            player2Stats.achievements.timeOutPocket.toString()
+                        ),
+                    )
+                )
+            }
+            statList.addAll(listOf(
                 Stat("Fouls"),
                 Stat("Total Fouls", player1Stats.fouls.total().toString(), player2Stats.fouls.total().toString()),
                 Stat("Scratch", player1Stats.fouls.scratch.toString(), player2Stats.fouls.scratch.toString()),
@@ -92,6 +126,16 @@ class PlayerStatsFragment: Fragment() {
                 Stat("No Rail", player1Stats.fouls.noRail.toString(), player2Stats.fouls.noRail.toString()),
                 Stat("Jump Off Table", player1Stats.fouls.jumpOffTable.toString(), player2Stats.fouls.jumpOffTable.toString()),
                 Stat("Other Fouls", player1Stats.fouls.other.toString(), player2Stats.fouls.other.toString()),
+                Stat(
+                    "Foul-Inning Ratio",
+                    String.format(getString(R.string.percent), 100 * player1Stats.fouls.total().toDouble() / mainActivity.gameDetails.gameStats.innings.toDouble()),
+                    String.format(getString(R.string.percent), 100 * player2Stats.fouls.total().toDouble() / mainActivity.gameDetails.gameStats.innings.toDouble())
+                ),
+                Stat(
+                    "Foul-Point Ratio",
+                    String.format(getString(R.string.percent), 100 * player1Stats.fouls.total().toDouble() / player1Stats.score.toDouble()),
+                    String.format(getString(R.string.percent), 100 * player2Stats.fouls.total().toDouble() / player2Stats.score.toDouble())
+                ),
                 Stat("Miscues"),
                 Stat("Miscue", player1Stats.achievements.miscue.toString(), player2Stats.achievements.miscue.toString()),
                 Stat("Miscue And Hit", player1Stats.achievements.miscueHit.toString(), player2Stats.achievements.miscueHit.toString()),

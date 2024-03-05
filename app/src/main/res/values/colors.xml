@@ -12,4 +12,5 @@
     <color name="notYourTurn">#C0C0C0</color>
 
     <color name="ball_in_hand_color">#ff0000</color>
+    <color name="match_points_color">#8080ff</color>
 </resources>

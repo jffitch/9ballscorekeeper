@@ -12,6 +12,7 @@ import com.mathgeniusguide.nineballscorekeeper.MainActivity
 import com.mathgeniusguide.nineballscorekeeper.R
 import com.mathgeniusguide.nineballscorekeeper.databinding.HistoryItemBinding
 import com.mathgeniusguide.nineballscorekeeper.util.getGameDetails
+import com.mathgeniusguide.nineballscorekeeper.util.toSpelledOutDate
 
 class HistoryAdapter(
     private val items: List<String>,
@@ -44,7 +45,7 @@ class HistoryAdapter(
         holder.binding.location.text = String.format(
             context.getString(R.string.at_location_on_date),
             gameDetails.description["Location"],
-            gameDetails.description["Date"]
+            gameDetails.description["Date"]?.toSpelledOutDate()
         )
         holder.binding.innings.text =
             String.format(context.getString(R.string.x_innings), gameDetails.gameStats.innings)
@@ -77,7 +78,15 @@ class HistoryAdapter(
                     notifyDataSetChanged()
                 }
                 deleteBuilder.setNegativeButton("Back", null)
-                deleteBuilder.setMessage(context.getString(R.string.delete_are_you_sure))
+                deleteBuilder.setMessage(
+                    String.format(
+                        context.getString(R.string.delete_are_you_sure),
+                        String.format(context.getString(R.string.player_vs_player, gameDetails.player1Name, gameDetails.player2Name)),
+                        String.format(context.getString(R.string.at_location_on_date, gameDetails.description["Location"], gameDetails.description["Date"]?.toSpelledOutDate())),
+                        String.format(context.getString(R.string.score_score, gameDetails.gameStats.player1Stats.score, gameDetails.gameStats.player2Stats.score)),
+                        String.format(context.getString(R.string.x_innings), gameDetails.gameStats.innings)
+                    )
+                )
                 deleteBuilder.create().show()
             }
             builder.setNeutralButton("Back", null)

@@ -5,4 +5,9 @@
         android:title="@string/settings"
         android:icon="@drawable/ic_settings"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/twenty_three"
+        android:title="@string/twenty_three_rule"
+        android:icon="@drawable/ic_23"
+        app:showAsAction="always" />
 </menu>

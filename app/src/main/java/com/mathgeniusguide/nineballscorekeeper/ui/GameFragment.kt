@@ -348,9 +348,9 @@ class GameFragment : Fragment() {
                 String.format(
                     getString(R.string.congrats_break_and_run),
                     if (playerTurn == PlayerTurn.PLAYER1)
-                        mainActivity.gameDetails.player1Name
+                        mainActivity.gameDetails.pronunciation1
                     else
-                        mainActivity.gameDetails.player2Name
+                        mainActivity.gameDetails.pronunciation2
                 )
             )
 
@@ -358,9 +358,9 @@ class GameFragment : Fragment() {
                 String.format(
                     getString(R.string.congrats_perfect_rack),
                     if (playerTurn == PlayerTurn.PLAYER1)
-                        mainActivity.gameDetails.player1Name
+                        mainActivity.gameDetails.pronunciation1
                     else
-                        mainActivity.gameDetails.player2Name
+                        mainActivity.gameDetails.pronunciation2
                 )
             )
 
@@ -368,9 +368,9 @@ class GameFragment : Fragment() {
                 String.format(
                     getString(R.string.congrats_nine_on_break),
                     if (playerTurn == PlayerTurn.PLAYER1)
-                        mainActivity.gameDetails.player1Name
+                        mainActivity.gameDetails.pronunciation1
                     else
-                        mainActivity.gameDetails.player2Name
+                        mainActivity.gameDetails.pronunciation2
                 )
             )
         }
@@ -379,7 +379,7 @@ class GameFragment : Fragment() {
                 mainActivity.speak(
                     String.format(
                         getString(R.string.current_streak),
-                        mainActivity.gameDetails.player1Name,
+                        mainActivity.gameDetails.pronunciation1,
                         mainActivity.gameDetails.gameStats.player1Stats.streaks.currentStreak
                     )
                 )
@@ -388,7 +388,7 @@ class GameFragment : Fragment() {
                 mainActivity.speak(
                     String.format(
                         getString(R.string.current_streak),
-                        mainActivity.gameDetails.player2Name,
+                        mainActivity.gameDetails.pronunciation2,
                         mainActivity.gameDetails.gameStats.player2Stats.streaks.currentStreak
                     )
                 )

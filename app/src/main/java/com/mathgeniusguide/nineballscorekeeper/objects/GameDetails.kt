@@ -10,6 +10,8 @@ class GameDetails(val description: Map<String, String>, val innings: List<Pair<S
     val gameStats = GameStats()
     val player1Name = if (description["Player 1"]?.isNotBlank() == true) description["Player 1"] else "Player 1"
     val player2Name = if (description["Player 2"]?.isNotBlank() == true) description["Player 2"] else "Player 2"
+    val pronunciation1 = if (description["Pronunciation 1"]?.isNotBlank() == true) description["Pronunciation 1"] else player1Name
+    val pronunciation2 = if (description["Pronunciation 2"]?.isNotBlank() == true) description["Pronunciation 2"] else player2Name
     private val player1GoalString = description["Goal 1"]
     private val player2GoalString = description["Goal 2"]
     val player1Goal = if ("\\d+".toRegex().matches(player1GoalString ?: "")) (player1GoalString ?: "-1").toInt() else -1

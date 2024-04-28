@@ -44,6 +44,10 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         }
         gameDetails = getGameDetails(gameString)
 
+        if (readSharedPreferences(SharedPreferencesTarget.ZERO_SCORE) == "") {
+            writeSharedPreferences(SharedPreferencesTarget.ZERO_SCORE, getString(R.string.goose_egg))
+        }
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
@@ -134,15 +138,15 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     fun speakScore() {
         val player1Score = gameDetails.gameStats.player1Stats.score
         val player2Score = gameDetails.gameStats.player2Stats.score
-        val player1Name = gameDetails.player1Name
-        val player2Name = gameDetails.player2Name
+        val player1Name = gameDetails.pronunciation1
+        val player2Name = gameDetails.pronunciation2
         speak(
             String.format(
                 if (gameDetails.gameOver) getString(R.string.spoken_final_score) else getString(R.string.spoken_score),
                 player1Name,
-                if (player1Score == 0) getString(R.string.goose_egg) else player1Score,
+                if (player1Score == 0) readSharedPreferences(SharedPreferencesTarget.ZERO_SCORE) else player1Score,
                 player2Name,
-                if (player2Score == 0) getString(R.string.goose_egg) else player2Score
+                if (player2Score == 0) readSharedPreferences(SharedPreferencesTarget.ZERO_SCORE) else player2Score
             )
         )
     }

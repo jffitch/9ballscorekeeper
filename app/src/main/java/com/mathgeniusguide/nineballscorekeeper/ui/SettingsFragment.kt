@@ -41,6 +41,10 @@ class SettingsFragment: Fragment() {
             mainActivity.gameString = newGameString
             mainActivity.gameDetails = getGameDetails(newGameString)
         }
+        binding.zeroScoreEditText.setText(mainActivity.readSharedPreferences(SharedPreferencesTarget.ZERO_SCORE))
+        binding.zeroScoreEditText.doOnTextChanged { text, start, before, count ->
+            mainActivity.writeSharedPreferences(SharedPreferencesTarget.ZERO_SCORE, text.toString())
+        }
         binding.restoreDefaultButton.setOnClickListener {
             binding.gameInfoEditText.setText(mainActivity.defaultText())
         }

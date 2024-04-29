@@ -4,10 +4,15 @@
         android:id="@+id/settings"
         android:title="@string/settings"
         android:icon="@drawable/ic_settings"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/twenty_three"
         android:title="@string/twenty_three_rule"
         android:icon="@drawable/ic_23"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/all_time"
+        android:title="@string/all_time"
+        android:icon="@drawable/ic_all_time"
+        app:showAsAction="ifRoom" />
 </menu>

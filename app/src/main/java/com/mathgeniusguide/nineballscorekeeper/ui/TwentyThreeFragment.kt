@@ -69,6 +69,31 @@ class TwentyThreeFragment: Fragment() {
                 }
             }
         }
+        if (rankListLength >= 4 && ranksAllowedList.isEmpty()) {
+            for (i in 0 until rankListLength - 3) {
+                for (j in i + 1 until rankListLength - 2) {
+                    for (k in j + 1 until rankListLength - 1) {
+                        for (l in k + 1 until rankListLength) {
+                            for (m in listOf(i, j, k, l)) {
+                                val rankString =
+                                    "" + rankList[i] + rankList[j] + rankList[k] + rankList[l] + "(" + rankList[m] + ")"
+                                if (matchesRequiredRanks(rankString, ranksRequired)) {
+                                    if (isAllowed(rankString)) {
+                                        if (!ranksAllowedList.contains(rankString)) {
+                                            ranksAllowedList.add(rankString)
+                                        }
+                                    } else {
+                                        if (!ranksNotAllowedList.contains(rankString)) {
+                                            ranksNotAllowedList.add(rankString)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
         binding.allowedList1.text = ranksAllowedList.filterIndexed { index, value -> index % 2 == 0 }.joinToString("\n")
         binding.allowedList2.text = ranksAllowedList.filterIndexed { index, value -> index % 2 == 1 }.joinToString("\n")
         binding.notAllowedList1.text = ranksNotAllowedList.filterIndexed { index, value -> index % 2 == 0 }.joinToString("\n")
@@ -79,7 +104,7 @@ class TwentyThreeFragment: Fragment() {
         var totalRanks = 0
         var seniorCount = 0
         for (i in rankString) {
-            val num = i.digitToIntOrNull() ?: 23
+            val num = i.digitToIntOrNull() ?: 0
             totalRanks += num
             if (num >= 6) {
                 seniorCount++
@@ -89,7 +114,8 @@ class TwentyThreeFragment: Fragment() {
     }
 
     fun matchesRequiredRanks(rankString: String, requiredRanks: String): Boolean {
-        return requiredRanks.all { requiredRank -> rankString.count { it == requiredRank } >= requiredRanks.count { it == requiredRank } }
+        val newRankString = rankString.substringBefore('(')
+        return requiredRanks.all { requiredRank -> newRankString.count { it == requiredRank } >= requiredRanks.count { it == requiredRank } }
     }
 }
 

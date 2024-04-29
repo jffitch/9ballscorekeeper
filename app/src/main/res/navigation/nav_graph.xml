@@ -19,6 +19,11 @@
         android:label="@string/rack_stats"
         tools:layout="@layout/rack_stats_fragment">
     </fragment>
+    <fragment android:id="@+id/chart"
+        android:name="com.mathgeniusguide.nineballscorekeeper.ChartFragment"
+        android:label="@string/chart"
+        tools:layout="@layout/chart_fragment">
+    </fragment>
     <fragment android:id="@+id/history"
         android:name="com.mathgeniusguide.nineballscorekeeper.HistoryFragment"
         android:label="@string/history"

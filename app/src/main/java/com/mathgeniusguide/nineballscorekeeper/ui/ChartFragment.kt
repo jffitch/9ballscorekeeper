@@ -44,10 +44,12 @@ class ChartFragment: Fragment() {
                 val isNine = shot.contains('9') && !isFoul
                 val isStalemate = shot.contains('S')
                 val isTimeOut = shot.contains('t')
+                val isDefense = shot.contains('d')
                 chartList.add(ChartShot(
                     inning = if (isInningStart) inningNumber.toString() else "",
                     rack = if (isRackStart) rackNumber.toString() else "",
                     ballsPocketed = shot,
+                    isDefense = isDefense,
                     isFoul = isFoul,
                     isStalemate = isStalemate,
                     isTimeOut = isTimeOut,
@@ -64,10 +66,12 @@ class ChartFragment: Fragment() {
                 val isNine = shot.contains('9') && !isFoul
                 val isStalemate = shot.contains('S')
                 val isTimeOut = shot.contains('t')
+                val isDefense = shot.contains('d')
                 chartList.add(ChartShot(
                     inning = "",
                     rack = if (isRackStart) rackNumber.toString() else "",
                     ballsPocketed = shot,
+                    isDefense = isDefense,
                     isFoul = isFoul,
                     isStalemate = isStalemate,
                     isTimeOut = isTimeOut,

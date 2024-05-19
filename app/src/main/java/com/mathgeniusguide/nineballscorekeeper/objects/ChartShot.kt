@@ -6,6 +6,7 @@ data class ChartShot (
     var inning: String = "",
     var rack: String = "",
     var ballsPocketed: String = "",
+    var isDefense: Boolean = false,
     var isFoul: Boolean = false,
     var isStalemate: Boolean = false,
     var isTimeOut: Boolean = false,

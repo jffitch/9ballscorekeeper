@@ -52,6 +52,12 @@ class ChartAdapter (private val items: List<ChartShot>, private val context: Con
             image.layoutParams = layoutParams
             holder.binding.ballsPocketed.addView(image)
         }
+        if (i.playerTurn == PlayerTurn.PLAYER1 && i.isDefense) {
+            val image = ImageView(context)
+            image.setImageResource(R.drawable.defense)
+            image.layoutParams = layoutParams
+            holder.binding.ballsPocketed.addView(image)
+        }
         if (i.playerTurn == PlayerTurn.PLAYER2 && i.isStalemate) {
             val image = ImageView(context)
             image.setImageResource(R.drawable.ic_circle)
@@ -78,6 +84,12 @@ class ChartAdapter (private val items: List<ChartShot>, private val context: Con
         if (i.playerTurn == PlayerTurn.PLAYER2 && i.isTimeOut) {
             val image = ImageView(context)
             image.setImageResource(R.drawable.ic_time_out)
+            image.layoutParams = layoutParams
+            holder.binding.ballsPocketed.addView(image)
+        }
+        if (i.playerTurn == PlayerTurn.PLAYER2 && i.isDefense) {
+            val image = ImageView(context)
+            image.setImageResource(R.drawable.defense)
             image.layoutParams = layoutParams
             holder.binding.ballsPocketed.addView(image)
         }

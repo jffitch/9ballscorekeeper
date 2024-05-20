@@ -1,6 +1,7 @@
 package com.mathgeniusguide.nineballscorekeeper.objects
 
 import com.mathgeniusguide.nineballscorekeeper.enums.BallStatus
+import com.mathgeniusguide.nineballscorekeeper.enums.DescriptionKey
 import com.mathgeniusguide.nineballscorekeeper.enums.PlayerTurn
 import com.mathgeniusguide.nineballscorekeeper.enums.ShotCondition
 import com.mathgeniusguide.nineballscorekeeper.objects.stats.GameStats
@@ -8,16 +9,16 @@ import com.mathgeniusguide.nineballscorekeeper.util.matchPointsArray
 
 class GameDetails(val description: Map<String, String>, val innings: List<Pair<String, String>>) {
     val gameStats = GameStats()
-    val player1Name = if (description["Player 1"]?.isNotBlank() == true) description["Player 1"] else "Player 1"
-    val player2Name = if (description["Player 2"]?.isNotBlank() == true) description["Player 2"] else "Player 2"
-    val pronunciation1 = if (description["Pronunciation 1"]?.isNotBlank() == true) description["Pronunciation 1"] else player1Name
-    val pronunciation2 = if (description["Pronunciation 2"]?.isNotBlank() == true) description["Pronunciation 2"] else player2Name
-    private val player1GoalString = description["Goal 1"]
-    private val player2GoalString = description["Goal 2"]
+    val player1Name = getDescription(DescriptionKey.PLAYER_1, "Player 1")
+    val player2Name = getDescription(DescriptionKey.PLAYER_2, "Player 2")
+    val pronunciation1 = getDescription(DescriptionKey.PLAYER_1, player1Name)
+    val pronunciation2 = getDescription(DescriptionKey.PLAYER_2, player2Name)
+    private val player1GoalString = getDescription(DescriptionKey.GOAL_1)
+    private val player2GoalString = getDescription(DescriptionKey.GOAL_2)
     val player1Goal = if ("\\d+".toRegex().matches(player1GoalString ?: "")) (player1GoalString ?: "-1").toInt() else -1
     val player2Goal = if ("\\d+".toRegex().matches(player2GoalString ?: "")) (player2GoalString ?: "-1").toInt() else -1
-    private val announceStreak1String = description["Announce Streak 1"]
-    private val announceStreak2String = description["Announce Streak 2"]
+    private val announceStreak1String = getDescription(DescriptionKey.ANNOUNCE_STREAK_1)
+    private val announceStreak2String = getDescription(DescriptionKey.ANNOUNCE_STREAK_2)
     val announceStreak1 = if ("\\d+".toRegex().matches(announceStreak1String ?: "")) (announceStreak1String ?: "-1").toInt() else -1
     val announceStreak2 = if ("\\d+".toRegex().matches(announceStreak2String ?: "")) (announceStreak2String ?: "-1").toInt() else -1
     var player1MatchPoints = -1
@@ -114,5 +115,12 @@ class GameDetails(val description: Map<String, String>, val innings: List<Pair<S
                 player2MatchPoints == -1 -> player2MatchPoints = 20 - player1MatchPoints
             }
         }
+    }
+
+    fun getDescription(key: DescriptionKey, default: String? = null): String? {
+        if (default == null) {
+            return description[key.text]
+        }
+        return if (description[key.text]?.isNotBlank() == true) description[key.text] else default
     }
 }

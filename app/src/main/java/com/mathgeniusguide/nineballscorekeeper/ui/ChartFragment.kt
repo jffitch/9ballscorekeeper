@@ -33,8 +33,8 @@ class ChartFragment: Fragment() {
         binding.player2Label.text = mainActivity.gameDetails.player2Name
         val chartList = mutableListOf<ChartShot>()
         var isRackStart = true
-        var rackNumber = 0
-        var inningNumber = 0
+        var rackNumber = mainActivity.gameDetails.startRacks
+        var inningNumber = mainActivity.gameDetails.startInnings
         for (pair in mainActivity.gameDetails.innings) {
             var isInningStart = true
             val player1Shots = pair.first.substringBeforeLast('\'').split("'")

@@ -26,6 +26,18 @@ class GameDetails(val description: Map<String, String>, val innings: List<Pair<S
     var player1MatchPoints = -1
     var player2MatchPoints = -1
 
+    val startInnings = getDescription(DescriptionKey.START_INNINGS, "0")?.toInt() ?: 0
+    val startRacks = getDescription(DescriptionKey.START_RACKS, "0")?.toInt() ?: 0
+    val startScore1 = getDescription(DescriptionKey.START_SCORE_1, "0")?.toInt() ?: 0
+    val startScore2 = getDescription(DescriptionKey.START_SCORE_2, "0")?.toInt() ?: 0
+    val startNineBreak1 = getDescription(DescriptionKey.START_NINE_BREAK_1, "0")?.toInt() ?: 0
+    val startNineBreak2 = getDescription(DescriptionKey.START_NINE_BREAK_2, "0")?.toInt() ?: 0
+    val startBreakRun1 = getDescription(DescriptionKey.START_BREAK_RUN_1, "0")?.toInt() ?: 0
+    val startBreakRun2 = getDescription(DescriptionKey.START_BREAK_RUN_2, "0")?.toInt() ?: 0
+    val startDefense1 = getDescription(DescriptionKey.START_DEFENSE_1, "0")?.toInt() ?: 0
+    val startDefense2 = getDescription(DescriptionKey.START_DEFENSE_2, "0")?.toInt() ?: 0
+    val startDeadBalls = startRacks * 10 - startScore1 - startScore2
+
     var gameOver = false
     var currentPlayerTurnStreak = 0
     val ballStatus = arrayOf(
@@ -42,7 +54,23 @@ class GameDetails(val description: Map<String, String>, val innings: List<Pair<S
     val rackList = mutableListOf<Rack>()
     var shotCondition = ShotCondition.BREAK
     init {
+        gameStats.deadBalls = startDeadBalls
+        gameStats.innings = startInnings
+        gameStats.player1Stats.score = startScore1
+        gameStats.player1Stats.achievements.defense.total = startDefense1
+        gameStats.player1Stats.achievements.nineOnBreak = startNineBreak1
+        gameStats.player1Stats.achievements.breakAndRun = startBreakRun1
+        gameStats.player2Stats.score = startScore2
+        gameStats.player2Stats.achievements.defense.total = startDefense2
+        gameStats.player2Stats.achievements.nineOnBreak = startNineBreak2
+        gameStats.player2Stats.achievements.breakAndRun = startBreakRun2
         rackList.add(Rack())
+        with (rackList[0]) {
+            this.player1Total = startScore1
+            this.player2Total = startScore2
+            this.deadBallsTotal = startDeadBalls
+            this.inningsTotal = startInnings
+        }
         for (pair in innings) {
             if (pair.first == "") {
                 break

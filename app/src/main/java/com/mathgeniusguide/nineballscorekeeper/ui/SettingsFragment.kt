@@ -10,6 +10,7 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.mathgeniusguide.nineballscorekeeper.databinding.SettingsFragmentBinding
+import com.mathgeniusguide.nineballscorekeeper.enums.DescriptionKey
 import com.mathgeniusguide.nineballscorekeeper.enums.SharedPreferencesTarget
 import com.mathgeniusguide.nineballscorekeeper.util.getGameDetails
 import com.mathgeniusguide.nineballscorekeeper.util.translateGameInfo
@@ -47,6 +48,15 @@ class SettingsFragment: Fragment() {
         }
         binding.restoreDefaultButton.setOnClickListener {
             binding.gameInfoEditText.setText(mainActivity.defaultText())
+        }
+        binding.lateStartButton.setOnClickListener {
+            var gameInfoText = binding.gameInfoEditText.text.toString()
+            for (value in DescriptionKey.values()) {
+                if (value.text.startsWith("Start")) {
+                    gameInfoText += "\n${value.text}: "
+                }
+            }
+            binding.gameInfoEditText.setText(gameInfoText)
         }
         binding.saveGameButton.setOnClickListener {
             val builder = AlertDialog.Builder(requireContext())

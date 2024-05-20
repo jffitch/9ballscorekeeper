@@ -1,6 +1,9 @@
 package com.mathgeniusguide.nineballscorekeeper.enums
 
 enum class DescriptionKey(val text: String) {
+    LOCATION("Location"),
+    DATE("Date"),
+
     PLAYER_1("Player 1"),
     PLAYER_2("Player 2"),
     PRONUNCIATION_1("Pronunciation 1"),

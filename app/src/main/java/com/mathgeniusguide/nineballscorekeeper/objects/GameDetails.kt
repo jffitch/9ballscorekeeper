@@ -9,10 +9,12 @@ import com.mathgeniusguide.nineballscorekeeper.util.matchPointsArray
 
 class GameDetails(val description: Map<String, String>, val innings: List<Pair<String, String>>) {
     val gameStats = GameStats()
+    val location = getDescription(DescriptionKey.LOCATION)
+    val date = getDescription(DescriptionKey.DATE)
     val player1Name = getDescription(DescriptionKey.PLAYER_1, "Player 1")
     val player2Name = getDescription(DescriptionKey.PLAYER_2, "Player 2")
-    val pronunciation1 = getDescription(DescriptionKey.PLAYER_1, player1Name)
-    val pronunciation2 = getDescription(DescriptionKey.PLAYER_2, player2Name)
+    val pronunciation1 = getDescription(DescriptionKey.PRONUNCIATION_1, player1Name)
+    val pronunciation2 = getDescription(DescriptionKey.PRONUNCIATION_2, player2Name)
     private val player1GoalString = getDescription(DescriptionKey.GOAL_1)
     private val player2GoalString = getDescription(DescriptionKey.GOAL_2)
     val player1Goal = if ("\\d+".toRegex().matches(player1GoalString ?: "")) (player1GoalString ?: "-1").toInt() else -1

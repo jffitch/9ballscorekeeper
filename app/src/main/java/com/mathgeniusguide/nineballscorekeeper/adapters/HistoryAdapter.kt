@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mathgeniusguide.nineballscorekeeper.MainActivity
 import com.mathgeniusguide.nineballscorekeeper.R
 import com.mathgeniusguide.nineballscorekeeper.databinding.HistoryItemBinding
+import com.mathgeniusguide.nineballscorekeeper.enums.DescriptionKey
 import com.mathgeniusguide.nineballscorekeeper.util.getGameDetails
 import com.mathgeniusguide.nineballscorekeeper.util.toSpelledOutDate
 
@@ -44,8 +45,8 @@ class HistoryAdapter(
         )
         holder.binding.location.text = String.format(
             context.getString(R.string.at_location_on_date),
-            gameDetails.description["Location"],
-            gameDetails.description["Date"]?.toSpelledOutDate()
+            gameDetails.location,
+            gameDetails.date?.toSpelledOutDate()
         )
         holder.binding.innings.text =
             String.format(context.getString(R.string.x_innings), gameDetails.gameStats.innings)
@@ -82,7 +83,7 @@ class HistoryAdapter(
                     String.format(
                         context.getString(R.string.delete_are_you_sure),
                         String.format(context.getString(R.string.player_vs_player, gameDetails.player1Name, gameDetails.player2Name)),
-                        String.format(context.getString(R.string.at_location_on_date, gameDetails.description["Location"], gameDetails.description["Date"]?.toSpelledOutDate())),
+                        String.format(context.getString(R.string.at_location_on_date, gameDetails.location, gameDetails.date?.toSpelledOutDate())),
                         String.format(context.getString(R.string.score_score, gameDetails.gameStats.player1Stats.score, gameDetails.gameStats.player2Stats.score)),
                         String.format(context.getString(R.string.x_innings), gameDetails.gameStats.innings)
                     )

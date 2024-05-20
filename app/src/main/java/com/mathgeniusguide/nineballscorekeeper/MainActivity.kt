@@ -100,7 +100,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     fun addToGameList(gameString: String) {
         gameList.add(gameString)
-        gameList.sortBy { getGameDetails(it).description["Date"] }
+        gameList.sortBy { getGameDetails(it).date }
         writeGameList()
     }
 
@@ -112,7 +112,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     fun readGameList() {
         val pref = getPreferences(Context.MODE_PRIVATE)
         gameList = (pref.getStringSet("game_list", setOf())?.toList()
-            ?: listOf()).sortedBy { getGameDetails(it).description["Date"] }.toMutableList()
+            ?: listOf()).sortedBy { getGameDetails(it).date }.toMutableList()
     }
 
     fun defaultText(): String {

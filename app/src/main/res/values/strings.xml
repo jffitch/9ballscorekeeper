@@ -24,8 +24,9 @@
     <string name="off_table">Off Table</string>
     <string name="other_foul">Other Foul</string>
     <string name="ball_in_hand">Ball In Hand</string>
+    <string name="match_points_running_total">%1$d (%2$d)</string>
 
-    <string name="default_game_info_string">Player 1: \nPlayer 2: \nLocation: \nDate: %1$s\nGoal 1: \nGoal 2: \nAnnounce Streak 1: \nAnnounce Streak 2: </string>
+    <string name="default_game_info_string">Player 1: \nPlayer 2: \nTeam 1: \nTeam 2: \nLocation: \nDate: %1$s\nGoal 1: \nGoal 2: </string>
 
     <string name="player_vs_player">%1$s vs %2$s</string>
     <string name="at_location_on_date">at %1$s on %2$s</string>
@@ -65,6 +66,7 @@
     <string name="spoken_final_score">Final Score. %1$s, %2$s. %3$s, %4$s.</string>
     <string name="goose_egg">goose egg</string>
     <string name="current_streak">%1$s streak, %2$d.</string>
+    <string name="tournament_over">Tournament Over. %1$s win.</string>
 
     <string name="congrats_break_and_run">Break and run. Congratulations, %1$s.</string>
     <string name="congrats_perfect_rack">Perfect rack. Congratulations, %1$s.</string>

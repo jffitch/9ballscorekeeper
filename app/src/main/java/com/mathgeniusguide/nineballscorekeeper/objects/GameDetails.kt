@@ -15,6 +15,9 @@ class GameDetails(val description: Map<String, String>, val innings: List<Pair<S
     val player2Name = getDescription(DescriptionKey.PLAYER_2, "Player 2")
     val pronunciation1 = getDescription(DescriptionKey.PRONUNCIATION_1, player1Name)
     val pronunciation2 = getDescription(DescriptionKey.PRONUNCIATION_2, player2Name)
+    val team1 = getDescription(DescriptionKey.TEAM_1, "")
+    val team2 = getDescription(DescriptionKey.TEAM_2, "")
+    val tournamentId = getDescription(DescriptionKey.TOURNAMENT_ID, "")
     private val player1GoalString = getDescription(DescriptionKey.GOAL_1)
     private val player2GoalString = getDescription(DescriptionKey.GOAL_2)
     val player1Goal = if ("\\d+".toRegex().matches(player1GoalString ?: "")) (player1GoalString ?: "-1").toInt() else -1
@@ -131,7 +134,7 @@ class GameDetails(val description: Map<String, String>, val innings: List<Pair<S
         if ((player1Goal != -1 && gameStats.player1Stats.score >= player1Goal) || (player2Goal != -1 && gameStats.player2Stats.score >= player2Goal)) {
             gameOver = true
         }
-        if (matchPointsArray[8].contains(player1Goal) && matchPointsArray[8].contains(player2Goal)) {
+        if (isValidApaGoals()) {
             val player1Rank = matchPointsArray[8].indexOf(player1Goal)
             val player2Rank = matchPointsArray[8].indexOf(player2Goal)
             player1MatchPoints = matchPointsArray.indexOfFirst { it[player1Rank] > gameStats.player1Stats.score }
@@ -152,5 +155,9 @@ class GameDetails(val description: Map<String, String>, val innings: List<Pair<S
             return description[key.text]
         }
         return if (description[key.text]?.isNotBlank() == true) description[key.text] else default
+    }
+
+    fun isValidApaGoals(): Boolean {
+        return matchPointsArray[8].contains(player1Goal) && matchPointsArray[8].contains(player2Goal)
     }
 }

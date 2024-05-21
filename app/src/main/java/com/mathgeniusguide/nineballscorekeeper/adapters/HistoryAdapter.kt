@@ -43,6 +43,27 @@ class HistoryAdapter(
             gameDetails.gameStats.player1Stats.score,
             gameDetails.gameStats.player2Stats.score
         )
+        if (gameDetails.isValidApaGoals()) {
+            holder.binding.matchScores.visibility = View.VISIBLE
+            holder.binding.matchScores.text = String.format(
+                context.getString(R.string.score_score),
+                gameDetails.player1MatchPoints,
+                gameDetails.player2MatchPoints
+            )
+            if (gameDetails.team1.isNullOrEmpty() || gameDetails.team2.isNullOrEmpty()) {
+                holder.binding.teamNames.visibility = View.GONE
+            } else {
+                holder.binding.teamNames.visibility = View.VISIBLE
+                holder.binding.teamNames.text = String.format(
+                    context.getString(R.string.player_vs_player),
+                    gameDetails.team1,
+                    gameDetails.team2
+                )
+            }
+        } else {
+            holder.binding.matchScores.visibility = View.GONE
+            holder.binding.teamNames.visibility = View.GONE
+        }
         holder.binding.location.text = String.format(
             context.getString(R.string.at_location_on_date),
             gameDetails.location,

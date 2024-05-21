@@ -7,13 +7,25 @@
     android:id="@+id/history_item">
 
     <TextView
-        android:text="PlayerNames"
+        android:text="Player Names"
         android:textStyle="bold"
         android:textSize="24sp"
         android:id="@+id/playerNames"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="5dp" />
+    <TextView
+        android:text="Team Names"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:id="@+id/teamNames"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/match_points_color"
+        app:layout_constraintTop_toBottomOf="@id/playerNames"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="5dp"
         android:layout_marginStart="5dp" />
@@ -31,12 +43,25 @@
         android:layout_marginEnd="5dp" />
 
     <TextView
+        android:text="Match Scores"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:id="@+id/matchScores"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/match_points_color"
+        app:layout_constraintTop_toBottomOf="@id/scores"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp" />
+
+    <TextView
         android:text="Location"
         android:textSize="16sp"
         android:id="@+id/location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/scores"
+        app:layout_constraintTop_toBottomOf="@id/matchScores"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="5dp"
         android:layout_marginStart="5dp" />

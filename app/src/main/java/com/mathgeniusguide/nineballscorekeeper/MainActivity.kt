@@ -15,6 +15,7 @@ import com.mathgeniusguide.nineballscorekeeper.databinding.ActivityMainBinding
 import com.mathgeniusguide.nineballscorekeeper.enums.SharedPreferencesTarget
 import com.mathgeniusguide.nineballscorekeeper.objects.GameDetails
 import com.mathgeniusguide.nineballscorekeeper.util.getGameDetails
+import com.mathgeniusguide.nineballscorekeeper.util.isSameTournament
 import com.mathgeniusguide.nineballscorekeeper.util.translateGameInfo
 import com.mathgeniusguide.nineballscorekeeper.util.translateGameInfoReverse
 import com.mathgeniusguide.nineballscorekeeper.util.yyyymmdd
@@ -29,6 +30,10 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     var gameString = ""
     var gameList = mutableListOf<String>()
     lateinit var gameDetails: GameDetails
+    var player1RunningTotal = 0
+    var player2RunningTotal = 0
+    var player1Wins = 0
+    var player2Wins = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         readGameList()
@@ -140,14 +145,71 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         val player2Score = gameDetails.gameStats.player2Stats.score
         val player1Name = gameDetails.pronunciation1
         val player2Name = gameDetails.pronunciation2
+        val winner = tournamentWinner()
+        if (winner != null) {
+            speak(
+                String.format(
+                    getString(R.string.tournament_over),
+                    winner
+                )
+            )
+        }
         speak(
             String.format(
-                if (gameDetails.gameOver) getString(R.string.spoken_final_score) else getString(R.string.spoken_score),
+                if (gameDetails.gameOver || winner != null) getString(R.string.spoken_final_score) else getString(R.string.spoken_score),
                 player1Name,
                 if (player1Score == 0) readSharedPreferences(SharedPreferencesTarget.ZERO_SCORE) else player1Score,
                 player2Name,
                 if (player2Score == 0) readSharedPreferences(SharedPreferencesTarget.ZERO_SCORE) else player2Score
             )
         )
+    }
+
+    fun calculateRunningTotal() {
+        player1RunningTotal = 0
+        player2RunningTotal = 0
+        player1Wins = 0
+        player2Wins = 0
+        for (i in gameList) {
+            val game = getGameDetails(i)
+            if (isSameTournament(gameDetails, game)) {
+                if (gameDetails.team1 == game.team1) {
+                    player1RunningTotal += game.player1MatchPoints
+                    if (game.player1MatchPoints >= 12) {
+                        player1Wins++
+                    }
+                }
+                if (gameDetails.team1 == game.team2) {
+                    player1RunningTotal += game.player2MatchPoints
+                    if (game.player2MatchPoints >= 12) {
+                        player1Wins++
+                    }
+                }
+                if (gameDetails.team2 == game.team1) {
+                    player2RunningTotal += game.player1MatchPoints
+                    if (game.player1MatchPoints >= 12) {
+                        player2Wins++
+                    }
+                }
+                if (gameDetails.team2 == game.team2) {
+                    player2RunningTotal += game.player2MatchPoints
+                    if (game.player2MatchPoints >= 12) {
+                        player2Wins++
+                    }
+                }
+            }
+        }
+    }
+
+    fun tournamentWinner(): String? {
+        if (gameDetails.player1MatchPoints + player1RunningTotal >=
+            (if (player1Wins >= 3) 50 else 51)) {
+            return gameDetails.team1
+        }
+        if (gameDetails.player2MatchPoints + player2RunningTotal >=
+            (if (player2Wins >= 3) 50 else 51)) {
+            return gameDetails.team2
+        }
+        return null
     }
 }

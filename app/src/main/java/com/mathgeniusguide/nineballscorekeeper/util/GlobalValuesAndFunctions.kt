@@ -60,3 +60,44 @@ fun String.toSpelledOutDate(): String {
     val newSdf = SimpleDateFormat("MMMM d, yyyy", Locale.US)
     return newSdf.format(date ?: Date())
 }
+
+fun isSameTournament(gameDetails1: GameDetails, gameDetails2: GameDetails): Boolean {
+    if (
+        // if either goal in either game is not a valid APA goal, return false
+        !gameDetails1.isValidApaGoals() ||
+        !gameDetails2.isValidApaGoals() ||
+        // if the team names are empty or don't match, return false
+        !teamsMatch(gameDetails1, gameDetails2)
+    ) {
+        return false
+    }
+    // if tournament IDs match, return true
+    if (!gameDetails1.tournamentId.isNullOrEmpty() || !gameDetails2.tournamentId.isNullOrEmpty()) {
+        return gameDetails1.tournamentId == gameDetails2.tournamentId
+    }
+    // if tournament IDs don't match, return whether location and date match
+    return !gameDetails1.location.isNullOrEmpty()
+            && !gameDetails2.location.isNullOrEmpty()
+            && gameDetails1.location == gameDetails2.location
+            && !gameDetails1.date.isNullOrEmpty()
+            && !gameDetails2.date.isNullOrEmpty()
+            && gameDetails1.date == gameDetails2.date
+}
+
+fun teamsMatch(gameDetails1: GameDetails, gameDetails2: GameDetails): Boolean {
+    if (
+        gameDetails1.team1.isNullOrEmpty() ||
+        gameDetails1.team2.isNullOrEmpty() ||
+        gameDetails2.team1.isNullOrEmpty() ||
+        gameDetails2.team2.isNullOrEmpty()
+    ) {
+        return false
+    }
+    if (gameDetails1.team1 == gameDetails2.team1) {
+        return gameDetails1.team2 == gameDetails2.team2
+    }
+    if (gameDetails1.team1 == gameDetails2.team2) {
+        return gameDetails1.team2 == gameDetails2.team1
+    }
+    return false
+}

@@ -30,6 +30,8 @@ class GameFragment : Fragment() {
     private lateinit var ballList: List<ImageView>
     private lateinit var ballTextList: List<TextView>
     private var areButtonsEnabled = true
+    private var newGoal1 = 0
+    private var newGoal2 = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainActivity = activity as MainActivity
@@ -116,7 +118,7 @@ class GameFragment : Fragment() {
                 return@setOnClickListener
             }
             disableButtons()
-            if (mainActivity.gameDetails.gameOver) {
+            if (mainActivity.gameDetails.gameOver || mainActivity.tournamentWinner() != null) {
                 return@setOnClickListener
             }
             var shotString = ""
@@ -153,7 +155,7 @@ class GameFragment : Fragment() {
                 shotString += 't'
             }
             makeShot(shotString + '\'')
-            if (mainActivity.gameDetails.gameOver || mainActivity.gameDetails.shotCondition == ShotCondition.BREAK) {
+            if (mainActivity.gameDetails.gameOver || mainActivity.tournamentWinner() != null || mainActivity.gameDetails.shotCondition == ShotCondition.BREAK) {
                 mainActivity.speakScore()
             }
         }
@@ -212,6 +214,7 @@ class GameFragment : Fragment() {
                 getString(R.string.score_goal),
                 mainActivity.gameDetails.player2Goal
             )
+        mainActivity.calculateRunningTotal()
         updateScores()
     }
 
@@ -292,8 +295,21 @@ class GameFragment : Fragment() {
             binding.mp2Score.visibility = View.VISIBLE
             binding.timeOutLabel.visibility = View.VISIBLE
             binding.timeOutCheckBox.visibility = View.VISIBLE
-            binding.mp1Score.text = mainActivity.gameDetails.player1MatchPoints.toString()
-            binding.mp2Score.text = mainActivity.gameDetails.player2MatchPoints.toString()
+            if (mainActivity.player1RunningTotal == 0 && mainActivity.player2RunningTotal == 0) {
+                binding.mp1Score.text = mainActivity.gameDetails.player1MatchPoints.toString()
+                binding.mp2Score.text = mainActivity.gameDetails.player2MatchPoints.toString()
+            } else {
+                binding.mp1Score.text = String.format(
+                    getString(R.string.match_points_running_total),
+                    mainActivity.gameDetails.player1MatchPoints,
+                    mainActivity.gameDetails.player1MatchPoints + mainActivity.player1RunningTotal
+                )
+                binding.mp2Score.text = String.format(
+                    getString(R.string.match_points_running_total),
+                    mainActivity.gameDetails.player2MatchPoints,
+                    mainActivity.gameDetails.player2MatchPoints + mainActivity.player2RunningTotal
+                )
+            }
         }
         selected.fill(false)
         binding.foulGroup.check(R.id.legalShot)

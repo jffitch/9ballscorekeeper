@@ -12,6 +12,7 @@ import com.mathgeniusguide.nineballscorekeeper.MainActivity
 import com.mathgeniusguide.nineballscorekeeper.R
 import com.mathgeniusguide.nineballscorekeeper.databinding.HistoryItemBinding
 import com.mathgeniusguide.nineballscorekeeper.enums.DescriptionKey
+import com.mathgeniusguide.nineballscorekeeper.enums.SharedPreferencesTarget
 import com.mathgeniusguide.nineballscorekeeper.util.getGameDetails
 import com.mathgeniusguide.nineballscorekeeper.util.toSpelledOutDate
 
@@ -31,6 +32,7 @@ class HistoryAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        var loadedGame = mainActivity.readSharedPreferences(SharedPreferencesTarget.LOADED_GAME)
         val string = items[position]
         val gameDetails = getGameDetails(string)
         holder.binding.playerNames.text = String.format(
@@ -77,15 +79,27 @@ class HistoryAdapter(
             builder.setPositiveButton("Load") { _, _ ->
                 val loadBuilder = AlertDialog.Builder(context)
                 loadBuilder.setPositiveButton("Load") { _, _ ->
+                    mainActivity.removeFromGameList(position)
+                    if (loadedGame.isNotEmpty()) {
+                        mainActivity.addToGameList(loadedGame)
+                    }
                     mainActivity.updateGameString(string)
+                    loadedGame = string
+                    mainActivity.writeSharedPreferences(SharedPreferencesTarget.LOADED_GAME, string)
                     Toast.makeText(
                         context,
                         context.getString(R.string.game_loaded),
                         Toast.LENGTH_LONG
                     ).show()
+                    notifyDataSetChanged()
                 }
                 loadBuilder.setNegativeButton("Back", null)
-                loadBuilder.setMessage(context.getString(R.string.load_are_you_sure))
+                loadBuilder.setMessage(context.getString(
+                    if (loadedGame.isEmpty())
+                        R.string.load_are_you_sure
+                    else
+                        R.string.load_revert_are_you_sure
+                ))
                 loadBuilder.create().show()
             }
             builder.setNegativeButton("Delete") { _, _ ->

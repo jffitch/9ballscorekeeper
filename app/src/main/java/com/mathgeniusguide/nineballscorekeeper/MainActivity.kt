@@ -134,6 +134,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     fun resetGame() {
         updateGameString(gameString.substringBefore('|') + '|')
+        writeSharedPreferences(SharedPreferencesTarget.LOADED_GAME, "")
     }
 
     fun speak(speech: String) {
@@ -202,6 +203,9 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     }
 
     fun tournamentWinner(): String? {
+        if (readSharedPreferences(SharedPreferencesTarget.END_AT_TOURNAMENT_WIN) != "true") {
+            return null
+        }
         if (gameDetails.player1MatchPoints + player1RunningTotal >=
             (if (player1Wins >= 3) 50 else 51)) {
             return gameDetails.team1

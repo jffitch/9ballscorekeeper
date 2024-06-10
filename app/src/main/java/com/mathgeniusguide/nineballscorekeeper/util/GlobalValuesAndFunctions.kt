@@ -104,7 +104,7 @@ fun teamsMatch(gameDetails1: GameDetails, gameDetails2: GameDetails): Boolean {
 
 fun getChartShotTitle(inning: String, rack: String, shot: String, playerTurn: String?): String {
     val isFoul = "[KMWRPO]".toRegex().containsMatchIn(shot)
-    var string = "Inning $inning. Rack $rack.${playerTurn?.let { " $it's turn." } ?: ""}\n"
+    var string = "Inning $inning. Rack $rack.${playerTurn?.let { " $it's turn." } ?: ""} "
     val ballsPocketed = (1..9).filter { shot.contains(it.toString()) }
     string += when (ballsPocketed.size) {
         0 -> "No balls pocketed."

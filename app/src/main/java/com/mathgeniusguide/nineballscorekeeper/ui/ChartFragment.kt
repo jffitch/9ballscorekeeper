@@ -31,66 +31,11 @@ class ChartFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.player1Label.text = mainActivity.gameDetails.player1Name
         binding.player2Label.text = mainActivity.gameDetails.player2Name
-        val chartList = mutableListOf<ChartShot>()
-        var isRackStart = true
-        var rackNumber = mainActivity.gameDetails.startRacks
-        var inningNumber = mainActivity.gameDetails.startInnings
-        for (pair in mainActivity.gameDetails.innings) {
-            var isInningStart = true
-            val player1Shots = pair.first.substringBeforeLast('\'').split("'")
-            val player2Shots = pair.second.substringBeforeLast('\'').split("'")
-            for (shot in player1Shots) {
-                val isFoul = "[KMWRPO]".toRegex().containsMatchIn(shot)
-                val isNine = shot.contains('9') && !isFoul
-                val isStalemate = shot.contains('S')
-                val isTimeOut = shot.contains('t')
-                val isDefense = shot.contains('d')
-                chartList.add(ChartShot(
-                    isInningStart = isInningStart,
-                    isRackStart = isRackStart,
-                    inning = inningNumber.toString(),
-                    rack = rackNumber.toString(),
-                    ballsPocketed = shot,
-                    isDefense = isDefense,
-                    isFoul = isFoul,
-                    isStalemate = isStalemate,
-                    isTimeOut = isTimeOut,
-                    playerTurn = PlayerTurn.PLAYER1
-                ))
-                isInningStart = false
-                isRackStart = isNine || isStalemate
-                if (isRackStart) {
-                    rackNumber++
-                }
-            }
-            for (shot in player2Shots) {
-                val isFoul = "[KMWRPO]".toRegex().containsMatchIn(shot)
-                val isNine = shot.contains('9') && !isFoul
-                val isStalemate = shot.contains('S')
-                val isTimeOut = shot.contains('t')
-                val isDefense = shot.contains('d')
-                chartList.add(ChartShot(
-                    isInningStart = false,
-                    isRackStart = isRackStart,
-                    inning = inningNumber.toString(),
-                    rack = rackNumber.toString(),
-                    ballsPocketed = shot,
-                    isDefense = isDefense,
-                    isFoul = isFoul,
-                    isStalemate = isStalemate,
-                    isTimeOut = isTimeOut,
-                    playerTurn = PlayerTurn.PLAYER2
-                ))
-                isRackStart = isNine || isStalemate
-                if (isRackStart) {
-                    rackNumber++
-                }
-            }
-            inningNumber++
-        }
+
+        mainActivity.calculateChartList()
 
         binding.chartRecyclerView.layoutManager = LinearLayoutManager(context)
-        binding.chartRecyclerView.adapter = ChartAdapter(chartList, requireContext(), mainActivity)
+        binding.chartRecyclerView.adapter = ChartAdapter(mainActivity.chartList, requireContext(), mainActivity)
     }
     override fun onDestroyView() {
         super.onDestroyView()

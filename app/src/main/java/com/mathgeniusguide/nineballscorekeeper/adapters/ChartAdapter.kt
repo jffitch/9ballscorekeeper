@@ -1,5 +1,6 @@
 package com.mathgeniusguide.nineballscorekeeper.adapters
 
+import android.app.ActionBar.LayoutParams
 import android.content.Context
 import android.graphics.Color
 import android.view.Gravity
@@ -7,15 +8,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.mathgeniusguide.nineballscorekeeper.MainActivity
 import com.mathgeniusguide.nineballscorekeeper.R
 import com.mathgeniusguide.nineballscorekeeper.databinding.ChartItemBinding
 import com.mathgeniusguide.nineballscorekeeper.enums.PlayerTurn
 import com.mathgeniusguide.nineballscorekeeper.objects.ChartShot
+import com.mathgeniusguide.nineballscorekeeper.util.addEmptyShotAt
+import com.mathgeniusguide.nineballscorekeeper.util.cleanGameString
 import com.mathgeniusguide.nineballscorekeeper.util.getChartShotTitle
+import com.mathgeniusguide.nineballscorekeeper.util.isClean
 
 class ChartAdapter (private val items: List<ChartShot>, private val context: Context, private val mainActivity: MainActivity) : RecyclerView.Adapter<ChartAdapter.ViewHolder> () {
     override fun getItemCount(): Int {
@@ -112,19 +117,43 @@ class ChartAdapter (private val items: List<ChartShot>, private val context: Con
                 i.ballsPocketed,
                 if (i.playerTurn == PlayerTurn.PLAYER1) mainActivity.gameDetails.player1Name else mainActivity.gameDetails.player2Name
             ))
-            alertDialog.setSingleChoiceItems(context.resources.getStringArray(R.array.add_innings), 0) {_, position ->
+            alertDialog.setSingleChoiceItems(context.resources.getStringArray(R.array.add_empty_shots), 0) {_, position ->
                 selected = position
             }
-            alertDialog.setPositiveButton("Continue") { _, _ ->
-                when (selected) {
-                    0 -> {}
-                    1 -> {}
-                    2 -> {}
-                }
-            }
+            alertDialog.setPositiveButton("Add Shot(s)") { _, _ -> checkIfClean(selected, position) }
             alertDialog.setNegativeButton("Back", null)
             alertDialog.create().show()
         }
+    }
+
+    private fun checkIfClean(selected: Int, position: Int) {
+        if (mainActivity.gameString.isClean()) {
+            addShots(selected, position)
+        } else {
+            val alertDialog = AlertDialog.Builder(context)
+            alertDialog.setTitle(context.getString(R.string.game_string_contains_errors_title))
+            alertDialog.setMessage(context.getString(R.string.game_string_contains_errors_message))
+            alertDialog.setNegativeButton("Back", null)
+            alertDialog.setPositiveButton("Continue") { _, _ ->
+                mainActivity.updateGameString(mainActivity.gameString.cleanGameString())
+                addShots(selected, position)
+            }
+            alertDialog.create().show()
+        }
+    }
+
+    private fun addShots(selected: Int, position: Int) {
+        when(selected) {
+            0 -> {
+                mainActivity.updateGameString(mainActivity.gameString.addEmptyShotAt(position + 1))
+                mainActivity.updateGameString(mainActivity.gameString.addEmptyShotAt(position))
+            }
+            1 -> mainActivity.updateGameString(mainActivity.gameString.addEmptyShotAt(position))
+            2 -> mainActivity.updateGameString(mainActivity.gameString.addEmptyShotAt(position + 1))
+            else -> {}
+        }
+        mainActivity.calculateChartList()
+        notifyDataSetChanged()
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {

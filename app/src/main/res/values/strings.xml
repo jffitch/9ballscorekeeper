@@ -64,6 +64,8 @@
     <string name="reset_revert_are_you_sure">Are you sure you want to revert your saved game and start a new game?</string>
     <string name="save_string_are_you_sure">Manually editing the game strings can cause you to lose your data and can cause errors if done wrong. Are you sure you want to save your changes?</string>
     <string name="edit_string_are_you_sure">Manually editing the game strings can cause you to lose your data and can cause errors if done wrong. Are you sure you want to continue?</string>
+    <string name="game_string_contains_errors_title">Invalid Game String</string>
+    <string name="game_string_contains_errors_message">Game string contains errors. Are you sure you want to continue?</string>
 
     <string name="spoken_score">Current Score. %1$s, %2$s. %3$s, %4$s.</string>
     <string name="spoken_final_score">Final Score. %1$s, %2$s. %3$s, %4$s.</string>
@@ -78,9 +80,9 @@
     <string name="this_game">This Game</string>
     <string name="game_list">Game List</string>
 
-    <string-array name="add_innings">
-        <item name="add_inning_before_after">Add innings before and after.</item>
-        <item name="add_inning_before">Add inning before.</item>
-        <item name="add_inning_after">Add inning after.</item>
+    <string-array name="add_empty_shots">
+        <item name="add_empty_shot_before_after">Add empty shots before and after.</item>
+        <item name="add_empty_shot_before">Add empty shot before.</item>
+        <item name="add_empty_shot_after">Add empty shot after.</item>
     </string-array>
 </resources>

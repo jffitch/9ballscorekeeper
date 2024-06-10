@@ -12,7 +12,9 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
 import com.mathgeniusguide.nineballscorekeeper.databinding.ActivityMainBinding
+import com.mathgeniusguide.nineballscorekeeper.enums.PlayerTurn
 import com.mathgeniusguide.nineballscorekeeper.enums.SharedPreferencesTarget
+import com.mathgeniusguide.nineballscorekeeper.objects.ChartShot
 import com.mathgeniusguide.nineballscorekeeper.objects.GameDetails
 import com.mathgeniusguide.nineballscorekeeper.util.getGameDetails
 import com.mathgeniusguide.nineballscorekeeper.util.isSameTournament
@@ -29,6 +31,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private lateinit var textToSpeech: TextToSpeech
     var gameString = ""
     var gameList = mutableListOf<String>()
+    var chartList = mutableListOf<ChartShot>()
     lateinit var gameDetails: GameDetails
     var player1RunningTotal = 0
     var player2RunningTotal = 0
@@ -215,5 +218,69 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             return gameDetails.team2
         }
         return null
+    }
+
+    fun calculateChartList() {
+        chartList.clear()
+        var isRackStart = true
+        var rackNumber = gameDetails.startRacks
+        var inningNumber = gameDetails.startInnings
+        for (pair in gameDetails.innings) {
+            var isInningStart = true
+            val player1Shots = pair.first.substringBeforeLast('\'').split("'")
+            val player2Shots = pair.second.substringBeforeLast('\'').split("'")
+            for (shot in player1Shots) {
+                val isFoul = "[KMWRPO]".toRegex().containsMatchIn(shot)
+                val isNine = shot.contains('9') && !isFoul
+                val isStalemate = shot.contains('S')
+                val isTimeOut = shot.contains('t')
+                val isDefense = shot.contains('d')
+                chartList.add(
+                    ChartShot(
+                        isInningStart = isInningStart,
+                        isRackStart = isRackStart,
+                        inning = inningNumber.toString(),
+                        rack = rackNumber.toString(),
+                        ballsPocketed = shot,
+                        isDefense = isDefense,
+                        isFoul = isFoul,
+                        isStalemate = isStalemate,
+                        isTimeOut = isTimeOut,
+                        playerTurn = PlayerTurn.PLAYER1
+                    )
+                )
+                isInningStart = false
+                isRackStart = isNine || isStalemate
+                if (isRackStart) {
+                    rackNumber++
+                }
+            }
+            for (shot in player2Shots) {
+                val isFoul = "[KMWRPO]".toRegex().containsMatchIn(shot)
+                val isNine = shot.contains('9') && !isFoul
+                val isStalemate = shot.contains('S')
+                val isTimeOut = shot.contains('t')
+                val isDefense = shot.contains('d')
+                chartList.add(
+                    ChartShot(
+                        isInningStart = false,
+                        isRackStart = isRackStart,
+                        inning = inningNumber.toString(),
+                        rack = rackNumber.toString(),
+                        ballsPocketed = shot,
+                        isDefense = isDefense,
+                        isFoul = isFoul,
+                        isStalemate = isStalemate,
+                        isTimeOut = isTimeOut,
+                        playerTurn = PlayerTurn.PLAYER2
+                    )
+                )
+                isRackStart = isNine || isStalemate
+                if (isRackStart) {
+                    rackNumber++
+                }
+            }
+            inningNumber++
+        }
     }
 }

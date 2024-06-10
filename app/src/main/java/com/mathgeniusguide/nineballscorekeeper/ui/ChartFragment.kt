@@ -46,8 +46,10 @@ class ChartFragment: Fragment() {
                 val isTimeOut = shot.contains('t')
                 val isDefense = shot.contains('d')
                 chartList.add(ChartShot(
-                    inning = if (isInningStart) inningNumber.toString() else "",
-                    rack = if (isRackStart) rackNumber.toString() else "",
+                    isInningStart = isInningStart,
+                    isRackStart = isRackStart,
+                    inning = inningNumber.toString(),
+                    rack = rackNumber.toString(),
                     ballsPocketed = shot,
                     isDefense = isDefense,
                     isFoul = isFoul,
@@ -68,8 +70,10 @@ class ChartFragment: Fragment() {
                 val isTimeOut = shot.contains('t')
                 val isDefense = shot.contains('d')
                 chartList.add(ChartShot(
-                    inning = "",
-                    rack = if (isRackStart) rackNumber.toString() else "",
+                    isInningStart = false,
+                    isRackStart = isRackStart,
+                    inning = inningNumber.toString(),
+                    rack = rackNumber.toString(),
                     ballsPocketed = shot,
                     isDefense = isDefense,
                     isFoul = isFoul,
@@ -86,7 +90,7 @@ class ChartFragment: Fragment() {
         }
 
         binding.chartRecyclerView.layoutManager = LinearLayoutManager(context)
-        binding.chartRecyclerView.adapter = ChartAdapter(chartList, requireContext())
+        binding.chartRecyclerView.adapter = ChartAdapter(chartList, requireContext(), mainActivity)
     }
     override fun onDestroyView() {
         super.onDestroyView()

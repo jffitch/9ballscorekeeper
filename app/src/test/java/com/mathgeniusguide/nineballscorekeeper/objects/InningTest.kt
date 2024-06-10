@@ -42,7 +42,7 @@ import org.junit.Test
 
 class InningTest {
     private var expectedPlayerStats = PlayerStats()
-    private var ballStatus = onBallStatus(1).toMutableList()
+    private var ballStatus = onBallStatus(1)
     private val rackList = mutableListOf(Rack())
 
     @Before
@@ -53,7 +53,7 @@ class InningTest {
     @Test
     fun testDryInning() {
         val inningString = dryInning
-        ballStatus = onBallStatus(4).toMutableList()
+        ballStatus = onBallStatus(4)
         val inning = Inning(inningString, PlayerTurn.PLAYER1, ShotCondition.NORMAL, ballStatus, rackList)
 
         expectedPlayerStats.shotsTaken = 1
@@ -62,7 +62,7 @@ class InningTest {
         assert(inning.successfulDefense == 0)
         assert(inning.leftOnTable == 0)
         assert(playerStatsMatch(inning.inningPlayerStats, expectedPlayerStats))
-        assert(listsMatch(ballStatus, listOf(
+        assert(listsMatch(ballStatus.toList(), listOf(
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
@@ -70,14 +70,15 @@ class InningTest {
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
-            BallStatus.ON_TABLE
+            BallStatus.ON_TABLE,
+            BallStatus.PLAYER1
         )))
     }
 
     @Test
     fun testBallInHandMissInning() {
         val inningString = dryInning
-        ballStatus = onBallStatus(4).toMutableList()
+        ballStatus = onBallStatus(4)
         val inning = Inning(inningString, PlayerTurn.PLAYER1, ShotCondition.BALL_IN_HAND, ballStatus, rackList)
 
         expectedPlayerStats.achievements.ballInHandMiss = 1
@@ -87,7 +88,7 @@ class InningTest {
         assert(inning.successfulDefense == 0)
         assert(inning.leftOnTable == 0)
         assert(playerStatsMatch(inning.inningPlayerStats, expectedPlayerStats))
-        assert(listsMatch(ballStatus, listOf(
+        assert(listsMatch(ballStatus.toList(), listOf(
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
@@ -95,14 +96,15 @@ class InningTest {
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
-            BallStatus.ON_TABLE
+            BallStatus.ON_TABLE,
+            BallStatus.PLAYER1
         )))
     }
 
     @Test
     fun testOnePointInning() {
         val inningString = onePointInning
-        ballStatus = onBallStatus(1).toMutableList()
+        ballStatus = onBallStatus(1)
         val inning = Inning(inningString, PlayerTurn.PLAYER1, ShotCondition.NORMAL, ballStatus, rackList)
 
         setScore(1)
@@ -112,7 +114,7 @@ class InningTest {
         assert(inning.successfulDefense == 0)
         assert(inning.leftOnTable == 0)
         assert(playerStatsMatch(inning.inningPlayerStats, expectedPlayerStats))
-        assert(listsMatch(ballStatus, listOf(
+        assert(listsMatch(ballStatus.toList(), listOf(
             BallStatus.PLAYER1,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
@@ -120,14 +122,15 @@ class InningTest {
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
-            BallStatus.ON_TABLE
+            BallStatus.ON_TABLE,
+            BallStatus.PLAYER1
         )))
     }
 
     @Test
     fun testTwoPointsInning() {
         val inningString = twoPointsInning
-        ballStatus = onBallStatus(1).toMutableList()
+        ballStatus = onBallStatus(1)
         val inning = Inning(inningString, PlayerTurn.PLAYER1, ShotCondition.NORMAL, ballStatus, rackList)
 
         setScore(2)
@@ -137,7 +140,7 @@ class InningTest {
         assert(inning.successfulDefense == 0)
         assert(inning.leftOnTable == 0)
         assert(playerStatsMatch(inning.inningPlayerStats, expectedPlayerStats))
-        assert(listsMatch(ballStatus, listOf(
+        assert(listsMatch(ballStatus.toList(), listOf(
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
             BallStatus.ON_TABLE,
@@ -145,14 +148,15 @@ class InningTest {
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
-            BallStatus.ON_TABLE
+            BallStatus.ON_TABLE,
+            BallStatus.PLAYER1
         )))
     }
 
     @Test
     fun testTwoInOneShotInning() {
         val inningString = twoInOneShotInning
-        ballStatus = onBallStatus(1).toMutableList()
+        ballStatus = onBallStatus(1)
         val inning = Inning(inningString, PlayerTurn.PLAYER1, ShotCondition.NORMAL, ballStatus, rackList)
 
         setScore(2)
@@ -162,7 +166,7 @@ class InningTest {
         assert(inning.successfulDefense == 0)
         assert(inning.leftOnTable == 0)
         assert(playerStatsMatch(inning.inningPlayerStats, expectedPlayerStats))
-        assert(listsMatch(ballStatus, listOf(
+        assert(listsMatch(ballStatus.toList(), listOf(
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
             BallStatus.ON_TABLE,
@@ -170,14 +174,15 @@ class InningTest {
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
-            BallStatus.ON_TABLE
+            BallStatus.ON_TABLE,
+            BallStatus.PLAYER1
         )))
     }
 
     @Test
     fun testIntentionalEclipseInning() {
         val inningString = intentionalEclipseInning
-        ballStatus = onBallStatus(4).toMutableList()
+        ballStatus = onBallStatus(4)
         val inning = Inning(inningString, PlayerTurn.PLAYER1, ShotCondition.NORMAL, ballStatus, rackList)
 
         setScore(1)
@@ -190,7 +195,7 @@ class InningTest {
         assert(inning.successfulDefense == 0)
         assert(inning.leftOnTable == 0)
         assert(playerStatsMatch(inning.inningPlayerStats, expectedPlayerStats))
-        assert(listsMatch(ballStatus, listOf(
+        assert(listsMatch(ballStatus.toList(), listOf(
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
@@ -198,14 +203,15 @@ class InningTest {
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
-            BallStatus.ON_TABLE
+            BallStatus.ON_TABLE,
+            BallStatus.PLAYER1
         )))
     }
 
     @Test
     fun testDefenseInning() {
         val inningString = defenseInning
-        ballStatus = onBallStatus(2).toMutableList()
+        ballStatus = onBallStatus(2)
         val inning = Inning(inningString, PlayerTurn.PLAYER1, ShotCondition.NORMAL, ballStatus, rackList)
 
         setScore(2)
@@ -216,7 +222,7 @@ class InningTest {
         assert(inning.successfulDefense == 0)
         assert(inning.leftOnTable == 0)
         assert(playerStatsMatch(inning.inningPlayerStats, expectedPlayerStats))
-        assert(listsMatch(ballStatus, listOf(
+        assert(listsMatch(ballStatus.toList(), listOf(
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
@@ -224,14 +230,15 @@ class InningTest {
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
-            BallStatus.ON_TABLE
+            BallStatus.ON_TABLE,
+            BallStatus.PLAYER1
         )))
     }
 
     @Test
     fun testSelfDefenseInning() {
         val inningString = selfDefenseInning
-        ballStatus = onBallStatus(3).toMutableList()
+        ballStatus = onBallStatus(3)
         val inning = Inning(inningString, PlayerTurn.PLAYER1, ShotCondition.NORMAL, ballStatus, rackList)
 
         setScore(3)
@@ -243,7 +250,7 @@ class InningTest {
         assert(inning.successfulDefense == 0)
         assert(inning.leftOnTable == 0)
         assert(playerStatsMatch(inning.inningPlayerStats, expectedPlayerStats))
-        assert(listsMatch(ballStatus, listOf(
+        assert(listsMatch(ballStatus.toList(), listOf(
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
@@ -251,14 +258,15 @@ class InningTest {
             BallStatus.PLAYER1,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
-            BallStatus.ON_TABLE
+            BallStatus.ON_TABLE,
+            BallStatus.PLAYER1
         )))
     }
 
     @Test
     fun testFoulOnDefenseInning() {
         val inningString = foulOnDefenseInning
-        ballStatus = onBallStatus(3).toMutableList()
+        ballStatus = onBallStatus(3)
         val inning = Inning(inningString, PlayerTurn.PLAYER1, ShotCondition.NORMAL, ballStatus, rackList)
 
         setScore(2)
@@ -271,7 +279,7 @@ class InningTest {
         assert(inning.successfulDefense == 0)
         assert(inning.leftOnTable == 0)
         assert(playerStatsMatch(inning.inningPlayerStats, expectedPlayerStats))
-        assert(listsMatch(ballStatus, listOf(
+        assert(listsMatch(ballStatus.toList(), listOf(
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
@@ -279,14 +287,15 @@ class InningTest {
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
-            BallStatus.ON_TABLE
+            BallStatus.ON_TABLE,
+            BallStatus.PLAYER1
         )))
     }
 
     @Test
     fun testBallInHandAfterThreePointsInning() {
         val inningString = ballInHandAfterThreePointsInning
-        ballStatus = onBallStatus(5).toMutableList()
+        ballStatus = onBallStatus(5)
         val inning = Inning(inningString, PlayerTurn.PLAYER1, ShotCondition.NORMAL, ballStatus, rackList)
 
         setScore(3)
@@ -298,7 +307,7 @@ class InningTest {
         assert(inning.successfulDefense == 0)
         assert(inning.leftOnTable == 0)
         assert(playerStatsMatch(inning.inningPlayerStats, expectedPlayerStats))
-        assert(listsMatch(ballStatus, listOf(
+        assert(listsMatch(ballStatus.toList(), listOf(
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
@@ -306,14 +315,15 @@ class InningTest {
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
-            BallStatus.DEAD
+            BallStatus.DEAD,
+            BallStatus.PLAYER1
         )))
     }
 
     @Test
     fun testBallInHandAfterOnePointInning() {
         val inningString = ballInHandAfterOnePointInning
-        ballStatus = onBallStatus(7).toMutableList()
+        ballStatus = onBallStatus(7)
         val inning = Inning(inningString, PlayerTurn.PLAYER1, ShotCondition.NORMAL, ballStatus, rackList)
 
         setScore(1)
@@ -325,7 +335,7 @@ class InningTest {
         assert(inning.successfulDefense == 0)
         assert(inning.leftOnTable == 0)
         assert(playerStatsMatch(inning.inningPlayerStats, expectedPlayerStats))
-        assert(listsMatch(ballStatus, listOf(
+        assert(listsMatch(ballStatus.toList(), listOf(
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
@@ -333,14 +343,15 @@ class InningTest {
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
-            BallStatus.DEAD
+            BallStatus.DEAD,
+            BallStatus.PLAYER1
         )))
     }
 
     @Test
     fun testBallInHandInning() {
         val inningString = ballInHandInning
-        ballStatus = onBallStatus(5).toMutableList()
+        ballStatus = onBallStatus(5)
         val inning = Inning(inningString, PlayerTurn.PLAYER1, ShotCondition.NORMAL, ballStatus, rackList)
 
         expectedPlayerStats.shotsTaken = 1
@@ -350,7 +361,7 @@ class InningTest {
         assert(inning.successfulDefense == 0)
         assert(inning.leftOnTable == 0)
         assert(playerStatsMatch(inning.inningPlayerStats, expectedPlayerStats))
-        assert(listsMatch(ballStatus, listOf(
+        assert(listsMatch(ballStatus.toList(), listOf(
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
@@ -358,14 +369,15 @@ class InningTest {
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
-            BallStatus.ON_TABLE
+            BallStatus.ON_TABLE,
+            BallStatus.PLAYER1
         )))
     }
 
     @Test
     fun testBallInHandAfterDefenseInning() {
         val inningString = ballInHandInning
-        ballStatus = onBallStatus(5).toMutableList()
+        ballStatus = onBallStatus(5)
         val inning = Inning(inningString, PlayerTurn.PLAYER1, ShotCondition.DEFENSE, ballStatus, rackList)
 
         expectedPlayerStats.shotsTaken = 1
@@ -375,7 +387,7 @@ class InningTest {
         assert(inning.successfulDefense == 1)
         assert(inning.leftOnTable == 0)
         assert(playerStatsMatch(inning.inningPlayerStats, expectedPlayerStats))
-        assert(listsMatch(ballStatus, listOf(
+        assert(listsMatch(ballStatus.toList(), listOf(
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
@@ -383,14 +395,15 @@ class InningTest {
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
-            BallStatus.ON_TABLE
+            BallStatus.ON_TABLE,
+            BallStatus.PLAYER1
         )))
     }
 
     @Test
     fun testBallInHandReturnInning() {
         val inningString = ballInHandInning
-        ballStatus = onBallStatus(5).toMutableList()
+        ballStatus = onBallStatus(5)
         val inning = Inning(inningString, PlayerTurn.PLAYER1, ShotCondition.BALL_IN_HAND, ballStatus, rackList)
 
         expectedPlayerStats.shotsTaken = 1
@@ -401,7 +414,7 @@ class InningTest {
         assert(inning.successfulDefense == 0)
         assert(inning.leftOnTable == 0)
         assert(playerStatsMatch(inning.inningPlayerStats, expectedPlayerStats))
-        assert(listsMatch(ballStatus, listOf(
+        assert(listsMatch(ballStatus.toList(), listOf(
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
@@ -409,14 +422,15 @@ class InningTest {
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
-            BallStatus.ON_TABLE
+            BallStatus.ON_TABLE,
+            BallStatus.PLAYER1
         )))
     }
 
     @Test
     fun testBreakAndRunThenMissInning() {
         val inningString = breakAndRunThenMissInning
-        ballStatus = onBallStatus(1).toMutableList()
+        ballStatus = onBallStatus(1)
         val inning = Inning(inningString, PlayerTurn.PLAYER1, ShotCondition.BREAK, ballStatus, rackList)
 
         setScore(10)
@@ -431,7 +445,7 @@ class InningTest {
         assert(inning.successfulDefense == 0)
         assert(inning.leftOnTable == 0)
         assert(playerStatsMatch(inning.inningPlayerStats, expectedPlayerStats))
-        assert(listsMatch(ballStatus, listOf(
+        assert(listsMatch(ballStatus.toList(), listOf(
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
@@ -439,14 +453,15 @@ class InningTest {
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
-            BallStatus.ON_TABLE
+            BallStatus.ON_TABLE,
+            BallStatus.PLAYER1
         )))
     }
 
     @Test
     fun testBreakAndRunThenContinueInning() {
         val inningString = breakAndRunThenContinueInning
-        ballStatus = onBallStatus(3).toMutableList()
+        ballStatus = onBallStatus(3)
         val inning = Inning(inningString, PlayerTurn.PLAYER1, ShotCondition.NORMAL, ballStatus, rackList)
 
         setScore(18)
@@ -462,7 +477,7 @@ class InningTest {
         assert(inning.successfulDefense == 0)
         assert(inning.leftOnTable == 5)
         assert(playerStatsMatch(inning.inningPlayerStats, expectedPlayerStats))
-        assert(listsMatch(ballStatus, listOf(
+        assert(listsMatch(ballStatus.toList(), listOf(
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
@@ -470,14 +485,15 @@ class InningTest {
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.PLAYER1,
-            BallStatus.ON_TABLE
+            BallStatus.ON_TABLE,
+            BallStatus.PLAYER1
         )))
     }
 
     @Test
     fun testBackToBackToBackBreakAndRunInning() {
         val inningString = backToBackToBackBreakAndRunInning
-        ballStatus = onBallStatus(7).toMutableList()
+        ballStatus = onBallStatus(7)
         val inning = Inning(inningString, PlayerTurn.PLAYER1, ShotCondition.NORMAL, ballStatus, rackList)
 
         setScore(36)
@@ -495,7 +511,7 @@ class InningTest {
         assert(inning.successfulDefense == 0)
         assert(inning.leftOnTable == 0)
         assert(playerStatsMatch(inning.inningPlayerStats, expectedPlayerStats))
-        assert(listsMatch(ballStatus, listOf(
+        assert(listsMatch(ballStatus.toList(), listOf(
             BallStatus.PLAYER1,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
@@ -503,14 +519,15 @@ class InningTest {
             BallStatus.ON_TABLE,
             BallStatus.PLAYER1,
             BallStatus.ON_TABLE,
-            BallStatus.ON_TABLE
+            BallStatus.ON_TABLE,
+            BallStatus.PLAYER1
         )))
     }
 
     @Test
     fun testPerfectRackInning() {
         val inningString = perfectRackInning
-        ballStatus = onBallStatus(6).toMutableList()
+        ballStatus = onBallStatus(6)
         val inning = Inning(inningString, PlayerTurn.PLAYER1, ShotCondition.NORMAL, ballStatus, rackList)
 
         setScore(5)
@@ -523,7 +540,7 @@ class InningTest {
         assert(inning.successfulDefense == 0)
         assert(inning.leftOnTable == 0)
         assert(playerStatsMatch(inning.inningPlayerStats, expectedPlayerStats))
-        assert(listsMatch(ballStatus, listOf(
+        assert(listsMatch(ballStatus.toList(), listOf(
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
@@ -531,14 +548,15 @@ class InningTest {
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
-            BallStatus.ON_TABLE
+            BallStatus.ON_TABLE,
+            BallStatus.PLAYER1
         )))
     }
 
     @Test
     fun testEarlyNineInning() {
         val inningString = earlyNineInning
-        ballStatus = onBallStatus(1).toMutableList()
+        ballStatus = onBallStatus(1)
         val inning = Inning(inningString, PlayerTurn.PLAYER1, ShotCondition.BREAK, ballStatus, rackList)
 
         setScore(10)
@@ -551,7 +569,7 @@ class InningTest {
         assert(inning.successfulDefense == 0)
         assert(inning.leftOnTable == 1)
         assert(playerStatsMatch(inning.inningPlayerStats, expectedPlayerStats))
-        assert(listsMatch(ballStatus, listOf(
+        assert(listsMatch(ballStatus.toList(), listOf(
             BallStatus.PLAYER1,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
@@ -559,14 +577,15 @@ class InningTest {
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
-            BallStatus.ON_TABLE
+            BallStatus.ON_TABLE,
+            BallStatus.PLAYER1
         )))
     }
 
     @Test
     fun testNineThenScratchOnBreakInning() {
         val inningString = nineThenScratchOnBreakInning
-        ballStatus = eightNotPerfect.toMutableList()
+        ballStatus = eightNotPerfect.clone()
         val inning = Inning(inningString, PlayerTurn.PLAYER1, ShotCondition.NORMAL, ballStatus, rackList)
 
         setScore(3)
@@ -581,7 +600,7 @@ class InningTest {
         assert(inning.successfulDefense == 0)
         assert(inning.leftOnTable == 0)
         assert(playerStatsMatch(inning.inningPlayerStats, expectedPlayerStats))
-        assert(listsMatch(ballStatus, listOf(
+        assert(listsMatch(ballStatus.toList(), listOf(
             BallStatus.ON_TABLE,
             BallStatus.DEAD,
             BallStatus.ON_TABLE,
@@ -589,14 +608,15 @@ class InningTest {
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
-            BallStatus.ON_TABLE
+            BallStatus.ON_TABLE,
+            BallStatus.PLAYER1
         )))
     }
 
     @Test
     fun testNineThenFourOnBreakInning() {
         val inningString = nineThenFourOnBreakInning
-        ballStatus = onBallStatus(7).toMutableList()
+        ballStatus = onBallStatus(7)
         val inning = Inning(inningString, PlayerTurn.PLAYER1, ShotCondition.NORMAL, ballStatus, rackList)
 
         setScore(8)
@@ -609,7 +629,7 @@ class InningTest {
         assert(inning.successfulDefense == 0)
         assert(inning.leftOnTable == 1)
         assert(playerStatsMatch(inning.inningPlayerStats, expectedPlayerStats))
-        assert(listsMatch(ballStatus, listOf(
+        assert(listsMatch(ballStatus.toList(), listOf(
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
             BallStatus.ON_TABLE,
@@ -617,6 +637,7 @@ class InningTest {
             BallStatus.PLAYER1,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
+            BallStatus.PLAYER1,
             BallStatus.PLAYER1
         )))
     }
@@ -624,7 +645,7 @@ class InningTest {
     @Test
     fun testImmediateEclipseInning() {
         val inningString = immediateEclipseInning
-        ballStatus = onBallStatus(3).toMutableList()
+        ballStatus = onBallStatus(3)
         val inning = Inning(inningString, PlayerTurn.PLAYER1, ShotCondition.NORMAL, ballStatus, rackList)
 
         expectedPlayerStats.shotsTaken = 1
@@ -634,7 +655,7 @@ class InningTest {
         assert(inning.successfulDefense == 0)
         assert(inning.leftOnTable == 0)
         assert(playerStatsMatch(inning.inningPlayerStats, expectedPlayerStats))
-        assert(listsMatch(ballStatus, listOf(
+        assert(listsMatch(ballStatus.toList(), listOf(
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
             BallStatus.ON_TABLE,
@@ -642,14 +663,15 @@ class InningTest {
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
-            BallStatus.ON_TABLE
+            BallStatus.ON_TABLE,
+            BallStatus.PLAYER1
         )))
     }
 
     @Test
     fun testEclipseReturnInning() {
         val inningString = immediateEclipseInning
-        ballStatus = onBallStatus(3).toMutableList()
+        ballStatus = onBallStatus(3)
         val inning = Inning(inningString, PlayerTurn.PLAYER1, ShotCondition.INTENTIONAL_ECLIPSE, ballStatus, rackList)
 
         expectedPlayerStats.shotsTaken = 1
@@ -661,7 +683,7 @@ class InningTest {
         assert(inning.successfulDefense == 0)
         assert(inning.leftOnTable == 0)
         assert(playerStatsMatch(inning.inningPlayerStats, expectedPlayerStats))
-        assert(listsMatch(ballStatus, listOf(
+        assert(listsMatch(ballStatus.toList(), listOf(
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
             BallStatus.ON_TABLE,
@@ -669,14 +691,15 @@ class InningTest {
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
-            BallStatus.ON_TABLE
+            BallStatus.ON_TABLE,
+            BallStatus.PLAYER1
         )))
     }
 
     @Test
     fun testEclipseAfterBallInHandInning() {
         val inningString = immediateEclipseInning
-        ballStatus = onBallStatus(3).toMutableList()
+        ballStatus = onBallStatus(3)
         val inning = Inning(inningString, PlayerTurn.PLAYER1, ShotCondition.BALL_IN_HAND, ballStatus, rackList)
 
         expectedPlayerStats.shotsTaken = 1
@@ -687,7 +710,7 @@ class InningTest {
         assert(inning.successfulDefense == 0)
         assert(inning.leftOnTable == 0)
         assert(playerStatsMatch(inning.inningPlayerStats, expectedPlayerStats))
-        assert(listsMatch(ballStatus, listOf(
+        assert(listsMatch(ballStatus.toList(), listOf(
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
             BallStatus.ON_TABLE,
@@ -695,14 +718,15 @@ class InningTest {
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
-            BallStatus.ON_TABLE
+            BallStatus.ON_TABLE,
+            BallStatus.PLAYER1
         )))
     }
 
     @Test
     fun testMultipleSelfEclipsesInning() {
         val inningString = multipleSelfEclipsesInning
-        ballStatus = onBallStatus(2).toMutableList()
+        ballStatus = onBallStatus(2)
         val inning = Inning(inningString, PlayerTurn.PLAYER1, ShotCondition.NORMAL, ballStatus, rackList)
 
         setScore(4)
@@ -715,7 +739,7 @@ class InningTest {
         assert(inning.successfulDefense == 0)
         assert(inning.leftOnTable == 0)
         assert(playerStatsMatch(inning.inningPlayerStats, expectedPlayerStats))
-        assert(listsMatch(ballStatus, listOf(
+        assert(listsMatch(ballStatus.toList(), listOf(
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
@@ -723,14 +747,15 @@ class InningTest {
             BallStatus.PLAYER1,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
-            BallStatus.ON_TABLE
+            BallStatus.ON_TABLE,
+            BallStatus.PLAYER1
         )))
     }
 
     @Test
     fun testMultipleSelfEclipsesAfterEclipseInning() {
         val inningString = multipleSelfEclipsesInning
-        ballStatus = onBallStatus(2).toMutableList()
+        ballStatus = onBallStatus(2)
         val inning = Inning(inningString, PlayerTurn.PLAYER1, ShotCondition.INTENTIONAL_ECLIPSE, ballStatus, rackList)
 
         setScore(4)
@@ -745,7 +770,7 @@ class InningTest {
         assert(inning.successfulDefense == -1)
         assert(inning.leftOnTable == 0)
         assert(playerStatsMatch(inning.inningPlayerStats, expectedPlayerStats))
-        assert(listsMatch(ballStatus, listOf(
+        assert(listsMatch(ballStatus.toList(), listOf(
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
@@ -753,14 +778,15 @@ class InningTest {
             BallStatus.PLAYER1,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
-            BallStatus.ON_TABLE
+            BallStatus.ON_TABLE,
+            BallStatus.PLAYER1
         )))
     }
 
     @Test
     fun testSelfEclipseReturnInning() {
         val inningString = selfEclipseReturnInning
-        ballStatus = onBallStatus(4).toMutableList()
+        ballStatus = onBallStatus(4)
         val inning = Inning(inningString, PlayerTurn.PLAYER1, ShotCondition.NORMAL, ballStatus, rackList)
 
         setScore(2)
@@ -774,7 +800,7 @@ class InningTest {
         assert(inning.successfulDefense == 0)
         assert(inning.leftOnTable == 0)
         assert(playerStatsMatch(inning.inningPlayerStats, expectedPlayerStats))
-        assert(listsMatch(ballStatus, listOf(
+        assert(listsMatch(ballStatus.toList(), listOf(
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
@@ -782,14 +808,15 @@ class InningTest {
             BallStatus.PLAYER1,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
-            BallStatus.ON_TABLE
+            BallStatus.ON_TABLE,
+            BallStatus.PLAYER1
         )))
     }
 
     @Test
     fun testIllegalNineInning() {
         val inningString = illegalNineInning
-        ballStatus = onBallStatus(5).toMutableList()
+        ballStatus = onBallStatus(5)
         val inning = Inning(inningString, PlayerTurn.PLAYER1, ShotCondition.NORMAL, ballStatus, rackList)
 
         setScore(2)
@@ -801,7 +828,7 @@ class InningTest {
         assert(inning.successfulDefense == 0)
         assert(inning.leftOnTable == 0)
         assert(playerStatsMatch(inning.inningPlayerStats, expectedPlayerStats))
-        assert(listsMatch(ballStatus, listOf(
+        assert(listsMatch(ballStatus.toList(), listOf(
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
@@ -809,14 +836,15 @@ class InningTest {
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
             BallStatus.ON_TABLE,
-            BallStatus.ON_TABLE
+            BallStatus.ON_TABLE,
+            BallStatus.PLAYER1
         )))
     }
 
     @Test
     fun testContinuedAfterNoPocketInning() {
         val inningString = continuedAfterNoPocketInning
-        ballStatus = onBallStatus(3).toMutableList()
+        ballStatus = onBallStatus(3)
         val inning = Inning(inningString, PlayerTurn.PLAYER1, ShotCondition.NORMAL, ballStatus, rackList)
 
         setScore(3)
@@ -826,7 +854,7 @@ class InningTest {
         assert(inning.successfulDefense == 0)
         assert(inning.leftOnTable == 0)
         assert(playerStatsMatch(inning.inningPlayerStats, expectedPlayerStats))
-        assert(listsMatch(ballStatus, listOf(
+        assert(listsMatch(ballStatus.toList(), listOf(
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
@@ -834,14 +862,15 @@ class InningTest {
             BallStatus.PLAYER1,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
-            BallStatus.ON_TABLE
+            BallStatus.ON_TABLE,
+            BallStatus.PLAYER1
         )))
     }
 
     @Test
     fun testContinuedAfterFoulInning() {
         val inningString = continuedAfterFoulInning
-        ballStatus = onBallStatus(6).toMutableList()
+        ballStatus = onBallStatus(6)
         val inning = Inning(inningString, PlayerTurn.PLAYER1, ShotCondition.NORMAL, ballStatus, rackList)
 
         setScore(1)
@@ -853,7 +882,7 @@ class InningTest {
         assert(inning.successfulDefense == 0)
         assert(inning.leftOnTable == 0)
         assert(playerStatsMatch(inning.inningPlayerStats, expectedPlayerStats))
-        assert(listsMatch(ballStatus, listOf(
+        assert(listsMatch(ballStatus.toList(), listOf(
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
@@ -861,14 +890,15 @@ class InningTest {
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
             BallStatus.DEAD,
-            BallStatus.ON_TABLE
+            BallStatus.ON_TABLE,
+            BallStatus.PLAYER1
         )))
     }
 
     @Test
     fun testbadBreakInning() {
         val inningString = badBreakInning
-        ballStatus = onBallStatus(1).toMutableList()
+        ballStatus = onBallStatus(1)
         val inning = Inning(inningString, PlayerTurn.PLAYER1, ShotCondition.NORMAL, ballStatus, rackList)
 
         setScore(3)
@@ -880,7 +910,7 @@ class InningTest {
         assert(inning.successfulDefense == 0)
         assert(inning.leftOnTable == 0)
         assert(playerStatsMatch(inning.inningPlayerStats, expectedPlayerStats))
-        assert(listsMatch(ballStatus, listOf(
+        assert(listsMatch(ballStatus.toList(), listOf(
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
             BallStatus.ON_TABLE,
@@ -888,14 +918,15 @@ class InningTest {
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
-            BallStatus.ON_TABLE
+            BallStatus.ON_TABLE,
+            BallStatus.PLAYER1
         )))
     }
 
     @Test
     fun testBadBreakScratchInning() {
         val inningString = badBreakScratchInning
-        ballStatus = onBallStatus(1).toMutableList()
+        ballStatus = onBallStatus(1)
         val inning = Inning(inningString, PlayerTurn.PLAYER1, ShotCondition.BREAK, ballStatus, rackList)
 
         expectedPlayerStats.fouls.badBreak = 1
@@ -907,7 +938,7 @@ class InningTest {
         assert(inning.successfulDefense == 0)
         assert(inning.leftOnTable == 0)
         assert(playerStatsMatch(inning.inningPlayerStats, expectedPlayerStats))
-        assert(listsMatch(ballStatus, listOf(
+        assert(listsMatch(ballStatus.toList(), listOf(
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
@@ -915,14 +946,15 @@ class InningTest {
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
-            BallStatus.ON_TABLE
+            BallStatus.ON_TABLE,
+            BallStatus.PLAYER1
         )))
     }
 
     @Test
     fun testBadBreakScratchAfterNineInning() {
         val inningString = badBreakScratchAfterNineInning
-        ballStatus = nineNotPerfect.toMutableList()
+        ballStatus = nineNotPerfect.clone()
         val inning = Inning(inningString, PlayerTurn.PLAYER1, ShotCondition.NORMAL, ballStatus, rackList)
 
         setScore(2)
@@ -936,7 +968,7 @@ class InningTest {
         assert(inning.successfulDefense == 0)
         assert(inning.leftOnTable == 0)
         assert(playerStatsMatch(inning.inningPlayerStats, expectedPlayerStats))
-        assert(listsMatch(ballStatus, listOf(
+        assert(listsMatch(ballStatus.toList(), listOf(
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
@@ -944,14 +976,15 @@ class InningTest {
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
-            BallStatus.ON_TABLE
+            BallStatus.ON_TABLE,
+            BallStatus.PLAYER1
         )))
     }
 
     @Test
     fun testContinuedAfterBadBreakScratchInning() {
         val inningString = continuedAfterBadBreakScratchInning
-        ballStatus = eightNotPerfect.toMutableList()
+        ballStatus = eightNotPerfect.clone()
         val inning = Inning(inningString, PlayerTurn.PLAYER1, ShotCondition.NORMAL, ballStatus, rackList)
 
         setScore(3)
@@ -965,7 +998,7 @@ class InningTest {
         assert(inning.successfulDefense == 0)
         assert(inning.leftOnTable == 0)
         assert(playerStatsMatch(inning.inningPlayerStats, expectedPlayerStats))
-        assert(listsMatch(ballStatus, listOf(
+        assert(listsMatch(ballStatus.toList(), listOf(
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
@@ -973,7 +1006,8 @@ class InningTest {
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
-            BallStatus.ON_TABLE
+            BallStatus.ON_TABLE,
+            BallStatus.PLAYER1
         )))
     }
 

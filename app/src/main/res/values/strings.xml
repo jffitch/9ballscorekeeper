@@ -77,4 +77,10 @@
 
     <string name="this_game">This Game</string>
     <string name="game_list">Game List</string>
+
+    <string-array name="add_innings">
+        <item name="add_inning_before_after">Add innings before and after.</item>
+        <item name="add_inning_before">Add inning before.</item>
+        <item name="add_inning_after">Add inning after.</item>
+    </string-array>
 </resources>

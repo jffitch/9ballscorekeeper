@@ -10,14 +10,12 @@ import com.mathgeniusguide.nineballscorekeeper.gameString2
 import com.mathgeniusguide.nineballscorekeeper.gameString3
 import com.mathgeniusguide.nineballscorekeeper.listsMatch
 import com.mathgeniusguide.nineballscorekeeper.objects.stats.GameStats
-import com.mathgeniusguide.nineballscorekeeper.onBallStatus
 import com.mathgeniusguide.nineballscorekeeper.util.getGameDetails
 import org.junit.Before
 import org.junit.Test
 
 class GameDetailsTest {
     private var expectedGameStats = GameStats()
-    private var ballStatus = onBallStatus(1).toMutableList()
 
     @Before
     fun before() {
@@ -75,7 +73,7 @@ class GameDetailsTest {
         }
         assert(gameDetails.currentPlayerTurnStreak == 5)
         assert(gameDetails.shotCondition == ShotCondition.BREAK)
-        assert(listsMatch(gameDetails.ballStatus, listOf(
+        assert(listsMatch(gameDetails.ballStatus.toList(), listOf(
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
@@ -83,7 +81,8 @@ class GameDetailsTest {
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
-            BallStatus.ON_TABLE
+            BallStatus.ON_TABLE,
+            BallStatus.SCORED_THIS_TURN
         )))
         assert(gameStatsMatch(gameDetails.gameStats, expectedGameStats))
     }
@@ -131,7 +130,7 @@ class GameDetailsTest {
         }
         assert(gameDetails.currentPlayerTurnStreak == 5)
         assert(gameDetails.shotCondition == ShotCondition.NORMAL)
-        assert(listsMatch(gameDetails.ballStatus, listOf(
+        assert(listsMatch(gameDetails.ballStatus.toList(), listOf(
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
@@ -139,7 +138,8 @@ class GameDetailsTest {
             BallStatus.ON_TABLE,
             BallStatus.SCORED_THIS_TURN,
             BallStatus.ON_TABLE,
-            BallStatus.ON_TABLE
+            BallStatus.ON_TABLE,
+            BallStatus.SCORED_THIS_TURN
         )))
         assert(gameStatsMatch(gameDetails.gameStats, expectedGameStats))
     }
@@ -185,7 +185,7 @@ class GameDetailsTest {
         }
         assert(gameDetails.currentPlayerTurnStreak == 0)
         assert(gameDetails.shotCondition == ShotCondition.NORMAL)
-        assert(listsMatch(gameDetails.ballStatus, listOf(
+        assert(listsMatch(gameDetails.ballStatus.toList(), listOf(
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
@@ -193,7 +193,8 @@ class GameDetailsTest {
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.PLAYER1,
-            BallStatus.ON_TABLE
+            BallStatus.ON_TABLE,
+            BallStatus.PLAYER1
         )))
         assert(gameStatsMatch(gameDetails.gameStats, expectedGameStats))
     }
@@ -204,7 +205,7 @@ class GameDetailsTest {
         expectedGameStats.playerTurn = PlayerTurn.PLAYER1
         assert(gameDetails.currentPlayerTurnStreak == 0)
         assert(gameDetails.shotCondition == ShotCondition.BREAK)
-        assert(listsMatch(gameDetails.ballStatus, listOf(
+        assert(listsMatch(gameDetails.ballStatus.toList(), listOf(
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
@@ -212,7 +213,8 @@ class GameDetailsTest {
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
-            BallStatus.ON_TABLE
+            BallStatus.ON_TABLE,
+            BallStatus.SCORED_THIS_TURN
         )))
         assert(gameStatsMatch(gameDetails.gameStats, expectedGameStats))
     }

@@ -8,13 +8,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
+import com.mathgeniusguide.nineballscorekeeper.MainActivity
 import com.mathgeniusguide.nineballscorekeeper.R
 import com.mathgeniusguide.nineballscorekeeper.databinding.ChartItemBinding
 import com.mathgeniusguide.nineballscorekeeper.enums.PlayerTurn
 import com.mathgeniusguide.nineballscorekeeper.objects.ChartShot
+import com.mathgeniusguide.nineballscorekeeper.util.getChartShotTitle
 
-class ChartAdapter (private val items: List<ChartShot>, private val context: Context) : RecyclerView.Adapter<ChartAdapter.ViewHolder> () {
+class ChartAdapter (private val items: List<ChartShot>, private val context: Context, private val mainActivity: MainActivity) : RecyclerView.Adapter<ChartAdapter.ViewHolder> () {
     override fun getItemCount(): Int {
         return items.size
     }
@@ -25,8 +28,8 @@ class ChartAdapter (private val items: List<ChartShot>, private val context: Con
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val i = items[position]
-        holder.binding.inningLabel.text = i.inning
-        holder.binding.rackLabel.text = i.rack
+        holder.binding.inningLabel.text = if (i.isInningStart) i.inning else ""
+        holder.binding.rackLabel.text = if (i.isRackStart) i.rack else ""
         holder.binding.ballsPocketed.setBackgroundColor(context.getColor(
             if (i.isFoul) R.color.foul else R.color.partially_transparent
         ))
@@ -100,6 +103,28 @@ class ChartAdapter (private val items: List<ChartShot>, private val context: Con
             holder.binding.ballsPocketed.addView(image)
         }
         holder.binding.ballsPocketed.gravity = if (i.playerTurn == PlayerTurn.PLAYER1) Gravity.START else Gravity.END
+        holder.binding.parent.setOnClickListener {
+            var selected = 0
+            val alertDialog = AlertDialog.Builder(context)
+            alertDialog.setTitle(getChartShotTitle(
+                i.inning,
+                i.rack,
+                i.ballsPocketed,
+                if (i.playerTurn == PlayerTurn.PLAYER1) mainActivity.gameDetails.player1Name else mainActivity.gameDetails.player2Name
+            ))
+            alertDialog.setSingleChoiceItems(context.resources.getStringArray(R.array.add_innings), 0) {_, position ->
+                selected = position
+            }
+            alertDialog.setPositiveButton("Continue") { _, _ ->
+                when (selected) {
+                    0 -> {}
+                    1 -> {}
+                    2 -> {}
+                }
+            }
+            alertDialog.setNegativeButton("Back", null)
+            alertDialog.create().show()
+        }
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {

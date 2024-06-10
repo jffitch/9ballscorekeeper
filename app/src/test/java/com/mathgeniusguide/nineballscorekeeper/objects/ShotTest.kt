@@ -28,14 +28,14 @@ class ShotTest {
     fun testOnePocketedBall() {
         val string = "4"
         val startCondition = ShotCondition.NORMAL
-        val ballStatus = customStartingBallStatus.toMutableList()
+        val ballStatus = customStartingBallStatus.clone()
         val shot = Shot(string, PlayerTurn.PLAYER1, startCondition, ballStatus)
         setScore(1)
         assert(playerStatsMatch(shot.shotPlayerStats, expectedPlayerStats))
         assert(shot.successfulDefense == 0)
         assert(!shot.isTurnEnd)
         assert(shot.shotCondition == ShotCondition.NORMAL)
-        assert(listsMatch(ballStatus, mutableListOf(
+        assert(listsMatch(ballStatus.toList(), mutableListOf(
             BallStatus.PLAYER1,
             BallStatus.SCORED_THIS_TURN,
             BallStatus.DEAD,
@@ -43,6 +43,7 @@ class ShotTest {
             BallStatus.ON_TABLE,
             BallStatus.DEAD,
             BallStatus.ON_TABLE,
+            BallStatus.PLAYER1,
             BallStatus.PLAYER1
         )))
     }
@@ -51,14 +52,14 @@ class ShotTest {
     fun testTwoPocketedBalls() {
         val string = "47"
         val startCondition = ShotCondition.NORMAL
-        val ballStatus = customStartingBallStatus.toMutableList()
+        val ballStatus = customStartingBallStatus.clone()
         val shot = Shot(string, PlayerTurn.PLAYER1, startCondition, ballStatus)
         setScore(2)
         assert(playerStatsMatch(shot.shotPlayerStats, expectedPlayerStats))
         assert(shot.successfulDefense == 0)
         assert(!shot.isTurnEnd)
         assert(shot.shotCondition == ShotCondition.NORMAL)
-        assert(listsMatch(ballStatus, mutableListOf(
+        assert(listsMatch(ballStatus.toList(), mutableListOf(
             BallStatus.PLAYER1,
             BallStatus.SCORED_THIS_TURN,
             BallStatus.DEAD,
@@ -66,6 +67,7 @@ class ShotTest {
             BallStatus.ON_TABLE,
             BallStatus.DEAD,
             BallStatus.SCORED_THIS_TURN,
+            BallStatus.PLAYER1,
             BallStatus.PLAYER1
         )))
     }
@@ -74,14 +76,14 @@ class ShotTest {
     fun testSomeAlreadyPocketedBalls() {
         val string = "246"
         val startCondition = ShotCondition.NORMAL
-        val ballStatus = customStartingBallStatus.toMutableList()
+        val ballStatus = customStartingBallStatus.clone()
         val shot = Shot(string, PlayerTurn.PLAYER1, startCondition, ballStatus)
         setScore(1)
         assert(playerStatsMatch(shot.shotPlayerStats, expectedPlayerStats))
         assert(shot.successfulDefense == 0)
         assert(!shot.isTurnEnd)
         assert(shot.shotCondition == ShotCondition.NORMAL)
-        assert(listsMatch(ballStatus, mutableListOf(
+        assert(listsMatch(ballStatus.toList(), mutableListOf(
             BallStatus.PLAYER1,
             BallStatus.SCORED_THIS_TURN,
             BallStatus.DEAD,
@@ -89,6 +91,7 @@ class ShotTest {
             BallStatus.ON_TABLE,
             BallStatus.DEAD,
             BallStatus.ON_TABLE,
+            BallStatus.PLAYER1,
             BallStatus.PLAYER1
         )))
     }
@@ -97,7 +100,7 @@ class ShotTest {
     fun testFoul() {
         val string = "5W"
         val startCondition = ShotCondition.NORMAL
-        val ballStatus = customStartingBallStatus.toMutableList()
+        val ballStatus = customStartingBallStatus.clone()
         val shot = Shot(string, PlayerTurn.PLAYER1, startCondition, ballStatus)
         expectedPlayerStats.deadBalls = 1
         expectedPlayerStats.fouls.wrongBallFirst = 1
@@ -105,7 +108,7 @@ class ShotTest {
         assert(shot.successfulDefense == 0)
         assert(shot.isTurnEnd)
         assert(shot.shotCondition == ShotCondition.BALL_IN_HAND)
-        assert(listsMatch(ballStatus, mutableListOf(
+        assert(listsMatch(ballStatus.toList(), mutableListOf(
             BallStatus.PLAYER1,
             BallStatus.SCORED_THIS_TURN,
             BallStatus.DEAD,
@@ -113,6 +116,7 @@ class ShotTest {
             BallStatus.DEAD,
             BallStatus.DEAD,
             BallStatus.ON_TABLE,
+            BallStatus.PLAYER1,
             BallStatus.PLAYER1
         )))
     }
@@ -121,14 +125,14 @@ class ShotTest {
     fun testDefense() {
         val string = "d"
         val startCondition = ShotCondition.NORMAL
-        val ballStatus = customStartingBallStatus.toMutableList()
+        val ballStatus = customStartingBallStatus.clone()
         val shot = Shot(string, PlayerTurn.PLAYER1, startCondition, ballStatus)
         expectedPlayerStats.achievements.defense.total = 1
         assert(playerStatsMatch(shot.shotPlayerStats, expectedPlayerStats))
         assert(shot.successfulDefense == 0)
         assert(shot.isTurnEnd)
         assert(shot.shotCondition == ShotCondition.DEFENSE)
-        assert(listsMatch(ballStatus, mutableListOf(
+        assert(listsMatch(ballStatus.toList(), mutableListOf(
             BallStatus.PLAYER1,
             BallStatus.SCORED_THIS_TURN,
             BallStatus.DEAD,
@@ -136,6 +140,7 @@ class ShotTest {
             BallStatus.ON_TABLE,
             BallStatus.DEAD,
             BallStatus.ON_TABLE,
+            BallStatus.PLAYER1,
             BallStatus.PLAYER1
         )))
     }
@@ -144,14 +149,14 @@ class ShotTest {
     fun testEclipse() {
         val string = "e"
         val startCondition = ShotCondition.NORMAL
-        val ballStatus = customStartingBallStatus.toMutableList()
+        val ballStatus = customStartingBallStatus.clone()
         val shot = Shot(string, PlayerTurn.PLAYER1, startCondition, ballStatus)
         expectedPlayerStats.achievements.eclipse = 1
         assert(playerStatsMatch(shot.shotPlayerStats, expectedPlayerStats))
         assert(shot.successfulDefense == 0)
         assert(shot.isTurnEnd)
         assert(shot.shotCondition == ShotCondition.ECLIPSE)
-        assert(listsMatch(ballStatus, mutableListOf(
+        assert(listsMatch(ballStatus.toList(), mutableListOf(
             BallStatus.PLAYER1,
             BallStatus.SCORED_THIS_TURN,
             BallStatus.DEAD,
@@ -159,6 +164,7 @@ class ShotTest {
             BallStatus.ON_TABLE,
             BallStatus.DEAD,
             BallStatus.ON_TABLE,
+            BallStatus.PLAYER1,
             BallStatus.PLAYER1
         )))
     }
@@ -167,7 +173,7 @@ class ShotTest {
     fun testIntentionalEclipse() {
         val string = "de"
         val startCondition = ShotCondition.NORMAL
-        val ballStatus = customStartingBallStatus.toMutableList()
+        val ballStatus = customStartingBallStatus.clone()
         val shot = Shot(string, PlayerTurn.PLAYER1, startCondition, ballStatus)
         expectedPlayerStats.achievements.eclipse = 1
         expectedPlayerStats.achievements.intentionalEclipse = 1
@@ -176,7 +182,7 @@ class ShotTest {
         assert(shot.successfulDefense == 0)
         assert(shot.isTurnEnd)
         assert(shot.shotCondition == ShotCondition.INTENTIONAL_ECLIPSE)
-        assert(listsMatch(ballStatus, mutableListOf(
+        assert(listsMatch(ballStatus.toList(), mutableListOf(
             BallStatus.PLAYER1,
             BallStatus.SCORED_THIS_TURN,
             BallStatus.DEAD,
@@ -184,6 +190,7 @@ class ShotTest {
             BallStatus.ON_TABLE,
             BallStatus.DEAD,
             BallStatus.ON_TABLE,
+            BallStatus.PLAYER1,
             BallStatus.PLAYER1
         )))
     }
@@ -192,7 +199,7 @@ class ShotTest {
     fun testPocketOnSelfDefense() {
         val string = "4d"
         val startCondition = ShotCondition.NORMAL
-        val ballStatus = customStartingBallStatus.toMutableList()
+        val ballStatus = customStartingBallStatus.clone()
         val shot = Shot(string, PlayerTurn.PLAYER1, startCondition, ballStatus)
         setScore(1)
         expectedPlayerStats.achievements.defense.total = 1
@@ -201,7 +208,7 @@ class ShotTest {
         assert(shot.successfulDefense == 0)
         assert(!shot.isTurnEnd)
         assert(shot.shotCondition == ShotCondition.NORMAL)
-        assert(listsMatch(ballStatus, mutableListOf(
+        assert(listsMatch(ballStatus.toList(), mutableListOf(
             BallStatus.PLAYER1,
             BallStatus.SCORED_THIS_TURN,
             BallStatus.DEAD,
@@ -209,6 +216,7 @@ class ShotTest {
             BallStatus.ON_TABLE,
             BallStatus.DEAD,
             BallStatus.ON_TABLE,
+            BallStatus.PLAYER1,
             BallStatus.PLAYER1
         )))
     }
@@ -217,7 +225,7 @@ class ShotTest {
     fun testSelfEclipse() {
         val string = "4e"
         val startCondition = ShotCondition.NORMAL
-        val ballStatus = customStartingBallStatus.toMutableList()
+        val ballStatus = customStartingBallStatus.clone()
         val shot = Shot(string, PlayerTurn.PLAYER1, startCondition, ballStatus)
         setScore(1)
         expectedPlayerStats.achievements.selfEclipse = 1
@@ -225,7 +233,7 @@ class ShotTest {
         assert(shot.successfulDefense == 0)
         assert(!shot.isTurnEnd)
         assert(shot.shotCondition == ShotCondition.SELF_ECLIPSE)
-        assert(listsMatch(ballStatus, mutableListOf(
+        assert(listsMatch(ballStatus.toList(), mutableListOf(
             BallStatus.PLAYER1,
             BallStatus.SCORED_THIS_TURN,
             BallStatus.DEAD,
@@ -233,6 +241,7 @@ class ShotTest {
             BallStatus.ON_TABLE,
             BallStatus.DEAD,
             BallStatus.ON_TABLE,
+            BallStatus.PLAYER1,
             BallStatus.PLAYER1
         )))
     }
@@ -241,7 +250,7 @@ class ShotTest {
     fun testFoulAfterEclipse() {
         val string = "4W"
         val startCondition = ShotCondition.ECLIPSE
-        val ballStatus = customStartingBallStatus.toMutableList()
+        val ballStatus = customStartingBallStatus.clone()
         val shot = Shot(string, PlayerTurn.PLAYER1, startCondition, ballStatus)
         expectedPlayerStats.deadBalls = 1
         expectedPlayerStats.fouls.wrongBallFirst = 1
@@ -249,7 +258,7 @@ class ShotTest {
         assert(shot.successfulDefense == 0)
         assert(shot.isTurnEnd)
         assert(shot.shotCondition == ShotCondition.BALL_IN_HAND)
-        assert(listsMatch(ballStatus, mutableListOf(
+        assert(listsMatch(ballStatus.toList(), mutableListOf(
             BallStatus.PLAYER1,
             BallStatus.SCORED_THIS_TURN,
             BallStatus.DEAD,
@@ -257,6 +266,7 @@ class ShotTest {
             BallStatus.ON_TABLE,
             BallStatus.DEAD,
             BallStatus.ON_TABLE,
+            BallStatus.PLAYER1,
             BallStatus.PLAYER1
         )))
     }
@@ -265,7 +275,7 @@ class ShotTest {
     fun testFoulAfterIntentionalEclipse() {
         val string = "4W"
         val startCondition = ShotCondition.INTENTIONAL_ECLIPSE
-        val ballStatus = customStartingBallStatus.toMutableList()
+        val ballStatus = customStartingBallStatus.clone()
         val shot = Shot(string, PlayerTurn.PLAYER1, startCondition, ballStatus)
         expectedPlayerStats.deadBalls = 1
         expectedPlayerStats.fouls.wrongBallFirst = 1
@@ -273,7 +283,7 @@ class ShotTest {
         assert(shot.successfulDefense == 1)
         assert(shot.isTurnEnd)
         assert(shot.shotCondition == ShotCondition.BALL_IN_HAND)
-        assert(listsMatch(ballStatus, mutableListOf(
+        assert(listsMatch(ballStatus.toList(), mutableListOf(
             BallStatus.PLAYER1,
             BallStatus.SCORED_THIS_TURN,
             BallStatus.DEAD,
@@ -281,6 +291,7 @@ class ShotTest {
             BallStatus.ON_TABLE,
             BallStatus.DEAD,
             BallStatus.ON_TABLE,
+            BallStatus.PLAYER1,
             BallStatus.PLAYER1
         )))
     }
@@ -289,14 +300,14 @@ class ShotTest {
     fun testMissAfterIntentionalEclipse() {
         val string = ""
         val startCondition = ShotCondition.INTENTIONAL_ECLIPSE
-        val ballStatus = customStartingBallStatus.toMutableList()
+        val ballStatus = customStartingBallStatus.clone()
         val shot = Shot(string, PlayerTurn.PLAYER1, startCondition, ballStatus)
         expectedPlayerStats.achievements.eclipseEscape = 1
         assert(playerStatsMatch(shot.shotPlayerStats, expectedPlayerStats))
         assert(shot.successfulDefense == 0)
         assert(shot.isTurnEnd)
         assert(shot.shotCondition == ShotCondition.NORMAL)
-        assert(listsMatch(ballStatus, mutableListOf(
+        assert(listsMatch(ballStatus.toList(), mutableListOf(
             BallStatus.PLAYER1,
             BallStatus.SCORED_THIS_TURN,
             BallStatus.DEAD,
@@ -304,6 +315,7 @@ class ShotTest {
             BallStatus.ON_TABLE,
             BallStatus.DEAD,
             BallStatus.ON_TABLE,
+            BallStatus.PLAYER1,
             BallStatus.PLAYER1
         )))
     }
@@ -312,7 +324,7 @@ class ShotTest {
     fun testPocketAfterIntentionalEclipse() {
         val string = "4"
         val startCondition = ShotCondition.INTENTIONAL_ECLIPSE
-        val ballStatus = customStartingBallStatus.toMutableList()
+        val ballStatus = customStartingBallStatus.clone()
         val shot = Shot(string, PlayerTurn.PLAYER1, startCondition, ballStatus)
         expectedPlayerStats.achievements.eclipseEscape = 1
         expectedPlayerStats.achievements.eclipsePocket = 1
@@ -321,7 +333,7 @@ class ShotTest {
         assert(shot.successfulDefense == -1)
         assert(!shot.isTurnEnd)
         assert(shot.shotCondition == ShotCondition.NORMAL)
-        assert(listsMatch(ballStatus, mutableListOf(
+        assert(listsMatch(ballStatus.toList(), mutableListOf(
             BallStatus.PLAYER1,
             BallStatus.SCORED_THIS_TURN,
             BallStatus.DEAD,
@@ -329,6 +341,7 @@ class ShotTest {
             BallStatus.ON_TABLE,
             BallStatus.DEAD,
             BallStatus.ON_TABLE,
+            BallStatus.PLAYER1,
             BallStatus.PLAYER1
         )))
     }
@@ -337,7 +350,7 @@ class ShotTest {
     fun testEclipseReturn() {
         val string = "e"
         val startCondition = ShotCondition.INTENTIONAL_ECLIPSE
-        val ballStatus = customStartingBallStatus.toMutableList()
+        val ballStatus = customStartingBallStatus.clone()
         val shot = Shot(string, PlayerTurn.PLAYER1, startCondition, ballStatus)
         expectedPlayerStats.achievements.eclipseReturn = 1
         expectedPlayerStats.achievements.eclipseEscape = 1
@@ -346,7 +359,7 @@ class ShotTest {
         assert(shot.successfulDefense == 0)
         assert(shot.isTurnEnd)
         assert(shot.shotCondition == ShotCondition.ECLIPSE)
-        assert(listsMatch(ballStatus, mutableListOf(
+        assert(listsMatch(ballStatus.toList(), mutableListOf(
             BallStatus.PLAYER1,
             BallStatus.SCORED_THIS_TURN,
             BallStatus.DEAD,
@@ -354,6 +367,7 @@ class ShotTest {
             BallStatus.ON_TABLE,
             BallStatus.DEAD,
             BallStatus.ON_TABLE,
+            BallStatus.PLAYER1,
             BallStatus.PLAYER1
         )))
     }
@@ -362,7 +376,7 @@ class ShotTest {
     fun testSelfEclipseAfterEclipse() {
         val string = "4e"
         val startCondition = ShotCondition.INTENTIONAL_ECLIPSE
-        val ballStatus = customStartingBallStatus.toMutableList()
+        val ballStatus = customStartingBallStatus.clone()
         val shot = Shot(string, PlayerTurn.PLAYER1, startCondition, ballStatus)
         expectedPlayerStats.achievements.eclipseEscape = 1
         expectedPlayerStats.achievements.eclipsePocket = 1
@@ -372,7 +386,7 @@ class ShotTest {
         assert(shot.successfulDefense == -1)
         assert(!shot.isTurnEnd)
         assert(shot.shotCondition == ShotCondition.SELF_ECLIPSE)
-        assert(listsMatch(ballStatus, mutableListOf(
+        assert(listsMatch(ballStatus.toList(), mutableListOf(
             BallStatus.PLAYER1,
             BallStatus.SCORED_THIS_TURN,
             BallStatus.DEAD,
@@ -380,6 +394,7 @@ class ShotTest {
             BallStatus.ON_TABLE,
             BallStatus.DEAD,
             BallStatus.ON_TABLE,
+            BallStatus.PLAYER1,
             BallStatus.PLAYER1
         )))
     }
@@ -388,7 +403,7 @@ class ShotTest {
     fun testFoulAfterSelfEclipse() {
         val string = "4W"
         val startCondition = ShotCondition.SELF_ECLIPSE
-        val ballStatus = customStartingBallStatus.toMutableList()
+        val ballStatus = customStartingBallStatus.clone()
         val shot = Shot(string, PlayerTurn.PLAYER1, startCondition, ballStatus)
         expectedPlayerStats.deadBalls = 1
         expectedPlayerStats.fouls.wrongBallFirst = 1
@@ -396,7 +411,7 @@ class ShotTest {
         assert(shot.successfulDefense == 0)
         assert(shot.isTurnEnd)
         assert(shot.shotCondition == ShotCondition.BALL_IN_HAND)
-        assert(listsMatch(ballStatus, mutableListOf(
+        assert(listsMatch(ballStatus.toList(), mutableListOf(
             BallStatus.PLAYER1,
             BallStatus.SCORED_THIS_TURN,
             BallStatus.DEAD,
@@ -404,6 +419,7 @@ class ShotTest {
             BallStatus.ON_TABLE,
             BallStatus.DEAD,
             BallStatus.ON_TABLE,
+            BallStatus.PLAYER1,
             BallStatus.PLAYER1
         )))
     }
@@ -412,14 +428,14 @@ class ShotTest {
     fun testMissAfterSelfEclipse() {
         val string = ""
         val startCondition = ShotCondition.SELF_ECLIPSE
-        val ballStatus = customStartingBallStatus.toMutableList()
+        val ballStatus = customStartingBallStatus.clone()
         val shot = Shot(string, PlayerTurn.PLAYER1, startCondition, ballStatus)
         expectedPlayerStats.achievements.selfEclipseEscape = 1
         assert(playerStatsMatch(shot.shotPlayerStats, expectedPlayerStats))
         assert(shot.successfulDefense == 0)
         assert(shot.isTurnEnd)
         assert(shot.shotCondition == ShotCondition.NORMAL)
-        assert(listsMatch(ballStatus, mutableListOf(
+        assert(listsMatch(ballStatus.toList(), mutableListOf(
             BallStatus.PLAYER1,
             BallStatus.SCORED_THIS_TURN,
             BallStatus.DEAD,
@@ -427,6 +443,7 @@ class ShotTest {
             BallStatus.ON_TABLE,
             BallStatus.DEAD,
             BallStatus.ON_TABLE,
+            BallStatus.PLAYER1,
             BallStatus.PLAYER1
         )))
     }
@@ -435,7 +452,7 @@ class ShotTest {
     fun testPocketAfterSelfEclipse() {
         val string = "4"
         val startCondition = ShotCondition.SELF_ECLIPSE
-        val ballStatus = customStartingBallStatus.toMutableList()
+        val ballStatus = customStartingBallStatus.clone()
         val shot = Shot(string, PlayerTurn.PLAYER1, startCondition, ballStatus)
         expectedPlayerStats.achievements.selfEclipseEscape = 1
         expectedPlayerStats.achievements.selfEclipsePocket = 1
@@ -444,7 +461,7 @@ class ShotTest {
         assert(shot.successfulDefense == 0)
         assert(!shot.isTurnEnd)
         assert(shot.shotCondition == ShotCondition.NORMAL)
-        assert(listsMatch(ballStatus, mutableListOf(
+        assert(listsMatch(ballStatus.toList(), mutableListOf(
             BallStatus.PLAYER1,
             BallStatus.SCORED_THIS_TURN,
             BallStatus.DEAD,
@@ -452,6 +469,7 @@ class ShotTest {
             BallStatus.ON_TABLE,
             BallStatus.DEAD,
             BallStatus.ON_TABLE,
+            BallStatus.PLAYER1,
             BallStatus.PLAYER1
         )))
     }
@@ -460,7 +478,7 @@ class ShotTest {
     fun testEclipseAfterSelfEclipse() {
         val string = "e"
         val startCondition = ShotCondition.SELF_ECLIPSE
-        val ballStatus = customStartingBallStatus.toMutableList()
+        val ballStatus = customStartingBallStatus.clone()
         val shot = Shot(string, PlayerTurn.PLAYER1, startCondition, ballStatus)
         expectedPlayerStats.achievements.selfEclipseReturn = 1
         expectedPlayerStats.achievements.selfEclipseEscape = 1
@@ -469,7 +487,7 @@ class ShotTest {
         assert(shot.successfulDefense == 0)
         assert(shot.isTurnEnd)
         assert(shot.shotCondition == ShotCondition.ECLIPSE)
-        assert(listsMatch(ballStatus, mutableListOf(
+        assert(listsMatch(ballStatus.toList(), mutableListOf(
             BallStatus.PLAYER1,
             BallStatus.SCORED_THIS_TURN,
             BallStatus.DEAD,
@@ -477,6 +495,7 @@ class ShotTest {
             BallStatus.ON_TABLE,
             BallStatus.DEAD,
             BallStatus.ON_TABLE,
+            BallStatus.PLAYER1,
             BallStatus.PLAYER1
         )))
     }
@@ -485,7 +504,7 @@ class ShotTest {
     fun testSelfEclipseAfterSelfEclipse() {
         val string = "4e"
         val startCondition = ShotCondition.SELF_ECLIPSE
-        val ballStatus = customStartingBallStatus.toMutableList()
+        val ballStatus = customStartingBallStatus.clone()
         val shot = Shot(string, PlayerTurn.PLAYER1, startCondition, ballStatus)
         expectedPlayerStats.achievements.selfEclipseEscape = 1
         expectedPlayerStats.achievements.selfEclipsePocket = 1
@@ -495,7 +514,7 @@ class ShotTest {
         assert(shot.successfulDefense == 0)
         assert(!shot.isTurnEnd)
         assert(shot.shotCondition == ShotCondition.SELF_ECLIPSE)
-        assert(listsMatch(ballStatus, mutableListOf(
+        assert(listsMatch(ballStatus.toList(), mutableListOf(
             BallStatus.PLAYER1,
             BallStatus.SCORED_THIS_TURN,
             BallStatus.DEAD,
@@ -503,6 +522,7 @@ class ShotTest {
             BallStatus.ON_TABLE,
             BallStatus.DEAD,
             BallStatus.ON_TABLE,
+            BallStatus.PLAYER1,
             BallStatus.PLAYER1
         )))
     }
@@ -511,14 +531,14 @@ class ShotTest {
     fun testBadBreak() {
         val string = "B"
         val startCondition = ShotCondition.BREAK
-        val ballStatus = onBallStatus(1).toMutableList()
+        val ballStatus = onBallStatus(1)
         val shot = Shot(string, PlayerTurn.PLAYER1, startCondition, ballStatus)
         expectedPlayerStats.fouls.badBreak = 1
         assert(playerStatsMatch(shot.shotPlayerStats, expectedPlayerStats))
         assert(shot.successfulDefense == 0)
         assert(!shot.isTurnEnd)
         assert(shot.shotCondition == ShotCondition.BREAK)
-        assert(listsMatch(ballStatus, mutableListOf(
+        assert(listsMatch(ballStatus.toList(), mutableListOf(
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
@@ -527,6 +547,7 @@ class ShotTest {
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
+            BallStatus.PLAYER1
         )))
     }
 
@@ -534,7 +555,7 @@ class ShotTest {
     fun testBadBreakScratch() {
         val string = "BK"
         val startCondition = ShotCondition.BREAK
-        val ballStatus = onBallStatus(1).toMutableList()
+        val ballStatus = onBallStatus(1)
         val shot = Shot(string, PlayerTurn.PLAYER1, startCondition, ballStatus)
         expectedPlayerStats.fouls.badBreak = 1
         expectedPlayerStats.fouls.scratch = 1
@@ -543,7 +564,7 @@ class ShotTest {
         assert(shot.successfulDefense == 0)
         assert(shot.isTurnEnd)
         assert(shot.shotCondition == ShotCondition.BREAK)
-        assert(listsMatch(ballStatus, mutableListOf(
+        assert(listsMatch(ballStatus.toList(), mutableListOf(
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
@@ -552,6 +573,7 @@ class ShotTest {
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
+            BallStatus.PLAYER1
         )))
     }
 
@@ -559,14 +581,14 @@ class ShotTest {
     fun testDryBreak() {
         val string = ""
         val startCondition = ShotCondition.BREAK
-        val ballStatus = onBallStatus(1).toMutableList()
+        val ballStatus = onBallStatus(1)
         val shot = Shot(string, PlayerTurn.PLAYER1, startCondition, ballStatus)
         expectedPlayerStats.achievements.pointsOnBreak[0] = 1
         assert(playerStatsMatch(shot.shotPlayerStats, expectedPlayerStats))
         assert(shot.successfulDefense == 0)
         assert(shot.isTurnEnd)
         assert(shot.shotCondition == ShotCondition.NORMAL)
-        assert(listsMatch(ballStatus, mutableListOf(
+        assert(listsMatch(ballStatus.toList(), mutableListOf(
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
@@ -575,6 +597,7 @@ class ShotTest {
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
+            BallStatus.PLAYER1
         )))
     }
 
@@ -582,7 +605,7 @@ class ShotTest {
     fun testOneBallOnBreak() {
         val string = "3"
         val startCondition = ShotCondition.BREAK
-        val ballStatus = onBallStatus(1).toMutableList()
+        val ballStatus = onBallStatus(1)
         val shot = Shot(string, PlayerTurn.PLAYER1, startCondition, ballStatus)
         expectedPlayerStats.achievements.pointsOnBreak[1] = 1
         setScore(1)
@@ -590,7 +613,7 @@ class ShotTest {
         assert(shot.successfulDefense == 0)
         assert(!shot.isTurnEnd)
         assert(shot.shotCondition == ShotCondition.NORMAL)
-        assert(listsMatch(ballStatus, mutableListOf(
+        assert(listsMatch(ballStatus.toList(), mutableListOf(
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.SCORED_THIS_TURN,
@@ -599,6 +622,7 @@ class ShotTest {
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
+            BallStatus.PLAYER1
         )))
     }
 
@@ -606,7 +630,7 @@ class ShotTest {
     fun testNineOnBreak() {
         val string = "39"
         val startCondition = ShotCondition.BREAK
-        val ballStatus = onBallStatus(1).toMutableList()
+        val ballStatus = onBallStatus(1)
         val shot = Shot(string, PlayerTurn.PLAYER1, startCondition, ballStatus)
         expectedPlayerStats.achievements.pointsOnBreak[3] = 1
         expectedPlayerStats.achievements.nineOnBreak = 1
@@ -616,7 +640,7 @@ class ShotTest {
         assert(shot.successfulDefense == 0)
         assert(!shot.isTurnEnd)
         assert(shot.shotCondition == ShotCondition.BREAK)
-        assert(listsMatch(ballStatus, mutableListOf(
+        assert(listsMatch(ballStatus.toList(), mutableListOf(
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.SCORED_THIS_TURN,
@@ -625,6 +649,7 @@ class ShotTest {
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
+            BallStatus.PLAYER1
         )))
     }
 
@@ -632,7 +657,7 @@ class ShotTest {
     fun testBreakAndRunNineOnly() {
         val string = "9"
         val startCondition = ShotCondition.NORMAL
-        val ballStatus = almostBreakAndRunBallStatusNineLeft.toMutableList()
+        val ballStatus = almostBreakAndRunBallStatusNineLeft.clone()
         val shot = Shot(string, PlayerTurn.PLAYER1, startCondition, ballStatus)
         expectedPlayerStats.achievements.breakAndRun = 1
         expectedPlayerStats.achievements.perfectRack = 1
@@ -642,7 +667,7 @@ class ShotTest {
         assert(shot.successfulDefense == 0)
         assert(!shot.isTurnEnd)
         assert(shot.shotCondition == ShotCondition.BREAK)
-        assert(listsMatch(ballStatus, mutableListOf(
+        assert(listsMatch(ballStatus.toList(), mutableListOf(
             BallStatus.SCORED_THIS_TURN,
             BallStatus.SCORED_THIS_TURN,
             BallStatus.SCORED_THIS_TURN,
@@ -650,7 +675,8 @@ class ShotTest {
             BallStatus.SCORED_THIS_TURN,
             BallStatus.SCORED_THIS_TURN,
             BallStatus.SCORED_THIS_TURN,
-            BallStatus.SCORED_THIS_TURN
+            BallStatus.SCORED_THIS_TURN,
+            BallStatus.PLAYER1
         )))
     }
 
@@ -658,7 +684,7 @@ class ShotTest {
     fun testBreakAndRunOneBallLeft() {
         val string = "79"
         val startCondition = ShotCondition.NORMAL
-        val ballStatus = almostBreakAndRunBallStatusOneBallLeft.toMutableList()
+        val ballStatus = almostBreakAndRunBallStatusOneBallLeft.clone()
         val shot = Shot(string, PlayerTurn.PLAYER1, startCondition, ballStatus)
         expectedPlayerStats.achievements.breakAndRun = 1
         expectedPlayerStats.achievements.perfectRack = 1
@@ -668,7 +694,7 @@ class ShotTest {
         assert(shot.successfulDefense == 0)
         assert(!shot.isTurnEnd)
         assert(shot.shotCondition == ShotCondition.BREAK)
-        assert(listsMatch(ballStatus, mutableListOf(
+        assert(listsMatch(ballStatus.toList(), mutableListOf(
             BallStatus.SCORED_THIS_TURN,
             BallStatus.SCORED_THIS_TURN,
             BallStatus.SCORED_THIS_TURN,
@@ -676,7 +702,8 @@ class ShotTest {
             BallStatus.SCORED_THIS_TURN,
             BallStatus.SCORED_THIS_TURN,
             BallStatus.SCORED_THIS_TURN,
-            BallStatus.SCORED_THIS_TURN
+            BallStatus.SCORED_THIS_TURN,
+            BallStatus.PLAYER1
         )))
     }
 
@@ -684,7 +711,7 @@ class ShotTest {
     fun testEarlyNineCustom() {
         val string = "9"
         val startCondition = ShotCondition.NORMAL
-        val ballStatus = customStartingBallStatus.toMutableList()
+        val ballStatus = customStartingBallStatus.clone()
         val shot = Shot(string, PlayerTurn.PLAYER1, startCondition, ballStatus)
         expectedPlayerStats.achievements.earlyNine = 1
         expectedPlayerStats.achievements.nines = 1
@@ -693,7 +720,7 @@ class ShotTest {
         assert(shot.successfulDefense == 0)
         assert(!shot.isTurnEnd)
         assert(shot.shotCondition == ShotCondition.BREAK)
-        assert(listsMatch(ballStatus, mutableListOf(
+        assert(listsMatch(ballStatus.toList(), mutableListOf(
             BallStatus.PLAYER1,
             BallStatus.SCORED_THIS_TURN,
             BallStatus.DEAD,
@@ -701,6 +728,7 @@ class ShotTest {
             BallStatus.ON_TABLE,
             BallStatus.DEAD,
             BallStatus.ON_TABLE,
+            BallStatus.PLAYER1,
             BallStatus.PLAYER1
         )))
     }
@@ -709,7 +737,7 @@ class ShotTest {
     fun testEarlyNineStart() {
         val string = "9"
         val startCondition = ShotCondition.NORMAL
-        val ballStatus = onBallStatus(1).toMutableList()
+        val ballStatus = onBallStatus(1)
         val shot = Shot(string, PlayerTurn.PLAYER1, startCondition, ballStatus)
         expectedPlayerStats.achievements.earlyNine = 1
         expectedPlayerStats.achievements.nines = 1
@@ -718,7 +746,7 @@ class ShotTest {
         assert(shot.successfulDefense == 0)
         assert(!shot.isTurnEnd)
         assert(shot.shotCondition == ShotCondition.BREAK)
-        assert(listsMatch(ballStatus, mutableListOf(
+        assert(listsMatch(ballStatus.toList(), mutableListOf(
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
@@ -727,6 +755,7 @@ class ShotTest {
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
+            BallStatus.PLAYER1
         )))
     }
 
@@ -734,7 +763,7 @@ class ShotTest {
     fun testEarlyNineOneBallLeft() {
         val string = "9"
         val startCondition = ShotCondition.NORMAL
-        val ballStatus = almostBreakAndRunBallStatusOneBallLeft.toMutableList()
+        val ballStatus = almostBreakAndRunBallStatusOneBallLeft.clone()
         val shot = Shot(string, PlayerTurn.PLAYER1, startCondition, ballStatus)
         expectedPlayerStats.achievements.earlyNine = 1
         expectedPlayerStats.achievements.nines = 1
@@ -743,7 +772,7 @@ class ShotTest {
         assert(shot.successfulDefense == 0)
         assert(!shot.isTurnEnd)
         assert(shot.shotCondition == ShotCondition.BREAK)
-        assert(listsMatch(ballStatus, mutableListOf(
+        assert(listsMatch(ballStatus.toList(), mutableListOf(
             BallStatus.SCORED_THIS_TURN,
             BallStatus.SCORED_THIS_TURN,
             BallStatus.SCORED_THIS_TURN,
@@ -751,7 +780,8 @@ class ShotTest {
             BallStatus.SCORED_THIS_TURN,
             BallStatus.SCORED_THIS_TURN,
             BallStatus.ON_TABLE,
-            BallStatus.SCORED_THIS_TURN
+            BallStatus.SCORED_THIS_TURN,
+            BallStatus.PLAYER1
         )))
     }
 
@@ -759,7 +789,7 @@ class ShotTest {
     fun testRegularNinePerfect() {
         val string = "9"
         val startCondition = ShotCondition.NORMAL
-        val ballStatus = ninePerfect.toMutableList()
+        val ballStatus = ninePerfect.clone()
         val shot = Shot(string, PlayerTurn.PLAYER1, startCondition, ballStatus)
         setScore(2)
         expectedPlayerStats.achievements.perfectRack = 1
@@ -768,7 +798,7 @@ class ShotTest {
         assert(shot.successfulDefense == 0)
         assert(!shot.isTurnEnd)
         assert(shot.shotCondition == ShotCondition.BREAK)
-        assert(listsMatch(ballStatus, mutableListOf(
+        assert(listsMatch(ballStatus.toList(), mutableListOf(
             BallStatus.SCORED_THIS_TURN,
             BallStatus.SCORED_THIS_TURN,
             BallStatus.SCORED_THIS_TURN,
@@ -776,7 +806,8 @@ class ShotTest {
             BallStatus.PLAYER1,
             BallStatus.SCORED_THIS_TURN,
             BallStatus.PLAYER1,
-            BallStatus.SCORED_THIS_TURN
+            BallStatus.SCORED_THIS_TURN,
+            BallStatus.PLAYER1
         )))
     }
 
@@ -784,7 +815,7 @@ class ShotTest {
     fun testRegularNineNotPerfect() {
         val string = "9"
         val startCondition = ShotCondition.NORMAL
-        val ballStatus = nineNotPerfect.toMutableList()
+        val ballStatus = nineNotPerfect.clone()
         val shot = Shot(string, PlayerTurn.PLAYER1, startCondition, ballStatus)
         expectedPlayerStats.achievements.nines = 1
         setScore(2)
@@ -792,7 +823,7 @@ class ShotTest {
         assert(shot.successfulDefense == 0)
         assert(!shot.isTurnEnd)
         assert(shot.shotCondition == ShotCondition.BREAK)
-        assert(listsMatch(ballStatus, mutableListOf(
+        assert(listsMatch(ballStatus.toList(), mutableListOf(
             BallStatus.SCORED_THIS_TURN,
             BallStatus.PLAYER2,
             BallStatus.PLAYER2,
@@ -800,7 +831,8 @@ class ShotTest {
             BallStatus.PLAYER1,
             BallStatus.SCORED_THIS_TURN,
             BallStatus.PLAYER1,
-            BallStatus.SCORED_THIS_TURN
+            BallStatus.SCORED_THIS_TURN,
+            BallStatus.PLAYER1
         )))
     }
 
@@ -808,7 +840,7 @@ class ShotTest {
     fun testDryBreakScratch() {
         val string = "K"
         val startCondition = ShotCondition.BREAK
-        val ballStatus = onBallStatus(1).toMutableList()
+        val ballStatus = onBallStatus(1)
         val shot = Shot(string, PlayerTurn.PLAYER1, startCondition, ballStatus)
         expectedPlayerStats.achievements.pointsOnBreak[0] = 1
         expectedPlayerStats.achievements.scratchOnBreak = 1
@@ -817,7 +849,7 @@ class ShotTest {
         assert(shot.successfulDefense == 0)
         assert(shot.isTurnEnd)
         assert(shot.shotCondition == ShotCondition.BALL_IN_HAND)
-        assert(listsMatch(ballStatus, mutableListOf(
+        assert(listsMatch(ballStatus.toList(), mutableListOf(
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
@@ -826,6 +858,7 @@ class ShotTest {
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
+            BallStatus.PLAYER1
         )))
     }
 
@@ -833,7 +866,7 @@ class ShotTest {
     fun testOneBallOnBreakScratch() {
         val string = "3K"
         val startCondition = ShotCondition.BREAK
-        val ballStatus = onBallStatus(1).toMutableList()
+        val ballStatus = onBallStatus(1)
         val shot = Shot(string, PlayerTurn.PLAYER1, startCondition, ballStatus)
         expectedPlayerStats.achievements.pointsOnBreak[0] = 1
         expectedPlayerStats.achievements.scratchOnBreak = 1
@@ -843,7 +876,7 @@ class ShotTest {
         assert(shot.successfulDefense == 0)
         assert(shot.isTurnEnd)
         assert(shot.shotCondition == ShotCondition.BALL_IN_HAND)
-        assert(listsMatch(ballStatus, mutableListOf(
+        assert(listsMatch(ballStatus.toList(), mutableListOf(
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.DEAD,
@@ -852,6 +885,7 @@ class ShotTest {
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
+            BallStatus.PLAYER1
         )))
     }
 
@@ -859,7 +893,7 @@ class ShotTest {
     fun testNineOnBreakScratch() {
         val string = "39K"
         val startCondition = ShotCondition.BREAK
-        val ballStatus = onBallStatus(1).toMutableList()
+        val ballStatus = onBallStatus(1)
         val shot = Shot(string, PlayerTurn.PLAYER1, startCondition, ballStatus)
         expectedPlayerStats.achievements.pointsOnBreak[0] = 1
         expectedPlayerStats.achievements.illegalNine = 1
@@ -870,7 +904,7 @@ class ShotTest {
         assert(shot.successfulDefense == 0)
         assert(shot.isTurnEnd)
         assert(shot.shotCondition == ShotCondition.BALL_IN_HAND)
-        assert(listsMatch(ballStatus, mutableListOf(
+        assert(listsMatch(ballStatus.toList(), mutableListOf(
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.DEAD,
@@ -879,6 +913,7 @@ class ShotTest {
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
+            BallStatus.PLAYER1
         )))
     }
 
@@ -886,7 +921,7 @@ class ShotTest {
     fun testBreakAndRunNineOnlyScratch() {
         val string = "9K"
         val startCondition = ShotCondition.NORMAL
-        val ballStatus = almostBreakAndRunBallStatusNineLeft.toMutableList()
+        val ballStatus = almostBreakAndRunBallStatusNineLeft.clone()
         val shot = Shot(string, PlayerTurn.PLAYER1, startCondition, ballStatus)
         expectedPlayerStats.achievements.illegalNine = 1
         expectedPlayerStats.fouls.scratch = 1
@@ -894,7 +929,7 @@ class ShotTest {
         assert(shot.successfulDefense == 0)
         assert(shot.isTurnEnd)
         assert(shot.shotCondition == ShotCondition.BALL_IN_HAND)
-        assert(listsMatch(ballStatus, mutableListOf(
+        assert(listsMatch(ballStatus.toList(), mutableListOf(
             BallStatus.SCORED_THIS_TURN,
             BallStatus.SCORED_THIS_TURN,
             BallStatus.SCORED_THIS_TURN,
@@ -902,7 +937,8 @@ class ShotTest {
             BallStatus.SCORED_THIS_TURN,
             BallStatus.SCORED_THIS_TURN,
             BallStatus.SCORED_THIS_TURN,
-            BallStatus.SCORED_THIS_TURN
+            BallStatus.SCORED_THIS_TURN,
+            BallStatus.PLAYER1
         )))
     }
 
@@ -910,7 +946,7 @@ class ShotTest {
     fun testBreakAndRunOneBallLeftScratch() {
         val string = "79K"
         val startCondition = ShotCondition.NORMAL
-        val ballStatus = almostBreakAndRunBallStatusOneBallLeft.toMutableList()
+        val ballStatus = almostBreakAndRunBallStatusOneBallLeft.clone()
         val shot = Shot(string, PlayerTurn.PLAYER1, startCondition, ballStatus)
         expectedPlayerStats.achievements.illegalNine = 1
         expectedPlayerStats.fouls.scratch = 1
@@ -919,7 +955,7 @@ class ShotTest {
         assert(shot.successfulDefense == 0)
         assert(shot.isTurnEnd)
         assert(shot.shotCondition == ShotCondition.BALL_IN_HAND)
-        assert(listsMatch(ballStatus, mutableListOf(
+        assert(listsMatch(ballStatus.toList(), mutableListOf(
             BallStatus.SCORED_THIS_TURN,
             BallStatus.SCORED_THIS_TURN,
             BallStatus.SCORED_THIS_TURN,
@@ -927,7 +963,8 @@ class ShotTest {
             BallStatus.SCORED_THIS_TURN,
             BallStatus.SCORED_THIS_TURN,
             BallStatus.DEAD,
-            BallStatus.SCORED_THIS_TURN
+            BallStatus.SCORED_THIS_TURN,
+            BallStatus.PLAYER1
         )))
     }
 
@@ -935,7 +972,7 @@ class ShotTest {
     fun testEarlyNineCustomScratch() {
         val string = "9K"
         val startCondition = ShotCondition.NORMAL
-        val ballStatus = customStartingBallStatus.toMutableList()
+        val ballStatus = customStartingBallStatus.clone()
         val shot = Shot(string, PlayerTurn.PLAYER1, startCondition, ballStatus)
         expectedPlayerStats.achievements.illegalNine = 1
         expectedPlayerStats.fouls.scratch = 1
@@ -943,7 +980,7 @@ class ShotTest {
         assert(shot.successfulDefense == 0)
         assert(shot.isTurnEnd)
         assert(shot.shotCondition == ShotCondition.BALL_IN_HAND)
-        assert(listsMatch(ballStatus, mutableListOf(
+        assert(listsMatch(ballStatus.toList(), mutableListOf(
             BallStatus.PLAYER1,
             BallStatus.SCORED_THIS_TURN,
             BallStatus.DEAD,
@@ -951,6 +988,7 @@ class ShotTest {
             BallStatus.ON_TABLE,
             BallStatus.DEAD,
             BallStatus.ON_TABLE,
+            BallStatus.PLAYER1,
             BallStatus.PLAYER1
         )))
     }
@@ -959,7 +997,7 @@ class ShotTest {
     fun testEarlyNineStartScratch() {
         val string = "9K"
         val startCondition = ShotCondition.NORMAL
-        val ballStatus = onBallStatus(1).toMutableList()
+        val ballStatus = onBallStatus(1)
         val shot = Shot(string, PlayerTurn.PLAYER1, startCondition, ballStatus)
         expectedPlayerStats.achievements.illegalNine = 1
         expectedPlayerStats.fouls.scratch = 1
@@ -967,7 +1005,7 @@ class ShotTest {
         assert(shot.successfulDefense == 0)
         assert(shot.isTurnEnd)
         assert(shot.shotCondition == ShotCondition.BALL_IN_HAND)
-        assert(listsMatch(ballStatus, mutableListOf(
+        assert(listsMatch(ballStatus.toList(), mutableListOf(
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
@@ -976,6 +1014,7 @@ class ShotTest {
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
             BallStatus.ON_TABLE,
+            BallStatus.PLAYER1
         )))
     }
 
@@ -983,7 +1022,7 @@ class ShotTest {
     fun testEarlyNineOneBallLeftScratch() {
         val string = "9K"
         val startCondition = ShotCondition.NORMAL
-        val ballStatus = almostBreakAndRunBallStatusOneBallLeft.toMutableList()
+        val ballStatus = almostBreakAndRunBallStatusOneBallLeft.clone()
         val shot = Shot(string, PlayerTurn.PLAYER1, startCondition, ballStatus)
         expectedPlayerStats.achievements.illegalNine = 1
         expectedPlayerStats.fouls.scratch = 1
@@ -991,7 +1030,7 @@ class ShotTest {
         assert(shot.successfulDefense == 0)
         assert(shot.isTurnEnd)
         assert(shot.shotCondition == ShotCondition.BALL_IN_HAND)
-        assert(listsMatch(ballStatus, mutableListOf(
+        assert(listsMatch(ballStatus.toList(), mutableListOf(
             BallStatus.SCORED_THIS_TURN,
             BallStatus.SCORED_THIS_TURN,
             BallStatus.SCORED_THIS_TURN,
@@ -999,7 +1038,8 @@ class ShotTest {
             BallStatus.SCORED_THIS_TURN,
             BallStatus.SCORED_THIS_TURN,
             BallStatus.ON_TABLE,
-            BallStatus.SCORED_THIS_TURN
+            BallStatus.SCORED_THIS_TURN,
+            BallStatus.PLAYER1
         )))
     }
 
@@ -1007,7 +1047,7 @@ class ShotTest {
     fun testRegularNineScratch() {
         val string = "9K"
         val startCondition = ShotCondition.NORMAL
-        val ballStatus = onBallStatus(9).toMutableList()
+        val ballStatus = onBallStatus(9)
         val shot = Shot(string, PlayerTurn.PLAYER1, startCondition, ballStatus)
         expectedPlayerStats.achievements.illegalNine = 1
         expectedPlayerStats.fouls.scratch = 1
@@ -1015,7 +1055,8 @@ class ShotTest {
         assert(shot.successfulDefense == 0)
         assert(shot.isTurnEnd)
         assert(shot.shotCondition == ShotCondition.BALL_IN_HAND)
-        assert(listsMatch(ballStatus, mutableListOf(
+        assert(listsMatch(ballStatus.toList(), mutableListOf(
+            BallStatus.PLAYER1,
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
             BallStatus.PLAYER1,
@@ -1031,7 +1072,7 @@ class ShotTest {
     fun testLucky() {
         val string = "4l"
         val startCondition = ShotCondition.NORMAL
-        val ballStatus = customStartingBallStatus.toMutableList()
+        val ballStatus = customStartingBallStatus.clone()
         val shot = Shot(string, PlayerTurn.PLAYER1, startCondition, ballStatus)
         expectedPlayerStats.achievements.lucky = 1
         setScore(1)
@@ -1039,7 +1080,7 @@ class ShotTest {
         assert(shot.successfulDefense == 0)
         assert(!shot.isTurnEnd)
         assert(shot.shotCondition == ShotCondition.NORMAL)
-        assert(listsMatch(ballStatus, mutableListOf(
+        assert(listsMatch(ballStatus.toList(), mutableListOf(
             BallStatus.PLAYER1,
             BallStatus.SCORED_THIS_TURN,
             BallStatus.DEAD,
@@ -1047,6 +1088,7 @@ class ShotTest {
             BallStatus.ON_TABLE,
             BallStatus.DEAD,
             BallStatus.ON_TABLE,
+            BallStatus.PLAYER1,
             BallStatus.PLAYER1
         )))
     }
@@ -1055,7 +1097,7 @@ class ShotTest {
     fun testBankMiss() {
         val string = "b"
         val startCondition = ShotCondition.NORMAL
-        val ballStatus = customStartingBallStatus.toMutableList()
+        val ballStatus = customStartingBallStatus.clone()
         val shot = Shot(string, PlayerTurn.PLAYER1, startCondition, ballStatus)
         expectedPlayerStats.achievements.bank.failure = 1
         expectedPlayerStats.achievements.bank.total = 1
@@ -1063,7 +1105,7 @@ class ShotTest {
         assert(shot.successfulDefense == 0)
         assert(shot.isTurnEnd)
         assert(shot.shotCondition == ShotCondition.NORMAL)
-        assert(listsMatch(ballStatus, mutableListOf(
+        assert(listsMatch(ballStatus.toList(), mutableListOf(
             BallStatus.PLAYER1,
             BallStatus.SCORED_THIS_TURN,
             BallStatus.DEAD,
@@ -1071,6 +1113,7 @@ class ShotTest {
             BallStatus.ON_TABLE,
             BallStatus.DEAD,
             BallStatus.ON_TABLE,
+            BallStatus.PLAYER1,
             BallStatus.PLAYER1
         )))
     }
@@ -1079,7 +1122,7 @@ class ShotTest {
     fun testBank() {
         val string = "4b"
         val startCondition = ShotCondition.NORMAL
-        val ballStatus = customStartingBallStatus.toMutableList()
+        val ballStatus = customStartingBallStatus.clone()
         val shot = Shot(string, PlayerTurn.PLAYER1, startCondition, ballStatus)
         expectedPlayerStats.achievements.bank.success = 1
         expectedPlayerStats.achievements.bank.total = 1
@@ -1088,7 +1131,7 @@ class ShotTest {
         assert(shot.successfulDefense == 0)
         assert(!shot.isTurnEnd)
         assert(shot.shotCondition == ShotCondition.NORMAL)
-        assert(listsMatch(ballStatus, mutableListOf(
+        assert(listsMatch(ballStatus.toList(), mutableListOf(
             BallStatus.PLAYER1,
             BallStatus.SCORED_THIS_TURN,
             BallStatus.DEAD,
@@ -1096,6 +1139,7 @@ class ShotTest {
             BallStatus.ON_TABLE,
             BallStatus.DEAD,
             BallStatus.ON_TABLE,
+            BallStatus.PLAYER1,
             BallStatus.PLAYER1
         )))
     }
@@ -1104,7 +1148,7 @@ class ShotTest {
     fun testBankScratch() {
         val string = "4Kb"
         val startCondition = ShotCondition.NORMAL
-        val ballStatus = customStartingBallStatus.toMutableList()
+        val ballStatus = customStartingBallStatus.clone()
         val shot = Shot(string, PlayerTurn.PLAYER1, startCondition, ballStatus)
         expectedPlayerStats.achievements.bank.failure = 1
         expectedPlayerStats.achievements.bank.total = 1
@@ -1114,7 +1158,7 @@ class ShotTest {
         assert(shot.successfulDefense == 0)
         assert(shot.isTurnEnd)
         assert(shot.shotCondition == ShotCondition.BALL_IN_HAND)
-        assert(listsMatch(ballStatus, mutableListOf(
+        assert(listsMatch(ballStatus.toList(), mutableListOf(
             BallStatus.PLAYER1,
             BallStatus.SCORED_THIS_TURN,
             BallStatus.DEAD,
@@ -1122,6 +1166,7 @@ class ShotTest {
             BallStatus.ON_TABLE,
             BallStatus.DEAD,
             BallStatus.ON_TABLE,
+            BallStatus.PLAYER1,
             BallStatus.PLAYER1
         )))
     }
@@ -1130,7 +1175,7 @@ class ShotTest {
     fun testOneBallLucky() {
         val string = "4l"
         val startCondition = ShotCondition.NORMAL
-        val ballStatus = customStartingBallStatus.toMutableList()
+        val ballStatus = customStartingBallStatus.clone()
         val shot = Shot(string, PlayerTurn.PLAYER1, startCondition, ballStatus)
         setScore(1)
         expectedPlayerStats.achievements.lucky = 1
@@ -1138,7 +1183,7 @@ class ShotTest {
         assert(shot.successfulDefense == 0)
         assert(!shot.isTurnEnd)
         assert(shot.shotCondition == ShotCondition.NORMAL)
-        assert(listsMatch(ballStatus, mutableListOf(
+        assert(listsMatch(ballStatus.toList(), mutableListOf(
             BallStatus.PLAYER1,
             BallStatus.SCORED_THIS_TURN,
             BallStatus.DEAD,
@@ -1146,6 +1191,7 @@ class ShotTest {
             BallStatus.ON_TABLE,
             BallStatus.DEAD,
             BallStatus.ON_TABLE,
+            BallStatus.PLAYER1,
             BallStatus.PLAYER1
         )))
     }
@@ -1153,7 +1199,7 @@ class ShotTest {
     fun testTwoBallsLucky() {
         val string = "45l"
         val startCondition = ShotCondition.NORMAL
-        val ballStatus = customStartingBallStatus.toMutableList()
+        val ballStatus = customStartingBallStatus.clone()
         val shot = Shot(string, PlayerTurn.PLAYER1, startCondition, ballStatus)
         setScore(2)
         expectedPlayerStats.achievements.lucky = 2
@@ -1161,7 +1207,7 @@ class ShotTest {
         assert(shot.successfulDefense == 0)
         assert(!shot.isTurnEnd)
         assert(shot.shotCondition == ShotCondition.NORMAL)
-        assert(listsMatch(ballStatus, mutableListOf(
+        assert(listsMatch(ballStatus.toList(), mutableListOf(
             BallStatus.PLAYER1,
             BallStatus.SCORED_THIS_TURN,
             BallStatus.DEAD,
@@ -1169,6 +1215,7 @@ class ShotTest {
             BallStatus.SCORED_THIS_TURN,
             BallStatus.DEAD,
             BallStatus.ON_TABLE,
+            BallStatus.PLAYER1,
             BallStatus.PLAYER1
         )))
     }

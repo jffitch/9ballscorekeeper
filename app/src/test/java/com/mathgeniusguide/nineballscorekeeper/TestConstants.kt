@@ -16,74 +16,81 @@ val gameString3 =
     "Player 1:Pawn;Player 2:Katy;Location:Home;Date:2024/02/03|',';1'',';2'3'',4'';5'6'7'8'9'34'de',7W';1'2'',';',';5'de',W';6'7'',8K';9'1'2'3'd',';4'd',5'';6e'7'',';8'9'3'1'',2'e';e',W';4'5'de',8W';6'',K';7'9'478'1'6'2'',';',';',3'5'';9'4'1'2'9'7''"
 val gameJustStarted = "Player 1:Pawn;Player 2:Queen;Location:Home;Date:2024/04/11|"
 
-val customStartingBallStatus = listOf(
+val customStartingBallStatus = arrayOf(
     BallStatus.PLAYER1,
     BallStatus.SCORED_THIS_TURN,
     BallStatus.DEAD,
     BallStatus.ON_TABLE,
     BallStatus.ON_TABLE,
     BallStatus.DEAD,
+    BallStatus.ON_TABLE,
+    BallStatus.PLAYER1,
+    BallStatus.DEAD
+)
+val almostBreakAndRunBallStatusNineLeft = arrayOf(
+    BallStatus.SCORED_THIS_TURN,
+    BallStatus.SCORED_THIS_TURN,
+    BallStatus.SCORED_THIS_TURN,
+    BallStatus.SCORED_THIS_TURN,
+    BallStatus.SCORED_THIS_TURN,
+    BallStatus.SCORED_THIS_TURN,
+    BallStatus.SCORED_THIS_TURN,
+    BallStatus.SCORED_THIS_TURN,
+    BallStatus.SCORED_THIS_TURN
+)
+val almostBreakAndRunBallStatusOneBallLeft = arrayOf(
+    BallStatus.SCORED_THIS_TURN,
+    BallStatus.SCORED_THIS_TURN,
+    BallStatus.SCORED_THIS_TURN,
+    BallStatus.SCORED_THIS_TURN,
+    BallStatus.SCORED_THIS_TURN,
+    BallStatus.SCORED_THIS_TURN,
+    BallStatus.ON_TABLE,
+    BallStatus.SCORED_THIS_TURN,
+    BallStatus.SCORED_THIS_TURN
+)
+val ninePerfect = arrayOf(
+    BallStatus.SCORED_THIS_TURN,
+    BallStatus.SCORED_THIS_TURN,
+    BallStatus.SCORED_THIS_TURN,
+    BallStatus.PLAYER1,
+    BallStatus.PLAYER1,
+    BallStatus.SCORED_THIS_TURN,
+    BallStatus.PLAYER1,
+    BallStatus.SCORED_THIS_TURN,
+    BallStatus.PLAYER1
+)
+val nineNotPerfect = arrayOf(
+    BallStatus.SCORED_THIS_TURN,
+    BallStatus.PLAYER2,
+    BallStatus.PLAYER2,
+    BallStatus.PLAYER1,
+    BallStatus.PLAYER1,
+    BallStatus.SCORED_THIS_TURN,
+    BallStatus.PLAYER1,
+    BallStatus.SCORED_THIS_TURN,
+    BallStatus.PLAYER1
+)
+
+val eightNotPerfect = arrayOf(
+    BallStatus.SCORED_THIS_TURN,
+    BallStatus.PLAYER2,
+    BallStatus.PLAYER2,
+    BallStatus.PLAYER1,
+    BallStatus.PLAYER1,
+    BallStatus.SCORED_THIS_TURN,
+    BallStatus.PLAYER1,
     BallStatus.ON_TABLE,
     BallStatus.PLAYER1
 )
-val almostBreakAndRunBallStatusNineLeft = listOf(
-    BallStatus.SCORED_THIS_TURN,
-    BallStatus.SCORED_THIS_TURN,
-    BallStatus.SCORED_THIS_TURN,
-    BallStatus.SCORED_THIS_TURN,
-    BallStatus.SCORED_THIS_TURN,
-    BallStatus.SCORED_THIS_TURN,
-    BallStatus.SCORED_THIS_TURN,
-    BallStatus.SCORED_THIS_TURN,
-)
-val almostBreakAndRunBallStatusOneBallLeft = listOf(
-    BallStatus.SCORED_THIS_TURN,
-    BallStatus.SCORED_THIS_TURN,
-    BallStatus.SCORED_THIS_TURN,
-    BallStatus.SCORED_THIS_TURN,
-    BallStatus.SCORED_THIS_TURN,
-    BallStatus.SCORED_THIS_TURN,
-    BallStatus.ON_TABLE,
-    BallStatus.SCORED_THIS_TURN
-)
-val ninePerfect = listOf(
-    BallStatus.SCORED_THIS_TURN,
-    BallStatus.SCORED_THIS_TURN,
-    BallStatus.SCORED_THIS_TURN,
-    BallStatus.PLAYER1,
-    BallStatus.PLAYER1,
-    BallStatus.SCORED_THIS_TURN,
-    BallStatus.PLAYER1,
-    BallStatus.SCORED_THIS_TURN
-)
-val nineNotPerfect = listOf(
-    BallStatus.SCORED_THIS_TURN,
-    BallStatus.PLAYER2,
-    BallStatus.PLAYER2,
-    BallStatus.PLAYER1,
-    BallStatus.PLAYER1,
-    BallStatus.SCORED_THIS_TURN,
-    BallStatus.PLAYER1,
-    BallStatus.SCORED_THIS_TURN
-)
 
-val eightNotPerfect = listOf(
-    BallStatus.SCORED_THIS_TURN,
-    BallStatus.PLAYER2,
-    BallStatus.PLAYER2,
-    BallStatus.PLAYER1,
-    BallStatus.PLAYER1,
-    BallStatus.SCORED_THIS_TURN,
-    BallStatus.PLAYER1,
-    BallStatus.ON_TABLE,
-)
-
-fun onBallStatus(ball: Int): List<BallStatus> {
+fun onBallStatus(ball: Int): Array<BallStatus> {
     val ballStatus = mutableListOf<BallStatus>()
     for (i in 1..8) {
         ballStatus.add(if (ball <= i) BallStatus.ON_TABLE else BallStatus.PLAYER1)
     }
-    return ballStatus
+    ballStatus.add(BallStatus.PLAYER1)
+    return ballStatus.toTypedArray()
 }
 
 val dryInning = "'"

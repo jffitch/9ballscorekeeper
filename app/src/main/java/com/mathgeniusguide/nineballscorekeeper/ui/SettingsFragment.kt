@@ -49,6 +49,38 @@ class SettingsFragment: Fragment() {
         binding.zeroScoreEditText.doOnTextChanged { text, start, before, count ->
             mainActivity.writeSharedPreferences(SharedPreferencesTarget.ZERO_SCORE, text.toString())
         }
+        binding.speakName1.setOnClickListener {
+            val descriptionMap = mutableMapOf<String, String>()
+            for (keyValue in binding.gameInfoEditText.text.toString().split('\n')) {
+                if (keyValue.count { it == ':' } != 1) {
+                    continue
+                }
+                val key = keyValue.substringBefore(':').trim()
+                val value = keyValue.substringAfter(':').trim()
+                descriptionMap.put(key, value)
+            }
+            mainActivity.speak(when {
+                !descriptionMap["Pronunciation 1"].isNullOrEmpty() -> descriptionMap["Pronunciation 1"]!!
+                !descriptionMap["Player 1"].isNullOrEmpty() -> descriptionMap["Player 1"]!!
+                else -> "Player 1"
+            })
+        }
+        binding.speakName2.setOnClickListener {
+            val descriptionMap = mutableMapOf<String, String>()
+            for (keyValue in binding.gameInfoEditText.text.toString().split('\n')) {
+                if (keyValue.count { it == ':' } != 1) {
+                    continue
+                }
+                val key = keyValue.substringBefore(':').trim()
+                val value = keyValue.substringAfter(':').trim()
+                descriptionMap.put(key, value)
+            }
+            mainActivity.speak(when {
+                !descriptionMap["Pronunciation 2"].isNullOrEmpty() -> descriptionMap["Pronunciation 2"]!!
+                !descriptionMap["Player 2"].isNullOrEmpty() -> descriptionMap["Player 2"]!!
+                else -> "Player 2"
+            })
+        }
         binding.restoreDefaultButton.setOnClickListener {
             binding.gameInfoEditText.setText(mainActivity.defaultText())
         }

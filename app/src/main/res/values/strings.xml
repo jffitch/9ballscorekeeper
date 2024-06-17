@@ -80,9 +80,12 @@
     <string name="this_game">This Game</string>
     <string name="game_list">Game List</string>
 
-    <string-array name="add_empty_shots">
+    <string-array name="edit_shots_array">
         <item name="add_empty_shot_before_after">Add empty shots before and after.</item>
         <item name="add_empty_shot_before">Add empty shot before.</item>
         <item name="add_empty_shot_after">Add empty shot after.</item>
+        <item name="edit_shot">Edit shot.</item>
     </string-array>
+
+    <string name="edit_shot">Edit Shot</string>
 </resources>

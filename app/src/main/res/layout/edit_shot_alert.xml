@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:src="@drawable/ball_1"
+        android:id="@+id/ball1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/ball2"
+        android:layout_marginTop="10dp" />
+
+    <ImageView
+        android:src="@drawable/ball_2"
+        android:id="@+id/ball2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/ball1"
+        app:layout_constraintStart_toEndOf="@id/ball1"
+        app:layout_constraintEnd_toStartOf="@id/ball3" />
+
+    <ImageView
+        android:src="@drawable/ball_3"
+        android:id="@+id/ball3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/ball2"
+        app:layout_constraintStart_toEndOf="@id/ball2"
+        app:layout_constraintEnd_toStartOf="@id/ball4" />
+
+    <ImageView
+        android:src="@drawable/ball_4"
+        android:id="@+id/ball4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/ball3"
+        app:layout_constraintStart_toEndOf="@id/ball3"
+        app:layout_constraintEnd_toStartOf="@id/ball5" />
+
+    <ImageView
+        android:src="@drawable/ball_5"
+        android:id="@+id/ball5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/ball4"
+        app:layout_constraintStart_toEndOf="@id/ball4"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
+        android:src="@drawable/ball_6"
+        android:id="@+id/ball6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/ball1"
+        app:layout_constraintStart_toStartOf="@id/ball1"
+        app:layout_constraintEnd_toEndOf="@id/ball2" />
+
+    <ImageView
+        android:src="@drawable/ball_7"
+        android:id="@+id/ball7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/ball6"
+        app:layout_constraintStart_toStartOf="@id/ball2"
+        app:layout_constraintEnd_toEndOf="@id/ball3" />
+
+    <ImageView
+        android:src="@drawable/ball_8"
+        android:id="@+id/ball8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/ball7"
+        app:layout_constraintStart_toStartOf="@id/ball3"
+        app:layout_constraintEnd_toEndOf="@id/ball4" />
+
+    <ImageView
+        android:src="@drawable/ball_9"
+        android:id="@+id/ball9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/ball8"
+        app:layout_constraintStart_toStartOf="@id/ball4"
+        app:layout_constraintEnd_toEndOf="@id/ball5" />
+
+    <RadioGroup
+        android:id="@+id/foulGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/ball6"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp">
+        <RadioButton
+            android:id="@+id/legalShot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/legal_shot"
+            android:checked="true" />
+        <RadioButton
+            android:id="@+id/scratch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/scratch" />
+        <RadioButton
+            android:id="@+id/wrongFirst"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/wrong_first" />
+        <RadioButton
+            android:id="@+id/miss"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/miss" />
+        <RadioButton
+            android:id="@+id/noRail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_rail" />
+        <RadioButton
+            android:id="@+id/offTable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/off_table" />
+        <RadioButton
+            android:id="@+id/otherFoul"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/other_foul" />
+    </RadioGroup>
+
+    <CheckBox
+        android:id="@+id/defenseCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/defenseLabel"
+        app:layout_constraintBottom_toBottomOf="@id/defenseLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="10dp" />
+
+    <TextView
+        android:text="Defense"
+        android:id="@+id/defenseLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/foulGroup"
+        app:layout_constraintEnd_toStartOf="@id/defenseCheckBox"
+        android:layout_marginEnd="5dp" />
+
+    <CheckBox
+        android:id="@+id/eclipseCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/eclipseLabel"
+        app:layout_constraintBottom_toBottomOf="@id/eclipseLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="10dp" />
+
+    <TextView
+        android:text="Eclipse"
+        android:id="@+id/eclipseLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/defenseLabel"
+        app:layout_constraintEnd_toStartOf="@id/eclipseCheckBox"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp" />
+
+    <CheckBox
+        android:id="@+id/bankCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/bankLabel"
+        app:layout_constraintBottom_toBottomOf="@id/bankLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="10dp" />
+
+    <TextView
+        android:text="Bank"
+        android:id="@+id/bankLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/eclipseLabel"
+        app:layout_constraintEnd_toStartOf="@id/bankCheckBox"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp" />
+
+    <CheckBox
+        android:id="@+id/luckyCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/luckyLabel"
+        app:layout_constraintBottom_toBottomOf="@id/luckyLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="10dp" />
+
+    <TextView
+        android:text="Lucky"
+        android:id="@+id/luckyLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/bankLabel"
+        app:layout_constraintEnd_toStartOf="@id/luckyCheckBox"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp" />
+
+    <CheckBox
+        android:id="@+id/miscueCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/miscueLabel"
+        app:layout_constraintBottom_toBottomOf="@id/miscueLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="10dp" />
+
+    <TextView
+        android:text="Miscue"
+        android:id="@+id/miscueLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/luckyLabel"
+        app:layout_constraintEnd_toStartOf="@id/miscueCheckBox"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp" />
+
+    <CheckBox
+        android:id="@+id/timeOutCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/timeOutLabel"
+        app:layout_constraintBottom_toBottomOf="@id/timeOutLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="10dp" />
+
+    <TextView
+        android:text="Time Out"
+        android:id="@+id/timeOutLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/miscueLabel"
+        app:layout_constraintEnd_toStartOf="@id/timeOutCheckBox"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+<!-- Code Generator
+
+player1Label, tvb30, ww, tm10, lm10
+player1Score, tv20, ww, x-1m5,, lm10
+player2Label, tvb30, ww, tm10, rm10
+player2Score, tv20, ww, x-1m5,, rm10
+ball1, iv, ww, x-3m10,, s
+ball2, iv, ww, x-1*,, m
+ball3, iv, ww, x-1*,, m
+ball4, iv, ww, x-1*,, m
+ball5, iv, ww, x-1*,, e
+ball6, iv, ww, x-5,, x-5*, x-4*
+ball7, iv, ww, x-1*,, x-5*, x-4*
+ball8, iv, ww, x-1*,, x-5*, x-4*
+ball9, iv, ww, x-1*,, x-5*, x-4*
+shotButton, bub30, fw, x-4m10,, sm10
+undoButton, bub30, fw, x-1*,, em10
+foulGroup, rg, ww, x-2m10,, lm10
+defenseCheckBox, cb, ww, x+1*,x+1*, rm10
+defenseLabel, tv, ww, x-2*,,, x-1m5
+eclipseCheckBox, cb, ww, x+1*,x+1*, rm10
+eclipseLabel, tv, ww, x-2m10,,, x-1m5
+bankCheckBox, cb, ww, x+1*,x+1*, rm10
+bankLabel, tv, ww, x-2m10,,, x-1m5
+luckyCheckBox, cb, ww, x+1*,x+1*, rm10
+luckyLabel, tv, ww, x-2m10,,, x-1m5
+badBreakButton, bub30, ww, x-1m10,, rm10
+-->

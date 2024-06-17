@@ -16,6 +16,7 @@ import com.mathgeniusguide.nineballscorekeeper.enums.BallStatus
 import com.mathgeniusguide.nineballscorekeeper.enums.PlayerTurn
 import com.mathgeniusguide.nineballscorekeeper.enums.ShotCondition
 import com.mathgeniusguide.nineballscorekeeper.objects.Shot
+import com.mathgeniusguide.nineballscorekeeper.util.lastShot
 import com.mathgeniusguide.nineballscorekeeper.util.undoShot
 import java.util.Arrays
 
@@ -110,8 +111,31 @@ class GameFragment : Fragment() {
                 return@setOnClickListener
             }
             disableButtons()
+            val lastShot = mainActivity.gameString.lastShot()
             mainActivity.updateGameString(mainActivity.gameString.undoShot())
             updateScores()
+
+            for (i in 1..9) {
+                if (lastShot.contains(i.toString())) {
+                    ballList[i - 1].performClick()
+                }
+            }
+            binding.foulGroup.check( when {
+                lastShot.contains("K") -> R.id.scratch
+                lastShot.contains("W") -> R.id.wrongFirst
+                lastShot.contains("M") -> R.id.miss
+                lastShot.contains("R") -> R.id.noRail
+                lastShot.contains("P") -> R.id.offTable
+                lastShot.contains("O") -> R.id.otherFoul
+                else -> R.id.legalShot
+            })
+
+            binding.defenseCheckBox.isChecked = lastShot.contains("d")
+            binding.eclipseCheckBox.isChecked = lastShot.contains("e")
+            binding.bankCheckBox.isChecked = lastShot.contains("b")
+            binding.luckyCheckBox.isChecked = lastShot.contains("l")
+            binding.miscueCheckBox.isChecked = lastShot.contains("m")
+            binding.timeOutCheckBox.isChecked = lastShot.contains("t")
         }
         binding.shotButton.setOnClickListener {
             if (!areButtonsEnabled) {

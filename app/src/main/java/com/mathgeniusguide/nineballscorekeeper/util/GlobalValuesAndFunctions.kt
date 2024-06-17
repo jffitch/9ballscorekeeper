@@ -47,6 +47,10 @@ fun String.undoShot(): String {
     return replace(lastShot, "")
 }
 
+fun String.lastShot(): String{
+    return "(?<=['|,;])[^,;'|]*'[,;]?$".toRegex().find(this)?.value ?: ""
+}
+
 fun String.translateGameInfo(gameInfo: String): String {
     return gameInfo.replace(" *: *".toRegex(), ":").replace(" *\n *".toRegex(), ";").trim() + '|' + this.substringAfter('|',"")
 }

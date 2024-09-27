@@ -55,11 +55,23 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:id="@+id/player1ToWin"
+        android:textStyle="bold"
+        android:textColor="@color/purple_200"
+        android:text="To Win"
+        app:layout_constraintStart_toStartOf="@id/player1Score"
+        app:layout_constraintTop_toBottomOf="@id/player1Score"
+        android:layout_marginTop="5dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:textSize="20sp"
         android:id="@+id/mp1Label"
         android:textStyle="bold"
         android:textColor="@color/match_points_color"
-        android:text="MP"
+        android:text="@string/match_points_abbreviation"
         app:layout_constraintStart_toEndOf="@id/player1Label"
         app:layout_constraintTop_toTopOf="@id/player1Label"
         android:layout_marginStart="10dp" />
@@ -113,10 +125,22 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:id="@+id/player2ToWin"
+        android:textStyle="bold"
+        android:textColor="@color/purple_200"
+        android:text="To Win"
+        app:layout_constraintEnd_toEndOf="@id/player2Goal"
+        app:layout_constraintTop_toBottomOf="@id/player2Score"
+        android:layout_marginTop="5dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:textSize="20sp"
         android:id="@+id/mp2Label"
         android:textColor="@color/match_points_color"
-        android:text="MP"
+        android:text="@string/match_points_abbreviation"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@id/player2Label"
         app:layout_constraintTop_toTopOf="@id/player2Label"
@@ -140,7 +164,7 @@
         android:id="@+id/ball1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/player1Score"
+        app:layout_constraintTop_toBottomOf="@id/player1ToWin"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/ball2"
         android:layout_marginTop="10dp" />

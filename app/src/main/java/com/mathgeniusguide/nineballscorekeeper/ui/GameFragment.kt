@@ -239,6 +239,9 @@ class GameFragment : Fragment() {
                 mainActivity.gameDetails.player2Goal
             )
         mainActivity.calculateRunningTotal()
+        val neededToWinTournament = mainActivity.neededToWinTournament()
+        binding.player1ToWin.text = neededToWinTournament.first
+        binding.player2ToWin.text = neededToWinTournament.second
         updateScores()
     }
 

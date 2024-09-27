@@ -3,6 +3,7 @@
 
     <string name="player1">Player 1</string>
     <string name="player2">Player 2</string>
+    <string name="match_points_abbreviation">MP</string>
 
     <string name="all_time">All Time</string>
     <string name="all_time_stats">All Time Stats</string>
@@ -25,6 +26,9 @@
     <string name="other_foul">Other Foul</string>
     <string name="ball_in_hand">Ball In Hand</string>
     <string name="match_points_running_total">%1$d (%2$d)</string>
+    <string name="win_to_win">Win To Win</string>
+    <string name="score_to_win">Score %1$d To Win</string>
+    <string name="prevent_to_win">Prevent %1$d To Win</string>
 
     <string name="default_game_info_string">Player 1: \nPlayer 2: \nTeam 1: \nTeam 2: \nLocation: \nDate: %1$s\nGoal 1: \nGoal 2: </string>
 

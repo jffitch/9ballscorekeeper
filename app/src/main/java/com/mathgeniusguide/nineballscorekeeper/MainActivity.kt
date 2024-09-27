@@ -18,6 +18,7 @@ import com.mathgeniusguide.nineballscorekeeper.objects.ChartShot
 import com.mathgeniusguide.nineballscorekeeper.objects.GameDetails
 import com.mathgeniusguide.nineballscorekeeper.util.getGameDetails
 import com.mathgeniusguide.nineballscorekeeper.util.isSameTournament
+import com.mathgeniusguide.nineballscorekeeper.util.matchPointsArray
 import com.mathgeniusguide.nineballscorekeeper.util.translateGameInfo
 import com.mathgeniusguide.nineballscorekeeper.util.translateGameInfoReverse
 import com.mathgeniusguide.nineballscorekeeper.util.yyyymmdd
@@ -210,14 +211,34 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             return null
         }
         if (gameDetails.player1MatchPoints + player1RunningTotal >=
-            (if (player1Wins >= 3) 50 else 51)) {
+            (if (player1Wins >= 3 || (player1Wins == 2 && gameDetails.player1MatchPoints >= 12)) 50 else 51)) {
             return gameDetails.team1
         }
         if (gameDetails.player2MatchPoints + player2RunningTotal >=
-            (if (player2Wins >= 3) 50 else 51)) {
+            (if (player2Wins >= 3 || (player2Wins == 2 && gameDetails.player2MatchPoints >= 12)) 50 else 51)) {
             return gameDetails.team2
         }
         return null
+    }
+
+    fun neededToWinTournament(): Pair<String, String> {
+        val player1Rank = matchPointsArray[8].indexOf(gameDetails.player1Goal)
+        val player2Rank = matchPointsArray[8].indexOf(gameDetails.player2Goal)
+        val player1PointsNeeded = (if (player1Wins >= 3 || (player1Wins == 2 && player1RunningTotal <= 40)) 50 else 51) - player1RunningTotal
+        val player2PointsNeeded = (if (player2Wins >= 3 || (player2Wins == 2 && player2RunningTotal <= 40)) 50 else 51) - player2RunningTotal
+        val player1String = when (player1PointsNeeded){
+            in 1..8 -> String.format(getString(R.string.score_to_win), matchPointsArray[player1PointsNeeded - 1][player1Rank])
+            in 9..12 -> getString(R.string.win_to_win)
+            in 13..20 -> String.format(getString(R.string.prevent_to_win), matchPointsArray[20 - player1PointsNeeded][player2Rank])
+            else -> ""
+        }
+        val player2String = when (player2PointsNeeded){
+            in 1..8 -> String.format(getString(R.string.score_to_win), matchPointsArray[player2PointsNeeded - 1][player2Rank])
+            in 9..12 -> getString(R.string.win_to_win)
+            in 13..20 -> String.format(getString(R.string.prevent_to_win), matchPointsArray[20 - player2PointsNeeded][player1Rank])
+            else -> ""
+        }
+        return Pair(player1String, player2String)
     }
 
     fun calculateChartList() {
